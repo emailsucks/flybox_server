@@ -1,2 +1,2 @@
-flybox_server
+flybox server
 =============
