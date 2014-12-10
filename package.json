@@ -17,6 +17,13 @@
   },
   "homepage": "https://github.com/emailsucks/flybox_server",
   "dependencies": {
-    "express": "^4.10.4"
+    "express": "^4.10.4",
+    "mongoose": "^3.8.20"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-jscs": "^1.0.0"
   }
 }
