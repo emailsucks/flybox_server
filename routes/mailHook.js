@@ -41,7 +41,7 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/hook', function(req, res) {
+  app.get('/api/hook', function(req, res) {
     res.status(200).send('works!');
   });
 };
