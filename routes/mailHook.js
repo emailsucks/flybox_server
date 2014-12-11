@@ -37,8 +37,6 @@ module.exports = function(app) {
           mailOptions.to += parsedEmails[i] + ', ';
         }
       }
-
-      mailOptions.to = jsonParsed.from[0].address;
       transporter.sendMail(mailOptions, function(error, info) {
         if (error) {
           console.log(error);
