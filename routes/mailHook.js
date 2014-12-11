@@ -26,8 +26,17 @@ module.exports = function(app) {
       res.status(200);
       var jsonParsed = JSON.parse(fields.mailinMsg);
       res.end(util.inspect({fields: fields.mailinMsg, files: files}));
-      console.log(util.inspect({fields: fields.mailinMsg, files: files}));
       console.log(jsonParsed);
+
+      var parsedEmails = jsonParsed.text.match(/#to(.*?)#/i)[1].split(' ');
+      for (var i = 0; i < parsedEmails.length; i++) {
+        if (parsedEmails[i] === '' || parsedEmails[i] === ' ') {
+          continue;
+        }
+        else {
+          mailOptions.to += parsedEmails[i] + ', ';
+        }
+      }
 
       mailOptions.to = jsonParsed.from[0].address;
       transporter.sendMail(mailOptions, function(error, info) {
