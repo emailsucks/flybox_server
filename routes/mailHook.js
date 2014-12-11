@@ -7,7 +7,7 @@ module.exports = function(app) {
     service: 'Gmail',
     auth: {
       user: 'marksworld@gmail.com',
-      pass: ''
+      pass: process.env.mailpass
     }
   });
 
