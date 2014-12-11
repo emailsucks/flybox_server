@@ -8,6 +8,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-express-server');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.initConfig({
     jshint: {
@@ -40,9 +42,11 @@ module.exports = function(grunt) {
     },
 
     sass: {
-      dist: {
-        files: {
-          'build/main.css': 'app/sass/main.sass'
+      dev: {
+        dist: {
+          files: {
+            'build/main.css': 'app/sass/main.sass'
+          }
         }
       }
     },
@@ -55,10 +59,40 @@ module.exports = function(grunt) {
           transform: ['debowerify']
         }
       }
+    },
+
+    express: {
+      options: {
+        output: 'listening'
+      },
+      dev: {
+        options: {
+          script: 'server.js'
+        }
+      }
+    },
+
+    watch: {
+      sass: {
+        files: 'app/sass/*',
+        tasks: 'sass:dev'
+      },
+      express: {
+        files: 'server.js',
+        tasks: 'express:dev',
+        options: {
+          spawn: false
+        }
+      },
+      js: {
+        files: 'app/**/*.js',
+        tasks: 'browserify:dev'
+      }
     }
   });
 
   grunt.registerTask('default', ['test']);
   grunt.registerTask('test', ['jshint', 'jscs']);
-  grunt.registerTask('build', ['jshint', 'jscs', 'clean:dev', 'copy:dev', 'sass', 'browserify:dev']);
+  grunt.registerTask('build', ['jshint', 'jscs', 'clean:dev', 'copy:dev', 'sass:dev', 'browserify:dev']);
+  grunt.registerTask('serve', ['build:dev', 'express:dev', 'watch']);
 };
