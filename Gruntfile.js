@@ -60,5 +60,5 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['test']);
   grunt.registerTask('test', ['jshint', 'jscs']);
-  grunt.registerTask('build', ['clean:dev', 'copy:dev', 'sass', 'browserify:dev']);
+  grunt.registerTask('build', ['jshint', 'jscs', 'clean:dev', 'copy:dev', 'sass', 'browserify:dev']);
 };
