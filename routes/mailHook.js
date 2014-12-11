@@ -12,7 +12,7 @@ module.exports = function(app) {
   });
 
   var mailOptions = {
-    from: 'Fred Foo, <foo@blurdybloop.com>', // sender address
+    from: 'Mark Harrell, <marksworld@gmail.com>', // sender address
     to: '', // list of receivers
     subject: 'Hello', // Subject line
     text: 'Hello world', // plaintext body
@@ -27,7 +27,7 @@ module.exports = function(app) {
       var jsonParsed = JSON.parse(fields.mailinMsg);
       res.end(util.inspect({fields: fields.mailinMsg, files: files}));
       console.log(util.inspect({fields: fields.mailinMsg, files: files}));
-      console.log(jsonParsed.from[0].address);
+      console.log(jsonParsed);
 
       mailOptions.to = jsonParsed.from[0].address;
       transporter.sendMail(mailOptions, function(error, info) {
