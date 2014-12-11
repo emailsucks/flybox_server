@@ -13,6 +13,7 @@ var port = process.env.PORT || 3000;
 mongoose.connect(process.env.MONGOLAB_URI ||
                 process.env.MONGOHQ_URL ||
                 'mongodb://localhost/notes_development');
+require('./routes/mailHook')(app);
 
 app.listen(port, function() {
   console.log('Server listening on port ' + port);
