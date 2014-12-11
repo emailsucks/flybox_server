@@ -41,7 +41,7 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/api/hook', function(req, res) {
+  app.get('/api/mailHook', function(req, res) {
     res.status(200).send('works!');
   });
 };
