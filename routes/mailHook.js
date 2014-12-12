@@ -35,8 +35,12 @@ module.exports = function(app) {
         }
       };
       var parsedEmails = jsonParsed.text.match(/#to(.*?)#/i)[1].split(' ').filter(Boolean);
+      var random = '';
       for (var i = 0; i < parsedEmails.length; i++) {
+        random = Math.floor((Math.random() * 100000) + 1);
         mailOptions.to = parsedEmails[i];
+        mailOptions.text = 'Hello world and some random numbers: ' + random;
+        mailOptions.html = '<b>Hello world and some random text: </b> ' + random;
         transporter.sendMail(mailOptions, emailCallback);
       }
     });
