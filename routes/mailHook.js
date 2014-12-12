@@ -7,12 +7,12 @@ module.exports = function(app) {
     service: 'Gmail',
     auth: {
       user: 'marksworld@gmail.com',
-      pass: ''
+      pass: process.env.mailpass
     }
   });
 
   var mailOptions = {
-    from: 'Fred Foo, <foo@blurdybloop.com>', // sender address
+    from: 'Mark Harrell, <marksworld@gmail.com>', // sender address
     to: '', // list of receivers
     subject: 'Hello', // Subject line
     text: 'Hello world', // plaintext body
@@ -26,18 +26,27 @@ module.exports = function(app) {
       res.status(200);
       var jsonParsed = JSON.parse(fields.mailinMsg);
       res.end(util.inspect({fields: fields.mailinMsg, files: files}));
-      console.log(util.inspect({fields: fields.mailinMsg, files: files}));
-      console.log(jsonParsed.from[0].address);
-
-      mailOptions.to = jsonParsed.from[0].address;
-      transporter.sendMail(mailOptions, function(error, info) {
+      console.log(jsonParsed);
+      var emailCallback = function(error, info) {
         if (error) {
           console.log(error);
         } else {
           console.log('Message sent: ' + info.response);
         }
-      });
-
+      };
+      var parsedEmails = jsonParsed.text.match(/#to(.*?)#/i)[1].split(' ').filter(Boolean);
+      var random = '';
+      for (var i = 0; i < parsedEmails.length; i++) {
+        random = Math.floor((Math.random() * 100000) + 1);
+        mailOptions.to = parsedEmails[i];
+        mailOptions.text = 'Hello world and some random numbers: ' + random;
+        mailOptions.html = '<b>Hello world and some random text: </b> ' + random;
+        transporter.sendMail(mailOptions, emailCallback);
+      }
     });
+  });
+
+  app.get('/api/mailHook', function(req, res) {
+    res.status(200).send('works!');
   });
 };
