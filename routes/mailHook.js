@@ -27,24 +27,18 @@ module.exports = function(app) {
       var jsonParsed = JSON.parse(fields.mailinMsg);
       res.end(util.inspect({fields: fields.mailinMsg, files: files}));
       console.log(jsonParsed);
-
-      var parsedEmails = jsonParsed.text.match(/#to(.*?)#/i)[1].split(' ');
-      for (var i = 0; i < parsedEmails.length; i++) {
-        if (parsedEmails[i] === '' || parsedEmails[i] === ' ') {
-          continue;
-        }
-        else {
-          mailOptions.to += parsedEmails[i] + ', ';
-        }
-      }
-      transporter.sendMail(mailOptions, function(error, info) {
+      var emailCallback = function(error, info) {
         if (error) {
           console.log(error);
         } else {
           console.log('Message sent: ' + info.response);
         }
-      });
-
+      };
+      var parsedEmails = jsonParsed.text.match(/#to(.*?)#/i)[1].split(' ').filter(Boolean);
+      for (var i = 0; i < parsedEmails.length; i++) {
+        mailOptions.to = parsedEmails[i];
+        transporter.sendMail(mailOptions, emailCallback);
+      }
     });
   });
 
