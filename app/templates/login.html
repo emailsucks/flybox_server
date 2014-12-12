@@ -1,0 +1,17 @@
+<div data-ng-controller="UsersCtrl">
+  <p class="banner">Learn about flybox</p>
+  <div class="portal">
+    <img class="logo" src="https://dt8kf6553cww8.cloudfront.net/static/images/index/logo-vflme-Gvg.png">
+    <h3>flybox</h3>
+    <div data-ng-show="signingUp">
+      <form name="newUser">
+        <input type="email" data-ng-model="newUser.email"><br>
+        <input type="password" data-ng-model="newUser.password"><br>
+        <input type="password" data-ng-model="newUser.passwordConfirm"><br>
+        <button data-ng-click="createUser()">Create User</button>
+      </form>
+    </div>
+    <button data-ng-hide="signingUp" data-ng-click="signUp()">Sign Up</button><br>
+    <button>Sign In</button>
+  </div>
+</div>

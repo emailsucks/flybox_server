@@ -6,3 +6,4 @@ db
 **/*bundle.js
 bower_components
 .sass-cache
+.DS_store
