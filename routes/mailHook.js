@@ -2,7 +2,7 @@
 var nodemailer = require('nodemailer');
 var util = require('util');
 var multiparty = require('multiparty');
-var User = require('../models/user_model');
+var User = require('../models/user');
 
 module.exports = function(app) {
 
