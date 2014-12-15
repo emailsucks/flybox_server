@@ -47,15 +47,15 @@ module.exports = function(app) {
         if (err) console.log(err);
         if (data === null) console.log('data is null');
         else {
+          userOptions.host = data.smtp.host;
+          userOptions.port = data.smtp.port;
+          userOptions.auth.user = data.smtp.username;
+          userOptions.auth.pass = data.smtp.password;
+          userOptions.secure = data.smtp.secure;
           var random = '';
           for (var i = 0; i < parsedEmails.length; i++) {
             random = Math.floor((Math.random() * 100000) + 1);
             mailOptions.to = parsedEmails[i];
-            userOptions.host = data.smtp.host;
-            userOptions.port = data.smtp.port;
-            userOptions.auth.user = data.smtp.username;
-            userOptions.auth.pass = data.smtp.password;
-            userOptions.secure = data.smtp.secure;
             mailOptions.from = userEmail;
             mailOptions.text = 'Hello world and some random numbers: ' + random;
             mailOptions.html = '<b>Hello world and some random text: </b> ' + random;
