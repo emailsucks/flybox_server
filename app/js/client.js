@@ -12,6 +12,9 @@ app.config(['$routeProvider', function($routeProvider) {
   .when('/', {
     templateUrl: 'templates/login.html'
   })
+  .when('/inbox/', {
+    templateUrl: 'templates/inbox.html'
+  })
   .otherwise({
     redirectTo: '/'
   });
