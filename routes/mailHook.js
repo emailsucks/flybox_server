@@ -42,7 +42,8 @@ module.exports = function(app) {
 
       var userEmail = jsonParsed.from[0].address;
       var parsedEmails = jsonParsed.text.match(/#to(.*?)#/i)[1].split(' ').filter(Boolean);
-      User.findOne({ email: userEmail }, function(err, data) {
+      User.findOne({ 'email': userEmail }, function(err, data) {
+        console.log(userEmail);
         if (err) console.log(err);
         if (data === null) console.log('data is null');
         else {
