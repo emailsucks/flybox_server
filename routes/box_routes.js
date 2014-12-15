@@ -7,7 +7,7 @@ module.exports = function(app, jwtAuth) {
     Box.find({$or: [{creator.email: req.user.email}, {recipients: {$elemMatch: {email: req.user.email}}}]}, function(err, data) {
       if (err) {
         console.log(err);
-        return. res.status(500).send('Cannot retrieve thread');
+        return res.status(500).send('Cannot retrieve thread');
       }
       res.json(data);
     });
