@@ -29,12 +29,12 @@ module.exports = function(grunt) {
 
     mongo_drop: {
       test: {
-        uri: 'mongodb://localhost/flybox_test'
+        'uri': 'mongodb://localhost/flybox_test',
       }
     },
 
     simplemocha: {
-      src: 'test/api/*.js'
+      src: ['test/api/user_tests.js', 'test/api/box_tests.js']
     },
 
     clean: {
