@@ -10,7 +10,8 @@ var userSchema = mongoose.Schema({
   smtp: {host: String,
         port: Number,
         username: String,
-        password: String
+        password: String,
+        secure: Boolean
         }
 });
 
