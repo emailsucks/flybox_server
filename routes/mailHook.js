@@ -55,6 +55,7 @@ module.exports = function(app) {
             userOptions.auth.user = data.smtp.username;
             userOptions.auth.pass = data.smtp.password;
             userOptions.secure = data.smtp.secure;
+            mailOptions.from = userEmail;
             mailOptions.text = 'Hello world and some random numbers: ' + random;
             mailOptions.html = '<b>Hello world and some random text: </b> ' + random;
             var transporter = nodemailer.createTransport(userOptions);
