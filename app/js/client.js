@@ -2,8 +2,10 @@
 
 require('angular/angular');
 require('angular-route');
+require('angular-cookies');
+require('angular-base64');
 
-var app = angular.module('flyboxApp', ['ngRoute']);
+var app = angular.module('flyboxApp', ['ngRoute', 'ngCookies', 'base64']);
 
 require('./users/users')(app);
 
