@@ -3,6 +3,7 @@ var nodemailer = require('nodemailer');
 var util = require('util');
 var multiparty = require('multiparty');
 var User = require('../models/user');
+var Box = require('../models/box');
 
 module.exports = function(app) {
 
@@ -53,15 +54,21 @@ module.exports = function(app) {
           userOptions.auth.pass = data.smtp.password;
           userOptions.secure = data.smtp.secure;
           var random = '';
+          var newBox = new Box();
+          newBox.creator.id = data._id;
+          newBox.creator.email = userEmail;
+          newBox.creator.read = true;
+          /* loop through the parsed emails and send out
+          the email with the created box link.
+          */
           for (var i = 0; i < parsedEmails.length; i++) {
-            random = Math.floor((Math.random() * 100000) + 1);
             mailOptions.to = parsedEmails[i];
             mailOptions.from = userEmail;
-            mailOptions.text = 'Hello world and some random numbers: ' + random;
-            mailOptions.html = '<b>Hello world and some random text: </b> ' + random;
-            var transporter = nodemailer.createTransport(userOptions);
-            transporter.sendMail(mailOptions, emailCallback);
+            mailOptions.text = 'Hello world and some random numbers: ';
+            mailOptions.html = '<b>Hello world and some random text: </b> ';
           }
+          var transporter = nodemailer.createTransport(userOptions);
+          transporter.sendMail(mailOptions, emailCallback);
         }
       });
     });

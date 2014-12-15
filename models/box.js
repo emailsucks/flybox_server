@@ -1,9 +1,9 @@
 'use strict';
 
-var mongoose = requier('mongoose');
+var mongoose = require('mongoose');
 
 var boxSchema = mongoose.Schema({
-  creator: {email: String, urlKey: String, read: Boolean},
+  creator: {email: String, urlKey: String, read: Boolean, userid: String },
   recipients: [{email: String, urlKey: String, read: Boolean}],
   subject: String,
   date: {type: Date, default: Date.now},
