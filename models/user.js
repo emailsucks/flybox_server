@@ -5,8 +5,13 @@ var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jwt-simple');
 
 var userSchema = mongoose.Schema({
-  email: 'String',
-  password: 'String'
+  email: String,
+  password: String,
+  smtp: {host: String,
+        port: Number,
+        username: String,
+        password: String
+        }
 });
 
 userSchema.methods.generateHash = function(password) {

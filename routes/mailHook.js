@@ -3,13 +3,16 @@ var nodemailer = require('nodemailer');
 var util = require('util');
 var multiparty = require('multiparty');
 module.exports = function(app) {
-  var transporter = nodemailer.createTransport({
-    service: 'Gmail',
+  var userOptions = {
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
     auth: {
       user: 'marksworld@gmail.com',
       pass: process.env.mailpass
     }
-  });
+  };
+  var transporter = nodemailer.createTransport(smtpTransport(userOptions));
 
   var mailOptions = {
     from: 'Mark Harrell, <marksworld@gmail.com>', // sender address
