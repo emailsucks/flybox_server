@@ -1,0 +1,412 @@
+$primary: #f4f2ff
+
+*
+  font-family: Verdana, sans-serif
+
+body
+  margin: 0px
+  // overflow: hidden;
+
+// Everything about header
+
+header
+  width: 100%
+  display: flex
+  height: 4em
+  border-bottom: 1px solid gray
+  box-shadow: 0px 3px 5px gray
+  & > ul
+    width: 100%
+    list-style-type: none
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    margin: 0px
+    padding: 0px
+    & > li img
+      cursor: pointer
+    .compose
+      background-color: white
+      &:hover
+        background-color: #ce3939
+        opacity: 0.7
+    .writing
+      background-color: #ce3939
+      opacity: 0.7
+      // &:hover {
+      //   background-color: white;
+      //   opacity: 0.7;
+      // }
+    #burger
+      background-color: white
+    #burger:active
+      background-color: $primary
+  // side-menu
+  nav
+    margin: 0
+    position: relative
+    width: 80px
+    z-index: 10
+    ul
+      display: none
+      width: 300%
+      background-color: $primary
+      height: 88.25vh
+      min-height: 500px
+      list-style-type: none
+      padding: 0.1em
+      box-shadow: 0px 1px 15px #aaaffd
+      li
+        margin: 0px
+        text-align: center
+        border-bottom: 2px solid #aaaffd
+        // background-color: #ccd4ff;
+        padding-bottom: 10%
+        padding-top: 10%
+        &:hover
+          // background-color: #999ffd;
+          box-shadow: 1px 0px 5px gray
+      #logout
+        position: absolute
+        bottom: 0px
+        padding-bottom: 30%
+        padding-top: 30%
+        width: 300%
+        background-color: #ce3939
+        border: 0px
+        color: white
+        opacity: 0.9
+        box-shadow: 2px 0px 3px gray
+        &:hover
+          opacity: 1.0
+  article
+    width: 80px
+    margin: 0
+    img
+      position: absolute
+      right: 0
+      top: 0
+    #read
+      display: none
+      z-index: 442432
+    #readMessage
+      z-index: 5436364
+      padding: 15px
+      .full-message
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        section
+          position: relative
+          width: 30%
+          h2
+            border-bottom: 1px solid gray
+            width: 100%
+          h4
+            border-bottom: 1px solid gray
+            width: 100%
+          \:nth-child(3)
+            border-bottom: 1px solid gray
+            width: 100%
+        #justMessage
+          width: 60%
+          padding-left: 10px
+          border-left: 1px solid gray
+          padding-right: 2%
+          overflow-y: scroll
+          max-height: 70vh
+          text-align: justify
+          &::-webkit-scrollbar
+            width: 4px
+            height: 4px
+          &::-webkit-scrollbar-track
+            background: $primary
+          &::-webkit-scrollbar-thumb
+            background: #afa7ff
+          &:hover
+            &::-webkit-scrollbar
+              width: 4px
+              height: 4px
+            &::-webkit-scrollbar-track
+              background: $primary
+            &::-webkit-scrollbar-thumb
+              background: #5142f4
+    #writeMail
+      #tools
+        &:hover
+          background-color: #9298ff
+      .toolsOpen
+        background-color: #9298ff
+    #close
+      width: 45px
+      padding: 0px
+      height: 45px
+      font-size: 3em
+      line-height: 0px
+      color: white
+      background-color: #ce3939
+      border: 0px
+      box-shadow: 0px
+      cursor: pointer
+      opacity: 0.4
+      &:hover
+        opacity: 1.0
+    aside
+      display: flex
+      display: none
+      position: absolute
+      right: 0
+      top: 4.1em
+      flex-direction: column
+      box-shadow: 0px 3px 15px black
+      padding: 0px
+      margin-left: 80px
+      width: 60vw
+      background-color: $primary
+      height: 84vh
+      min-height: 500px
+      #message
+        position: absolute
+        left: 0
+        top: 126px
+        line-height: 25px
+        height: 75%
+        padding-top: 0px
+        width: 92%
+        resize: none
+        font-size: 1em
+        color: #020340
+      input
+        position: absolute
+        left: 0
+        top: 0px
+        width: 92.5%
+        height: 40px
+        font-size: 1em
+        color: #020340
+        &:nth-child(2)
+          top: 42px
+        &:nth-child(3)
+          top: 84px
+      section
+        position: absolute
+        right: 0
+        top: 0
+        width: 64px
+        z-index: 10000
+        img
+          position: relative
+          width: 100%
+          right: 0
+          top: 0
+        div
+          display: none
+          height: 200%
+          background-color: #cecbe3
+          width: 100%
+          box-shadow: 2px 2px 5px #938fa7
+          ul
+            padding: 0px
+            list-style-type: none
+            display: flex
+            flex-direction: row
+            flex-wrap: wrap
+            justify-content: center
+            li
+              margin: 0px
+              padding: 0px
+              img
+                width: 48px
+      #options
+        position: absolute
+        z-index: 30
+        width: 92.5%
+        height: 40px
+        bottom: 0
+        background-color: #d2d2d2
+        border: 1px solid #929292
+        box-shadow: 0px -1px 5px #929292
+        ul
+          list-style-type: none
+          display: flex
+          flex-direction: row
+          justify-content: space-around
+          width: 100%
+          height: 100%
+          padding: 0px
+          img
+            position: relative
+            width: 32px
+            height: 32px
+  img
+    height: 4em
+
+.functions
+  display: flex
+  position: relative
+  flex-direction: row
+  align-items: center
+  justify-content: space-between
+  width: 70%
+  background-color: rgba(206,57,57,1)
+  max-height: 50px
+  margin: 0 auto
+  margin-top: 2%
+  border: 1px solid #e7e4fb
+  border-bottom: 0px
+  span
+    display: flex
+    align-items: center
+    position: absolute
+    left: 0
+    top: 0
+    width: 5%
+    height: 50px
+    // margin: 0 auto
+    input
+      margin: 0 auto
+      display: none
+      & + label
+        background: url(../../logo/checkbox-all.svg) no-repeat
+        background-position: center
+        width: 16px
+        height: 16px
+        display: inline-block
+        padding: 0px 0px 0px 0px
+        margin: 0 auto
+    .checkbox-checked
+      background: url(../../logo/checkbox-all-checked.svg) no-repeat
+      background-position: center
+      width: 16px
+      height: 16px
+      display: inline-block
+      padding: 0px 0px 0px 0px
+  ul
+    width: 95%
+    display: flex
+    flex-direction: row
+    height: 50px
+    max-height: 50px
+    padding: 0px
+    margin: 0px
+    margin-left: 5%
+    list-style-type: none
+    justify-content: space-around
+    align-items: center
+    li
+      height: 40px
+      img
+        width: 40px
+
+main
+  display: flex
+  position: relative
+  overflow-y: scroll
+  width: 70%
+  max-height: 75vh
+  margin: 0 auto
+  flex-direction: column
+  &::-webkit-scrollbar
+    width: 6px
+    height: 6px
+  &::-webkit-scrollbar-track
+    background: $primary
+  &::-webkit-scrollbar-thumb
+    background: #afa7ff
+  &:hover
+    &::-webkit-scrollbar
+      width: 6px
+      height: 6px
+    &::-webkit-scrollbar-track
+      background: $primary
+    &::-webkit-scrollbar-thumb
+      background: #5142f4
+  .checkedNames
+    display: none
+  .checkedNamesActive
+    display: block
+    position: fixed
+    // bottom: 2%
+    right: 15.5%
+    background-color: rgba(104, 86, 208, 0.6)
+    z-index: 200
+    max-height: 30px
+    margin: 0px
+    color: rgba(255, 255, 255, 1)
+    text-align: center
+    text-transform: uppercase
+    min-width: 10%
+    padding-left: 4px
+    padding-right: 4px
+    p
+      font-family: Verdana, sans-serif
+      padding: 0px
+      font-size: 0.8em
+      line-height: 0em
+  .checked
+    background-color: #e9e5ff
+  section
+    position: relative
+    display: flex
+    flex-direction: row
+    width: 99%
+    min-height: 50px
+    justify-content: space-between
+    align-items: center
+    padding-right: 5px
+    background-color: white
+    border: 1px solid $primary
+    font-size: 1em
+    color: #6364a1
+    cursor: pointer
+    .full-message
+      display: none
+    &:hover
+      background-color: $primary
+    .pars
+      width: 95%
+      margin-left: 5%
+      display: flex
+      flex-direction: row
+      justify-content: space-between
+      align-items: center
+      p
+        text-align: center
+      p:first-child
+        font-weight: bold
+      *
+        width: 20%
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
+        padding-right: 2px
+        padding-left: 2px
+      p:nth-child(4)
+        text-align: right
+      p:nth-child(3)
+        width: 40%
+    span
+      display: flex
+      align-items: center
+      position: absolute
+      left: 0
+      top: 0
+      width: 5%
+      height: 50px
+      input
+        margin: 0 auto
+        display: none
+      label
+        background: url(../../logo/checkbox.svg) no-repeat
+        background-position: center
+        width: 16px
+        height: 16px
+        display: block
+        padding: 0px 0px 0px 0px
+        margin: 0 auto
+      .checkbox-checked
+        background: url(../../logo/checkbox-checked.svg) no-repeat
+.inactive
+  right: 46vw
+  z-index: 0
+  opacity: 0.5
