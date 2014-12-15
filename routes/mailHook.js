@@ -12,7 +12,7 @@ module.exports = function(app) {
       pass: process.env.mailpass
     }
   };
-  var transporter = nodemailer.createTransport(smtpTransport(userOptions));
+  var transporter = nodemailer.createTransport(userOptions);
 
   var mailOptions = {
     from: 'Mark Harrell, <marksworld@gmail.com>', // sender address
