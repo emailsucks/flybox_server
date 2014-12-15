@@ -34,7 +34,7 @@ module.exports = function(grunt) {
     },
 
     simplemocha: {
-      src: 'test/api/*.js'
+      src: ['test/api/user_tests.js', 'test/api/box_tests.js']
     },
 
     clean: {
