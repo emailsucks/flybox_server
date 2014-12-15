@@ -29,7 +29,7 @@ module.exports = function(grunt) {
 
     mongo_drop: {
       test: {
-        'uri': 'mongodb://localhost/flybox_test',
+        uri: 'mongodb://localhost/flybox_test'
       }
     },
 
