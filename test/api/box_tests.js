@@ -16,7 +16,7 @@ describe('box routes', function() {
   before(function(done) {
     chai.request(appUrl)
     .post('/api/users')
-    .send({email: 'fake@email.com', password: 'foobar'})
+    .send({email: 'fakecreator@email.com', password: 'foobar'})
     .end(function(err, res) {
       expect(err).to.eql(null);
       expect(res.body).to.have.property('jwt');
@@ -31,6 +31,7 @@ describe('box routes', function() {
     .set({jwt: jwtToken})
     .end(function(err, res) {
       expect(err).to.eql(null);
+      console.log(res.body);
       expect(Array.isArray(res.body)).to.be.true;
       done();
     });
