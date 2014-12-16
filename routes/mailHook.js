@@ -41,6 +41,7 @@ module.exports = function(app) {
     var form = new multiparty.Form();
     form.parse(req, function(err, fields, files) {
       res.set('Content-Type', 'text/plain');
+      console.log(files);
       res.status(200);
       var jsonParsed = JSON.parse(fields.mailinMsg);
       res.end(util.inspect({fields: fields.mailinMsg, files: files}));
