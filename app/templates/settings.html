@@ -1,0 +1,41 @@
+<div data-ng-controller="InboxCtrl">
+  <header>
+    <link rel="stylesheet" type="text/css" href="CSS/inbox.css">
+    <ul>
+      <li>
+        <nav>
+          <img src='../logo/hamburger-2.svg' id='burger' data-ng-click='menu=!menu'>
+          <ul id='sideMenu' data-ng-hide='menu'>
+            <li data-ng-click='goToInbox()'>Inbox</li>
+            <li>Sent</li>
+            <li>Drafts</li>
+            <li>Contacts</li>
+            <li data-ng-click='settings()'>Account Settings</li>
+            <li id='logout' data-ng-click='logOut()'>Log Out</li>
+          </ul>
+        </nav>
+      </li>
+      <li id='logo'>
+        <img src='../logo/fly-box-logo.svg'>
+      </li>
+      <li>
+        <article>
+        </article>
+      </li>
+    </ul>
+  </header>
+  <main>
+    <div>
+<section class='form'>
+        {{errors}}
+        <label>E-Mail</label>
+        <input type='text'>
+        <label>SMTP</label>
+        <input type='text'>
+        <label>IPOPcorn</label>
+        <input type='text'>
+        <button id='submit' class='submit'>Save</button>
+      </section>
+    </div>
+  </main>
+</div>

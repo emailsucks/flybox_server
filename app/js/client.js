@@ -8,6 +8,7 @@ require('angular-base64');
 var app = angular.module('flyboxApp', ['ngRoute', 'ngCookies', 'base64']);
 
 require('./users/users')(app);
+require('./inbox/inbox')(app);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
@@ -16,6 +17,9 @@ app.config(['$routeProvider', function($routeProvider) {
   })
   .when('/inbox/', {
     templateUrl: 'templates/inbox.html'
+  })
+  .when('/settings/', {
+    templateUrl: 'templates/settings.html'
   })
   .otherwise({
     redirectTo: '/'
