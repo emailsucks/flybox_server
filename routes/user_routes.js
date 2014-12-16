@@ -25,6 +25,20 @@ module.exports = function(app, passport, jwtAuth) {
     res.json(req.body);
   });
 
+  app.get('/api/userSMTP', jwtAuth, function(req, res) {
+    User.findOne({_id: req.user._id}, function(err, user) {
+      if (err) {
+        console.log(err);
+        res.status(500).send('server error');
+      }
+      if (user === null) return res.status(500).send('cannot post users smtp');
+      if (user.smtp.username) {
+        res.json({smtpSet: user.smtp.username});
+        return;
+      }
+      res.json({smtpSet: false});
+    });
+  });
 
   app.post('/api/userSMTP', jwtAuth, function(req, res) {
     var userObject = {

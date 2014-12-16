@@ -11,23 +11,27 @@
         <p>Or <a id='signup' href data-ng-click='signingUp = true'>Sign Up</a></p>
       </section>
       <section id='signUpForm' class='form' data-ng-show='signingUp'>
-        {{errors}}
-        <label>E-Mail</label>
-        <input type='text' data-ng-model='newUser.email'>
-        <label>Password</label>
-        <input type='password' data-ng-model='newUser.password'>
-        <label>Password Confirmation</label>
-        <input type='password' data-ng-model='newUser.passwordConfirmation'>
-        <button id='submit' class='submit' data-ng-click='signUp()'>Sign Up</button>
+        <i>{{errors}}</i><br>
+        <form>
+          <label>Email:</label><br>
+          <input type='text' data-ng-model='newUser.email'>
+          <label>Password:</label><br>
+          <input type='password' data-ng-model='newUser.password'>
+          <label>Password Confirmation:</label><br>
+          <input type='password' data-ng-model='newUser.passwordConfirmation'>
+          <button id='submit' class='submit' data-ng-click='signUp()'>Sign Up</button>
+        </form>
         <a id='signin' href data-ng-click='signingIn = true; signingUp = false; errors = null;'>Log In</a>
       </section>
       <section id='signInForm' class='form' data-ng-show='signingIn'>
-        {{errors}}
-        <label>E-Mail</label>
-        <input type='text' data-ng-model='user.email'>
-        <label>Password</label>
-        <input type='password' data-ng-model='user.password'>
-        <button id='login' class='submit' data-ng-click='logIn()'>Log In</button>
+        <i>{{errors}}</i><br>
+        <form>
+          <label>Email:</label><br>
+          <input type='text' data-ng-model='user.email'>
+          <label>Password:</label><br>
+          <input type='password' data-ng-model='user.password'>
+          <button id='login' class='submit' data-ng-click='logIn()'>Log In</button>
+        </form>
         <a id='signin' href data-ng-click='signingUp = true; signingIn = false; errors = null;'>Sign Up</a>
       </section>
     </main>
