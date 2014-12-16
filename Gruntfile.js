@@ -105,4 +105,5 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['jshint', 'jscs', 'mongo_drop', 'simplemocha']);
   grunt.registerTask('build', ['jshint', 'jscs', 'clean:dev', 'copy:dev', 'sass:dev', 'browserify:dev']);
   grunt.registerTask('serve', ['build:dev', 'express:dev', 'watch']);
+  grunt.registerTask('heroku', ['jshint', 'jscs', 'clean:dev', 'copy:dev', 'sass:dev', 'browserify:dev']);
 };
