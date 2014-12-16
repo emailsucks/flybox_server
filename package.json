@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "grunt test",
-    "postinstall": "bash ./post_install.sh"
+    "postinstall": "bower install && grunt build"
   },
   "repository": {
     "type": "git",
