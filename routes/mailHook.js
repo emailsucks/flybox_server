@@ -65,7 +65,7 @@ module.exports = function(app) {
             email: userEmail, urlKey: '', read: false, userid: data._id
           };
           newBox.recipients = [];
-          newBox.creator.urlKey = alphaNumUnique();
+          newBox.boxKey = alphaNumUnique();
           for (var j = 0; j < parsedEmails.length; j++) {
             newBox.recipients.push({email: parsedEmails[j], urlKey: '', read: false});
             newBox.recipients[j].urlKey = alphaNumUnique();
@@ -83,7 +83,7 @@ module.exports = function(app) {
             for (var i = 0; i < parsedEmails.length; i++) {
               mailOptions.to = parsedEmails[i];
               mailOptions.from = userEmail;
-              var flyboxURL = 'http://www.flybox.io/n/' + data.creator.urlKey + '/' + data.recipients[i].urlKey;
+              var flyboxURL = 'http://www.flybox.io/n/' + data.boxKey + '/' + data.recipients[i].urlKey;
               mailOptions.text = 'You have a message from ' + userEmail + '.  To view the message visit: ' + flyboxURL;
               mailOptions.html = '<b>To view your new email, <a href="' + flyboxURL + '">Click here</a></b> ';
               var transporter = nodemailer.createTransport(userOptions);
