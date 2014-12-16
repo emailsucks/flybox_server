@@ -5,8 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "grunt test",
-    "postinstall": "npm install grunt-contrib-jshint grunt-jscs grunt-mongo-drop grunt-simple-mocha grunt-contrib-clean grunt-contrib-copy grunt-contrib-sass grunt-browserify grunt-express-server grunt-contrib-watch",
-    "bower install && grunt build"
+    "postinstall": "bash ./post_install.sh"
   },
   "repository": {
     "type": "git",
