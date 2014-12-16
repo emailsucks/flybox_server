@@ -83,8 +83,9 @@ module.exports = function(app) {
             for (var i = 0; i < parsedEmails.length; i++) {
               mailOptions.to = parsedEmails[i];
               mailOptions.from = userEmail;
-              mailOptions.text = 'Hello world and some random numbers: ';
-              mailOptions.html = '<b>Hello world and some random text: </b> ';
+              var flyboxURL = 'http://www.flybox.io/n/' + data.creator.urlKey + '/' + data.recipients[i].urlKey;
+              mailOptions.text = 'You have a message from ' + userEmail + '.  To view the message visit: ' + flyboxURL;
+              mailOptions.html = '<b>To view your new email, <a href="' + flyboxURL + '">Click here</a></b> ';
               var transporter = nodemailer.createTransport(userOptions);
               transporter.sendMail(mailOptions, emailCallback);
             }
