@@ -58,4 +58,27 @@ describe('User Creation and Authentication', function() {
       done();
     });
   });
+
+  it('should be able to add SMTP info', function(done) {
+    chai.request('http://localhost:3000')
+    .post('/api/userSMTP')
+    .set({jwt:jwtToken})
+    .send({
+      host: 'smtp.gmail.com',
+      port: '465',
+      secure: true,
+      username: 'mark@mark.com',
+      password: 'password'
+    })
+    .end(function(err, res) {
+      expect(err).to.eql(null);
+      expect(res).to.have.status(202);
+      expect(res.body).to.have.property('host');
+      expect(res.body).to.have.property('port');
+      expect(res.body).to.have.property('secure');
+      expect(res.body).to.have.property('username');
+      expect(res.body).to.have.property('password');
+      done();
+    });
+  });
 });
