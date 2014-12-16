@@ -47,7 +47,7 @@ module.exports = function(grunt) {
       dev: {
         cwd: 'app/',
         expand: true,
-        src: ['**/*.html', '**/*.css'],
+        src: ['**/*.html',  'logo/**', '**/*.css'],
         dest: 'build/'
       }
     },
@@ -55,7 +55,8 @@ module.exports = function(grunt) {
     sass: {
       dev: {
         files: {
-          'build/main.css': 'app/sass/main.sass'
+          'build/CSS/inbox.css': 'app/sass/inbox.sass',
+          'build/CSS/style.css': 'app/sass/style.sass'
         }
       }
     },
