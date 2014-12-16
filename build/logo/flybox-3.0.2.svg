@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg4824"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="New document 36">
+  <defs
+     id="defs4826" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="375"
+     inkscape:cy="520"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1333"
+     inkscape:window-height="744"
+     inkscape:window-x="33"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata4829">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-size:99.92285156px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="144.19672"
+       y="976.92938"
+       id="text3859"
+       sodipodi:linespacing="125%"
+       transform="scale(1.2061261,0.82910071)"><tspan
+         sodipodi:role="line"
+         id="tspan3861"
+         x="144.19672"
+         y="976.92938"
+         style="font-size:399.69140625px;font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-family:Arual;-inkscape-font-specification:Arual Light">O</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:7.78862572;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 38.342351,880.98529 c 1.091419,-73.09417 4.469414,-139.08744 5.08503,-251.33954 0.04998,-16.91729 0.218451,-88.21937 0.383711,-110.4969 l 244.592688,74.15008 c -58.58052,14.39799 -89.31036,63.19958 -127.43199,102.87011 39.67992,37.79539 77.31314,78.54763 128.09096,100.3121 z"
+       id="path3851-5-2"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="csccccc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:7.78862572;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 707.22878,880.4766 c -1.09312,-73.09433 -4.46949,-139.08763 -5.08525,-251.33913 -0.0463,-16.91776 -0.21836,-88.21989 -0.38395,-110.49713 l -244.59252,74.1499 c 58.58088,14.39792 89.31093,63.19935 127.43243,102.87023 -39.68001,37.79492 -77.31306,78.54738 -128.09144,100.31167 z"
+       id="path3851-5-2-1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="csccccc" />
+    <path
+       style="fill:none;stroke:#323232;stroke-width:3.01037765;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:0.90980392;stroke-dasharray:none"
+       d="M 706.25438,878.63746 584.47069,694.59361 698.04456,519.44437"
+       id="path4110"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:88.6266861px;font-style:normal;font-weight:normal;line-height:0%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="501.45349"
+       y="411.88394"
+       id="text3909-0"
+       sodipodi:linespacing="0%"
+       transform="scale(0.75133073,1.3309718)"><tspan
+         sodipodi:role="line"
+         id="tspan3911-8"
+         x="501.45349"
+         y="411.88394"
+         style="font-size:354.50674438px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:0%;letter-spacing:0px;text-anchor:middle;fill:#000000;font-family:Veron;-inkscape-font-specification:Veron Bold"
+         dy="0 0 0"
+         dx="0 0 0">FLY</tspan></text>
+  </g>
+</svg>

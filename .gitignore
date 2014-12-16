@@ -1,9 +1,7 @@
 node_modules
 npm-debug.log
 **/*.sw?
-build
 db
-**/*bundle.js
 bower_components
 .sass-cache
 .DS_store
