@@ -59,6 +59,17 @@ describe('User Creation and Authentication', function() {
     });
   });
 
+  it('should be try to get SMTP info before smtp is set', function(done) {
+    chai.request('http://localhost:3000')
+    .get('/api/userSMTP')
+    .set({jwt: jwtToken})
+    .end(function(err, res) {
+      expect(err).to.eql(null);
+      expect(res.body.smtpSet).to.eql(false);
+      done();
+    });
+  });
+
   it('should be able to add SMTP info', function(done) {
     chai.request('http://localhost:3000')
     .post('/api/userSMTP')
@@ -78,6 +89,17 @@ describe('User Creation and Authentication', function() {
       expect(res.body).to.have.property('secure');
       expect(res.body).to.have.property('username');
       expect(res.body).to.have.property('password');
+      done();
+    });
+  });
+
+  it('should be able to get SMTP info after smtp is set', function(done) {
+    chai.request('http://localhost:3000')
+    .get('/api/userSMTP')
+    .set({jwt: jwtToken})
+    .end(function(err, res) {
+      expect(err).to.eql(null);
+      expect(res.body.smtpSet).to.eql('mark@mark.com');
       done();
     });
   });
