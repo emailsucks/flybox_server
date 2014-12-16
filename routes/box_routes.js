@@ -3,6 +3,7 @@
 var Box = require('../models/box');
 
 module.exports = function(app, jwtAuth) {
+
   app.get('/api/boxes', function(req, res) {
     Box.find({}, function(err, data) {
       if (err) {

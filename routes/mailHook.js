@@ -13,6 +13,13 @@ module.exports = function(app) {
   }
 
   app.post('/api/mailHook', function(req, res) {
+    /*API EXPECTS:
+  html: 'all html here'
+  text: 'all text from the email'
+  subject: 'email subject'
+  from[0].address:  'user email address'
+  from[0].name: 'user name'
+    */
     var userOptions = {
       host: '',
       port: 25,
@@ -49,7 +56,6 @@ module.exports = function(app) {
       var userEmail = jsonParsed.from[0].address;
       var parsedEmails = jsonParsed.text.match(/#to(.*?)#/i)[1].split(' ').filter(Boolean);
       User.findOne({ 'email': userEmail }, function(err, data) {
-        console.log(userEmail);
         if (err) console.log(err);
         if (data === null) console.log('data is null');
         else {
@@ -73,6 +79,8 @@ module.exports = function(app) {
           newBox.subject = jsonParsed.subject;
           newBox.date = new Date();
           newBox.thread = [];
+          newBox.html = jsonParsed.html;
+          newBox.text = jsonParsed.text;
           newBox.save(function(err, data) {
             //TODO: make sure to add some error reporting
             if (err) return console.log('could not save box');
