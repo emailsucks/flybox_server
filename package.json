@@ -4,9 +4,9 @@
   "description": "flybox_server =============",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt test",
+    "postinstall": "bower install && grunt build"
   },
-  "postinstall": "bower install && grunt build",
   "repository": {
     "type": "git",
     "url": "https://github.com/emailsucks/flybox_server.git"
