@@ -1,6 +1,43 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
+<<<<<<< HEAD
+=======
+module.exports = function(app) {
+  require('./controllers/box_controller')(app);
+};
+
+},{"./controllers/box_controller":2}],2:[function(require,module,exports){
+'use strict';
+
+module.exports = function(app) {
+  app.controller('BoxCtrl', ['$scope', '$http', '$base64', '$cookies', '$location', function($scope, $http, $base64, $cookies, $location) {
+    console.log('running in box ctrl');
+    if (!$cookies.jwt) {
+      console.log('redirecting');
+      $location.path('/');
+    }
+
+    $scope.logOut = function() {
+      delete $cookies.jwt;
+      return $location.path('/');
+    };
+
+    $scope.settings = function() {
+      return $location.path('/settings');
+    };
+
+    $scope.goToInbox = function() {
+      return $location.path('/inbox');
+    };
+
+  }]);
+};
+
+},{}],3:[function(require,module,exports){
+'use strict';
+
+>>>>>>> box-dev
 require("./../../bower_components/angular/angular");
 require("./../../bower_components/angular-route/angular-route.js");
 require("./../../bower_components/angular-cookies/angular-cookies.js");
@@ -22,12 +59,23 @@ app.config(['$routeProvider', function($routeProvider) {
   .when('/settings/', {
     templateUrl: 'templates/settings.html'
   })
+<<<<<<< HEAD
+=======
+  .when('/n/:boxId/:keyId/', {
+    templateUrl: 'templates/box.html',
+    controller: 'BoxCtrl'
+  })
+>>>>>>> box-dev
   .otherwise({
     redirectTo: '/'
   });
 }]);
 
+<<<<<<< HEAD
 },{"./../../bower_components/angular-base64/angular-base64.js":6,"./../../bower_components/angular-cookies/angular-cookies.js":7,"./../../bower_components/angular-route/angular-route.js":8,"./../../bower_components/angular/angular":9,"./inbox/inbox":3,"./users/users":5}],2:[function(require,module,exports){
+=======
+},{"./../../bower_components/angular-base64/angular-base64.js":8,"./../../bower_components/angular-cookies/angular-cookies.js":9,"./../../bower_components/angular-route/angular-route.js":10,"./../../bower_components/angular/angular":11,"./inbox/inbox":5,"./users/users":7}],4:[function(require,module,exports){
+>>>>>>> box-dev
 'use strict';
 
 module.exports = function(app) {
@@ -49,6 +97,7 @@ module.exports = function(app) {
     $scope.goToInbox = function() {
       return $location.path('/inbox');
     };
+<<<<<<< HEAD
 
     $scope.saveSettings = function() {
       $scope.errors = null;
@@ -75,13 +124,23 @@ module.exports = function(app) {
   }]);
 };
 },{}],3:[function(require,module,exports){
+=======
+  }]);
+};
+
+},{}],5:[function(require,module,exports){
+>>>>>>> box-dev
 'use strict';
 
 module.exports = function(app) {
   require('./controllers/inbox_controller')(app);
 };
 
+<<<<<<< HEAD
 },{"./controllers/inbox_controller":2}],4:[function(require,module,exports){
+=======
+},{"./controllers/inbox_controller":4}],6:[function(require,module,exports){
+>>>>>>> box-dev
 'use strict';
 
 module.exports = function(app) {
@@ -134,14 +193,22 @@ module.exports = function(app) {
   }]);
 };
 
+<<<<<<< HEAD
 },{}],5:[function(require,module,exports){
+=======
+},{}],7:[function(require,module,exports){
+>>>>>>> box-dev
 'use strict';
 
 module.exports = function(app) {
   require('./controllers/users_controller')(app);
 };
 
+<<<<<<< HEAD
 },{"./controllers/users_controller":4}],6:[function(require,module,exports){
+=======
+},{"./controllers/users_controller":6}],8:[function(require,module,exports){
+>>>>>>> box-dev
 (function() {
     'use strict';
 
@@ -309,7 +376,11 @@ module.exports = function(app) {
 
 })();
 
+<<<<<<< HEAD
 },{}],7:[function(require,module,exports){
+=======
+},{}],9:[function(require,module,exports){
+>>>>>>> box-dev
 /**
  * @license AngularJS v1.3.7
  * (c) 2010-2014 Google, Inc. http://angularjs.org
@@ -517,7 +588,11 @@ angular.module('ngCookies', ['ng']).
 
 })(window, window.angular);
 
+<<<<<<< HEAD
 },{}],8:[function(require,module,exports){
+=======
+},{}],10:[function(require,module,exports){
+>>>>>>> box-dev
 /**
  * @license AngularJS v1.3.7
  * (c) 2010-2014 Google, Inc. http://angularjs.org
@@ -1514,9 +1589,15 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 })(window, window.angular);
 
+<<<<<<< HEAD
 },{}],9:[function(require,module,exports){
 /**
  * @license AngularJS v1.3.6
+=======
+},{}],11:[function(require,module,exports){
+/**
+ * @license AngularJS v1.3.7
+>>>>>>> box-dev
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -1571,7 +1652,11 @@ function minErr(module, ErrorConstructor) {
       return match;
     });
 
+<<<<<<< HEAD
     message = message + '\nhttp://errors.angularjs.org/1.3.6/' +
+=======
+    message = message + '\nhttp://errors.angularjs.org/1.3.7/' +
+>>>>>>> box-dev
       (module ? module + '/' : '') + code;
     for (i = 2; i < arguments.length; i++) {
       message = message + (i == 2 ? '?' : '&') + 'p' + (i - 2) + '=' +
@@ -1626,6 +1711,10 @@ function minErr(module, ErrorConstructor) {
   isWindow: true,
   isScope: true,
   isFile: true,
+<<<<<<< HEAD
+=======
+  isFormData: true,
+>>>>>>> box-dev
   isBlob: true,
   isBoolean: true,
   isPromiseLike: true,
@@ -2147,6 +2236,14 @@ function isFile(obj) {
 }
 
 
+<<<<<<< HEAD
+=======
+function isFormData(obj) {
+  return toString.call(obj) === '[object FormData]';
+}
+
+
+>>>>>>> box-dev
 function isBlob(obj) {
   return toString.call(obj) === '[object Blob]';
 }
@@ -3009,7 +3106,16 @@ function reloadWithDebugInfo() {
  * @param {DOMElement} element DOM element which is the root of angular application.
  */
 function getTestability(rootElement) {
+<<<<<<< HEAD
   return angular.element(rootElement).injector().get('$$testability');
+=======
+  var injector = angular.element(rootElement).injector();
+  if (!injector) {
+    throw ngMinErr('test',
+      'no injector found for element argument to getTestability');
+  }
+  return injector.get('$$testability');
+>>>>>>> box-dev
 }
 
 var SNAKE_CASE_REGEXP = /[A-Z]/g;
@@ -3622,11 +3728,19 @@ function toDebugString(obj) {
  * - `codeName` – `{string}` – Code name of the release, such as "jiggling-armfat".
  */
 var version = {
+<<<<<<< HEAD
   full: '1.3.6',    // all of these placeholder strings will be replaced by grunt's
   major: 1,    // package task
   minor: 3,
   dot: 6,
   codeName: 'robofunky-danceblaster'
+=======
+  full: '1.3.7',    // all of these placeholder strings will be replaced by grunt's
+  major: 1,    // package task
+  minor: 3,
+  dot: 7,
+  codeName: 'leaky-obstruction'
+>>>>>>> box-dev
 };
 
 
@@ -8639,7 +8753,14 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
             // support ngAttr attribute binding
             ngAttrName = directiveNormalize(name);
             if (isNgAttr = NG_ATTR_BINDING.test(ngAttrName)) {
+<<<<<<< HEAD
               name = snake_case(ngAttrName.substr(6), '-');
+=======
+              name = name.replace(PREFIX_REGEXP, '')
+                .substr(8).replace(/_(.)/g, function(match, letter) {
+                  return letter.toUpperCase();
+                });
+>>>>>>> box-dev
             }
 
             var directiveNName = ngAttrName.replace(/(Start|End)$/, '');
@@ -9551,7 +9672,14 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
 
     function addAttrInterpolateDirective(node, directives, value, name, allOrNothing) {
+<<<<<<< HEAD
       var interpolateFn = $interpolate(value, true);
+=======
+      var trustedContext = getTrustedContext(node, name);
+      allOrNothing = ALL_OR_NOTHING_ATTRS[name] || allOrNothing;
+
+      var interpolateFn = $interpolate(value, true, trustedContext, allOrNothing);
+>>>>>>> box-dev
 
       // no interpolation found -> ignore
       if (!interpolateFn) return;
@@ -9576,6 +9704,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
                           "ng- versions (such as ng-click instead of onclick) instead.");
                 }
 
+<<<<<<< HEAD
                 // If the attribute was removed, then we are done
                 if (!attr[name]) {
                   return;
@@ -9586,6 +9715,18 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
                 interpolateFn = $interpolate(attr[name], true, getTrustedContext(node, name),
                     ALL_OR_NOTHING_ATTRS[name] || allOrNothing);
 
+=======
+                // If the attribute has changed since last $interpolate()ed
+                var newValue = attr[name];
+                if (newValue !== value) {
+                  // we need to interpolate again since the attribute value has been updated
+                  // (e.g. by another directive's compile function)
+                  // ensure unset/empty values make interpolateFn falsy
+                  interpolateFn = newValue && $interpolate(newValue, true, trustedContext, allOrNothing);
+                  value = newValue;
+                }
+
+>>>>>>> box-dev
                 // if attribute was updated so that there is no interpolation going on we don't want to
                 // register any observers
                 if (!interpolateFn) return;
@@ -10046,12 +10187,21 @@ function $ExceptionHandlerProvider() {
 
 var APPLICATION_JSON = 'application/json';
 var CONTENT_TYPE_APPLICATION_JSON = {'Content-Type': APPLICATION_JSON + ';charset=utf-8'};
+<<<<<<< HEAD
 var JSON_START = /^\s*(\[|\{[^\{])/;
 var JSON_END = /[\}\]]\s*$/;
+=======
+var JSON_START = /^\[|^\{(?!\{)/;
+var JSON_ENDS = {
+  '[': /]$/,
+  '{': /}$/
+};
+>>>>>>> box-dev
 var JSON_PROTECTION_PREFIX = /^\)\]\}',?\n/;
 
 function defaultHttpResponseTransform(data, headers) {
   if (isString(data)) {
+<<<<<<< HEAD
     // strip json vulnerability protection prefix
     data = data.replace(JSON_PROTECTION_PREFIX, '');
     var contentType = headers('Content-Type');
@@ -10063,6 +10213,27 @@ function defaultHttpResponseTransform(data, headers) {
   return data;
 }
 
+=======
+    // Strip json vulnerability protection prefix and trim whitespace
+    var tempData = data.replace(JSON_PROTECTION_PREFIX, '').trim();
+
+    if (tempData) {
+      var contentType = headers('Content-Type');
+      if ((contentType && (contentType.indexOf(APPLICATION_JSON) === 0)) || isJsonLike(tempData)) {
+        data = fromJson(tempData);
+      }
+    }
+  }
+
+  return data;
+}
+
+function isJsonLike(str) {
+    var jsonStart = str.match(JSON_START);
+    return jsonStart && JSON_ENDS[jsonStart[0]].test(str);
+}
+
+>>>>>>> box-dev
 /**
  * Parse headers into key value object
  *
@@ -10125,6 +10296,7 @@ function headersGetter(headers) {
  * This function is used for both request and response transforming
  *
  * @param {*} data Data to transform.
+<<<<<<< HEAD
  * @param {function(string=)} headers Http headers getter fn.
  * @param {(Function|Array.<Function>)} fns Function or an array of functions.
  * @returns {*} Transformed data.
@@ -10135,6 +10307,19 @@ function transformData(data, headers, fns) {
 
   forEach(fns, function(fn) {
     data = fn(data, headers);
+=======
+ * @param {function(string=)} headers HTTP headers getter fn.
+ * @param {number} status HTTP status code of the response.
+ * @param {(Function|Array.<Function>)} fns Function or an array of functions.
+ * @returns {*} Transformed data.
+ */
+function transformData(data, headers, status, fns) {
+  if (isFunction(fns))
+    return fns(data, headers, status);
+
+  forEach(fns, function(fn) {
+    data = fn(data, headers, status);
+>>>>>>> box-dev
   });
 
   return data;
@@ -10186,7 +10371,11 @@ function $HttpProvider() {
 
     // transform outgoing request data
     transformRequest: [function(d) {
+<<<<<<< HEAD
       return isObject(d) && !isFile(d) && !isBlob(d) ? toJson(d) : d;
+=======
+      return isObject(d) && !isFile(d) && !isBlob(d) && !isFormData(d) ? toJson(d) : d;
+>>>>>>> box-dev
     }],
 
     // default headers
@@ -10413,7 +10602,11 @@ function $HttpProvider() {
      *
      * Both requests and responses can be transformed using transformation functions: `transformRequest`
      * and `transformResponse`. These properties can be a single function that returns
+<<<<<<< HEAD
      * the transformed value (`{function(data, headersGetter)`) or an array of such transformation functions,
+=======
+     * the transformed value (`{function(data, headersGetter, status)`) or an array of such transformation functions,
+>>>>>>> box-dev
      * which allows you to `push` or `unshift` a new transformation function into the transformation chain.
      *
      * ### Default Transformations
@@ -10657,9 +10850,15 @@ function $HttpProvider() {
      *      See {@link ng.$http#overriding-the-default-transformations-per-request
      *      Overriding the Default Transformations}
      *    - **transformResponse** –
+<<<<<<< HEAD
      *      `{function(data, headersGetter)|Array.<function(data, headersGetter)>}` –
      *      transform function or an array of such functions. The transform function takes the http
      *      response body and headers and returns its transformed (typically deserialized) version.
+=======
+     *      `{function(data, headersGetter, status)|Array.<function(data, headersGetter, status)>}` –
+     *      transform function or an array of such functions. The transform function takes the http
+     *      response body, headers and status and returns its transformed (typically deserialized) version.
+>>>>>>> box-dev
      *      See {@link ng.$http#overriding-the-default-transformations-per-request
      *      Overriding the Default Transformations}
      *    - **cache** – `{boolean|Cache}` – If true, a default $http cache will be used to cache the
@@ -10782,17 +10981,21 @@ function $HttpProvider() {
 </example>
      */
     function $http(requestConfig) {
+<<<<<<< HEAD
       var config = {
         method: 'get',
         transformRequest: defaults.transformRequest,
         transformResponse: defaults.transformResponse
       };
       var headers = mergeHeaders(requestConfig);
+=======
+>>>>>>> box-dev
 
       if (!angular.isObject(requestConfig)) {
         throw minErr('$http')('badreq', 'Http request configuration must be an object.  Received: {0}', requestConfig);
       }
 
+<<<<<<< HEAD
       extend(config, requestConfig);
       config.headers = headers;
       config.method = uppercase(config.method);
@@ -10800,6 +11003,20 @@ function $HttpProvider() {
       var serverRequest = function(config) {
         headers = config.headers;
         var reqData = transformData(config.data, headersGetter(headers), config.transformRequest);
+=======
+      var config = extend({
+        method: 'get',
+        transformRequest: defaults.transformRequest,
+        transformResponse: defaults.transformResponse
+      }, requestConfig);
+
+      config.headers = mergeHeaders(requestConfig);
+      config.method = uppercase(config.method);
+
+      var serverRequest = function(config) {
+        var headers = config.headers;
+        var reqData = transformData(config.data, headersGetter(headers), undefined, config.transformRequest);
+>>>>>>> box-dev
 
         // strip content-type if data is undefined
         if (isUndefined(reqData)) {
@@ -10815,7 +11032,11 @@ function $HttpProvider() {
         }
 
         // send request
+<<<<<<< HEAD
         return sendReq(config, reqData, headers).then(transformResponse, transformResponse);
+=======
+        return sendReq(config, reqData).then(transformResponse, transformResponse);
+>>>>>>> box-dev
       };
 
       var chain = [serverRequest, undefined];
@@ -10860,13 +11081,37 @@ function $HttpProvider() {
         if (!response.data) {
           resp.data = response.data;
         } else {
+<<<<<<< HEAD
           resp.data = transformData(response.data, response.headers, config.transformResponse);
+=======
+          resp.data = transformData(response.data, response.headers, response.status, config.transformResponse);
+>>>>>>> box-dev
         }
         return (isSuccess(response.status))
           ? resp
           : $q.reject(resp);
       }
 
+<<<<<<< HEAD
+=======
+      function executeHeaderFns(headers) {
+        var headerContent, processedHeaders = {};
+
+        forEach(headers, function(headerFn, header) {
+          if (isFunction(headerFn)) {
+            headerContent = headerFn();
+            if (headerContent != null) {
+              processedHeaders[header] = headerContent;
+            }
+          } else {
+            processedHeaders[header] = headerFn;
+          }
+        });
+
+        return processedHeaders;
+      }
+
+>>>>>>> box-dev
       function mergeHeaders(config) {
         var defHeaders = defaults.headers,
             reqHeaders = extend({}, config.headers),
@@ -10889,6 +11134,7 @@ function $HttpProvider() {
         }
 
         // execute if header value is a function for merged headers
+<<<<<<< HEAD
         execHeaders(reqHeaders);
         return reqHeaders;
 
@@ -10906,6 +11152,9 @@ function $HttpProvider() {
             }
           });
         }
+=======
+        return executeHeaderFns(reqHeaders);
+>>>>>>> box-dev
       }
     }
 
@@ -11048,11 +11297,19 @@ function $HttpProvider() {
      * !!! ACCESSES CLOSURE VARS:
      * $httpBackend, defaults, $log, $rootScope, defaultCache, $http.pendingRequests
      */
+<<<<<<< HEAD
     function sendReq(config, reqData, reqHeaders) {
+=======
+    function sendReq(config, reqData) {
+>>>>>>> box-dev
       var deferred = $q.defer(),
           promise = deferred.promise,
           cache,
           cachedResp,
+<<<<<<< HEAD
+=======
+          reqHeaders = config.headers,
+>>>>>>> box-dev
           url = buildUrl(config.url, config.params);
 
       $http.pendingRequests.push(config);
@@ -12752,8 +13009,13 @@ function $LocationProvider() {
    * @param {string=} oldState History state object that was before it was changed.
    */
 
+<<<<<<< HEAD
   this.$get = ['$rootScope', '$browser', '$sniffer', '$rootElement',
       function($rootScope, $browser, $sniffer, $rootElement) {
+=======
+  this.$get = ['$rootScope', '$browser', '$sniffer', '$rootElement', '$window',
+      function($rootScope, $browser, $sniffer, $rootElement, $window) {
+>>>>>>> box-dev
     var $location,
         LocationMode,
         baseHref = $browser.baseHref(), // if base[href] is undefined, it defaults to ''
@@ -12835,7 +13097,11 @@ function $LocationProvider() {
           if ($location.absUrl() != $browser.url()) {
             $rootScope.$apply();
             // hack to work around FF6 bug 684208 when scenario runner clicks on links
+<<<<<<< HEAD
             window.angular['ff-684208-preventDefault'] = true;
+=======
+            $window.angular['ff-684208-preventDefault'] = true;
+>>>>>>> box-dev
           }
         }
       }
@@ -13451,6 +13717,11 @@ Parser.prototype = {
       primary = this.arrayDeclaration();
     } else if (this.expect('{')) {
       primary = this.object();
+<<<<<<< HEAD
+=======
+    } else if (this.peek().identifier && this.peek().text in CONSTANTS) {
+      primary = CONSTANTS[this.consume().text];
+>>>>>>> box-dev
     } else if (this.peek().identifier) {
       primary = this.identifier();
     } else if (this.peek().constant) {
@@ -13553,7 +13824,11 @@ Parser.prototype = {
       id += this.consume().text + this.consume().text;
     }
 
+<<<<<<< HEAD
     return CONSTANTS[id] || getterFn(id, this.options, this.text);
+=======
+    return getterFn(id, this.options, this.text);
+>>>>>>> box-dev
   },
 
   constant: function() {
@@ -13743,17 +14018,29 @@ Parser.prototype = {
   },
 
   fieldAccess: function(object) {
+<<<<<<< HEAD
     var expression = this.text;
     var field = this.consume().text;
     var getter = getterFn(field, this.options, expression);
 
     return extend(function $parseFieldAccess(scope, locals, self) {
       return getter(self || object(scope, locals));
+=======
+    var getter = this.identifier();
+
+    return extend(function $parseFieldAccess(scope, locals, self) {
+      var o = self || object(scope, locals);
+      return (o == null) ? undefined : getter(o);
+>>>>>>> box-dev
     }, {
       assign: function(scope, value, locals) {
         var o = object(scope, locals);
         if (!o) object.assign(scope, o = {});
+<<<<<<< HEAD
         return setter(o, field, value, expression);
+=======
+        return getter.assign(o, value);
+>>>>>>> box-dev
       }
     });
   },
@@ -14911,12 +15198,19 @@ function qFactory(nextTick, exceptionHandler) {
 function $$RAFProvider() { //rAF
   this.$get = ['$window', '$timeout', function($window, $timeout) {
     var requestAnimationFrame = $window.requestAnimationFrame ||
+<<<<<<< HEAD
                                 $window.webkitRequestAnimationFrame ||
                                 $window.mozRequestAnimationFrame;
 
     var cancelAnimationFrame = $window.cancelAnimationFrame ||
                                $window.webkitCancelAnimationFrame ||
                                $window.mozCancelAnimationFrame ||
+=======
+                                $window.webkitRequestAnimationFrame;
+
+    var cancelAnimationFrame = $window.cancelAnimationFrame ||
+                               $window.webkitCancelAnimationFrame ||
+>>>>>>> box-dev
                                $window.webkitCancelRequestAnimationFrame;
 
     var rafSupported = !!requestAnimationFrame;
@@ -15045,7 +15339,10 @@ function $RootScopeProvider() {
          var child = parent.$new();
 
          parent.salutation = "Hello";
+<<<<<<< HEAD
          child.name = "World";
+=======
+>>>>>>> box-dev
          expect(child.salutation).toEqual('Hello');
 
          child.salutation = "Welcome";
@@ -15683,7 +15980,11 @@ function $RootScopeProvider() {
           while (asyncQueue.length) {
             try {
               asyncTask = asyncQueue.shift();
+<<<<<<< HEAD
               asyncTask.scope.$eval(asyncTask.expression);
+=======
+              asyncTask.scope.$eval(asyncTask.expression, asyncTask.locals);
+>>>>>>> box-dev
             } catch (e) {
               $exceptionHandler(e);
             }
@@ -15898,8 +16199,14 @@ function $RootScopeProvider() {
        *    - `string`: execute using the rules as defined in {@link guide/expression expression}.
        *    - `function(scope)`: execute the function with the current `scope` parameter.
        *
+<<<<<<< HEAD
        */
       $evalAsync: function(expr) {
+=======
+       * @param {(object)=} locals Local variables object, useful for overriding values in scope.
+       */
+      $evalAsync: function(expr, locals) {
+>>>>>>> box-dev
         // if we are outside of an $digest loop and this is the first time we are scheduling async
         // task also schedule async auto-flush
         if (!$rootScope.$$phase && !asyncQueue.length) {
@@ -15910,7 +16217,11 @@ function $RootScopeProvider() {
           });
         }
 
+<<<<<<< HEAD
         asyncQueue.push({scope: this, expression: expr});
+=======
+        asyncQueue.push({scope: this, expression: expr, locals: locals});
+>>>>>>> box-dev
       },
 
       $$postDigest: function(fn) {
@@ -18602,8 +18913,13 @@ var DATE_FORMATS_SPLIT = /((?:[^yMdHhmsaZEw']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|d
  *   * `'.sss' or ',sss'`: Millisecond in second, padded (000-999)
  *   * `'a'`: AM/PM marker
  *   * `'Z'`: 4 digit (+sign) representation of the timezone offset (-1200-+1200)
+<<<<<<< HEAD
  *   * `'ww'`: ISO-8601 week of year (00-53)
  *   * `'w'`: ISO-8601 week of year (0-53)
+=======
+ *   * `'ww'`: Week of year, padded (00-53). Week 01 is the week with the first Thursday of the year
+ *   * `'w'`: Week of year (0-53). Week 1 is the week with the first Thursday of the year
+>>>>>>> box-dev
  *
  *   `format` string can also be one of the following predefined
  *   {@link guide/i18n localizable formats}:
@@ -19088,6 +19404,7 @@ function orderByFilter($parse) {
           ? function(a, b) {return comp(b,a);}
           : comp;
     }
+<<<<<<< HEAD
     function compare(v1, v2) {
       var t1 = typeof v1;
       var t2 = typeof v2;
@@ -19111,6 +19428,39 @@ function orderByFilter($parse) {
           // perform relational comparison, and do not re-order objects.
           if (t1 === t2 && v1 === v2 || t1 === "object") return 0;
         }
+=======
+
+    function isPrimitive(value) {
+      switch (typeof value) {
+        case 'number': /* falls through */
+        case 'boolean': /* falls through */
+        case 'string':
+          return true;
+        default:
+          return false;
+      }
+    }
+
+    function objectToString(value) {
+      if (value === null) return 'null';
+      if (typeof value.toString === 'function') {
+        value = value.toString();
+        if (isPrimitive(value)) return value;
+      }
+      if (typeof value.valueOf === 'function') {
+        value = value.valueOf();
+        if (isPrimitive(value)) return value;
+      }
+      return '';
+    }
+
+    function compare(v1, v2) {
+      var t1 = typeof v1;
+      var t2 = typeof v2;
+      if (t1 === t2 && t1 === "object") {
+        v1 = objectToString(v1);
+        v2 = objectToString(v2);
+>>>>>>> box-dev
       }
       if (t1 === t2) {
         if (t1 === "string") {
@@ -25844,7 +26194,11 @@ var ngRepeatDirective = ['$parse', '$animate', function($parse, $animate) {
       var aliasAs = match[3];
       var trackByExp = match[4];
 
+<<<<<<< HEAD
       match = lhs.match(/^(?:([\$\w]+)|\(([\$\w]+)\s*,\s*([\$\w]+)\))$/);
+=======
+      match = lhs.match(/^(?:(\s*[\$\w]+)|\(\s*([\$\w]+)\s*,\s*([\$\w]+)\s*\))$/);
+>>>>>>> box-dev
 
       if (!match) {
         throw ngRepeatMinErr('iidexp', "'_item_' in '_item_ in _collection_' should be an identifier or '(_key_, _value_)' expression, but got '{0}'.",
@@ -27515,4 +27869,8 @@ var styleDirective = valueFn({
 })(window, document);
 
 !window.angular.$$csp() && window.angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}</style>');
+<<<<<<< HEAD
 },{}]},{},[1,2,3,4,5]);
+=======
+},{}]},{},[1,2,3,4,5,6,7]);
+>>>>>>> box-dev
