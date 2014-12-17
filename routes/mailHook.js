@@ -48,101 +48,114 @@ module.exports = function(app) {
 
     var form = new multiparty.Form();
     var destPath;
-    form.on('field', function(name, value) {
-      if (name === 'path') {
-        destPath = value;
-      }
-    });
-    form.on('part', function(part) {
-      s3Client.putObject({
-        Bucket: bucket,
-        Key: destPath,
-        ACL: 'public-read',
-        Body: part,
-        ContentLength: part.byteCount
-      }, function(err, data) {
-        if (err) console.log('s3 error: ' + err);
-        console.log('done', data);
-        console.log('https://s3.amazonaws.com/' + bucket + '/' + destPath);
-        res.status(200);
-        res.end('OK');
-      });
-    });
-
-    form.on('error', function(err) {
-      console.log('Error parsing form: ' + err.stack);
-    });
-    form.parse(req);
-    // form.parse(req, function(err, fields, files) {
-    //   Object.keys(fields).forEach(function(name) {
-    //     console.log('got field named ' + name);
-    //   });
-    //
-    //   Object.keys(files).forEach(function(name) {
-    //     console.log('got file named ' + name);
-    //   });
-    //   res.set('Content-Type', 'text/plain');
-    //   console.log(fields);
-    //   res.status(200);
-    //   var jsonParsed = JSON.parse(fields.mailinMsg);
-    //   res.end(util.inspect({fields: fields.mailinMsg, files: files}));
-    //   console.log(jsonParsed);
-    //   var emailCallback = function(error, info) {
-    //     if (error) {
-    //       console.log(error);
-    //     } else {
-    //       console.log('Message sent: ' + info.response);
-    //     }
-    //   };
-    //
-    //   var userEmail = jsonParsed.from[0].address;
-    //   var parsedEmails = jsonParsed.text.match(/#to(.*?)#/i)[1].split(' ').filter(Boolean);
-    //   User.findOne({ 'email': userEmail }, function(err, data) {
-    //     if (err) console.log(err);
-    //     if (data === null) console.log('data is null');
-    //     else {
-    //       userOptions.host = data.smtp.host;
-    //       userOptions.port = data.smtp.port;
-    //       userOptions.auth.user = data.smtp.username;
-    //       userOptions.auth.pass = data.smtp.password;
-    //       userOptions.secure = data.smtp.secure;
-    //       var random = '';
-    //       /*create a Box using the user parsed info.  TODO: Think OOP. */
-    //       var newBox = new Box();
-    //       newBox.creator = {
-    //         email: userEmail, urlKey: '', read: false, userid: data._id
-    //       };
-    //       newBox.recipients = [];
-    //       newBox.boxKey = alphaNumUnique();
-    //       for (var j = 0; j < parsedEmails.length; j++) {
-    //         newBox.recipients.push({email: parsedEmails[j], urlKey: '', read: false});
-    //         newBox.recipients[j].urlKey = alphaNumUnique();
-    //       }
-    //       newBox.subject = jsonParsed.subject;
-    //       newBox.date = new Date();
-    //       newBox.thread = [];
-    //       newBox.html = jsonParsed.html;
-    //       newBox.text = jsonParsed.text;
-    //       newBox.save(function(err, data) {
-    //         //TODO: make sure to add some error reporting
-    //         if (err) return console.log('could not save box');
-    //         if (data === null) return console.log('no box saved');
-    //         /* loop through the parsed emails and send out
-    //         the email with the created box link.
-    //         */
-    //         for (var i = 0; i < parsedEmails.length; i++) {
-    //           mailOptions.to = parsedEmails[i];
-    //           mailOptions.from = userEmail;
-    //           var flyboxURL = 'http://www.flybox.io/n/' + data.boxKey + '/' + data.recipients[i].urlKey;
-    //           mailOptions.text = 'You have a message from ' + userEmail + '.  To view the message visit: ' + flyboxURL;
-    //           mailOptions.html = '<b>To view your new email, <a href="' + flyboxURL + '">Click here</a></b> ';
-    //           var transporter = nodemailer.createTransport(userOptions);
-    //           transporter.sendMail(mailOptions, emailCallback);
-    //         }
-    //       });
-    //     }
+    // form.on('field', function(name, value) {
+    //   if (name === 'path') {
+    //     destPath = value;
+    //   }
+    // });
+    // form.on('part', function(part) {
+    //   s3Client.putObject({
+    //     Bucket: bucket,
+    //     Key: destPath,
+    //     ACL: 'public-read',
+    //     Body: part,
+    //     ContentLength: part.byteCount
+    //   }, function(err, data) {
+    //     if (err) console.log('s3 error: ' + err);
+    //     console.log('done', data);
+    //     console.log('https://s3.amazonaws.com/' + bucket + '/' + destPath);
+    //     res.status(200);
+    //     res.end('OK');
     //   });
     // });
+    //
+    // form.on('error', function(err) {
+    //   console.log('Error parsing form: ' + err.stack);
+    // });
+    // form.parse(req);
+    form.parse(req, function(err, fields, files) {
+      Object.keys(fields).forEach(function(name) {
+        if (name !== 'mailinMsg') {
+          destPath = name;
+          console.log(name);
+          s3Client.putObject({
+                Bucket: bucket,
+                Key: destPath,
+                ACL: 'public-read',
+                Body: fields.name,
+                ContentLength: 9673
+              }, function(err, data) {
+                if (err) console.log('s3 error: ' + err);
+                console.log('done', data);
+                console.log('https://s3.amazonaws.com/' + bucket + '/' + destPath);
+                res.status(200);
+                res.end('OK');
+              });
+        }
+      });
+
+      res.set('Content-Type', 'text/plain');
+      console.log(fields);
+      res.status(200);
+      var jsonParsed = JSON.parse(fields.mailinMsg);
+      res.end(util.inspect({fields: fields.mailinMsg, files: files}));
+      console.log(jsonParsed);
+      var emailCallback = function(error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Message sent: ' + info.response);
+        }
+      };
+
+      var userEmail = jsonParsed.from[0].address;
+      var parsedEmails = jsonParsed.text.match(/#to(.*?)#/i)[1].split(' ').filter(Boolean);
+      User.findOne({ 'email': userEmail }, function(err, data) {
+        if (err) console.log(err);
+        if (data === null) console.log('data is null');
+        else {
+          userOptions.host = data.smtp.host;
+          userOptions.port = data.smtp.port;
+          userOptions.auth.user = data.smtp.username;
+          userOptions.auth.pass = data.smtp.password;
+          userOptions.secure = data.smtp.secure;
+          var random = '';
+          /*create a Box using the user parsed info.  TODO: Think OOP. */
+          var newBox = new Box();
+          newBox.creator = {
+            email: userEmail, urlKey: '', read: false, userid: data._id
+          };
+          newBox.recipients = [];
+          newBox.boxKey = alphaNumUnique();
+          for (var j = 0; j < parsedEmails.length; j++) {
+            newBox.recipients.push({email: parsedEmails[j], urlKey: '', read: false});
+            newBox.recipients[j].urlKey = alphaNumUnique();
+          }
+          newBox.subject = jsonParsed.subject;
+          newBox.date = new Date();
+          newBox.thread = [];
+          newBox.html = jsonParsed.html;
+          newBox.text = jsonParsed.text;
+          newBox.save(function(err, data) {
+            //TODO: make sure to add some error reporting
+            if (err) return console.log('could not save box');
+            if (data === null) return console.log('no box saved');
+            /* loop through the parsed emails and send out
+            the email with the created box link.
+            */
+            for (var i = 0; i < parsedEmails.length; i++) {
+              mailOptions.to = parsedEmails[i];
+              mailOptions.from = userEmail;
+              var flyboxURL = 'http://www.flybox.io/n/' + data.boxKey + '/' + data.recipients[i].urlKey;
+              mailOptions.text = 'You have a message from ' + userEmail + '.  To view the message visit: ' + flyboxURL;
+              mailOptions.html = '<b>To view your new email, <a href="' + flyboxURL + '">Click here</a></b> ';
+              var transporter = nodemailer.createTransport(userOptions);
+              transporter.sendMail(mailOptions, emailCallback);
+            }
+          });
+        }
+      });
+    });
   });
 
   app.get('/api/mailHook', function(req, res) {
