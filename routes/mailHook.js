@@ -162,8 +162,4 @@ module.exports = function(app) {
       console.log('something went wrong.');
     }
   });
-
-  app.get('/api/mailHook', function(req, res) {
-    res.status(200).send('works!');
-  });
 };
