@@ -77,7 +77,7 @@ module.exports = function(app) {
       Object.keys(fields).forEach(function(name) {
         if (name !== 'mailinMsg') {
           destPath = name;
-          console.log(name);
+          console.log(fields[name][0]);
           s3Client.putObject({
                 Bucket: bucket,
                 Key: destPath,
