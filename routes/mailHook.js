@@ -48,13 +48,13 @@ module.exports = function(app) {
     };
 
     var form = new multiparty.Form();
-    var destPath;
+    var destPath = {};
     form.parse(req, function(err, fields, files) {
       var decodedFile;
       Object.keys(fields).forEach(function(name) {
         if (name !== 'mailinMsg') {
           decodedFile = new Buffer(fields[name][0], 'base64');
-          destPath = name;
+          destPath[name] = name;
           s3Client.putObject({
                 Bucket: bucket,
                 Key: destPath,
@@ -64,7 +64,7 @@ module.exports = function(app) {
               }, function(err, data) {
                 if (err) console.log('s3 error: ' + err);
                 console.log('done', data);
-                console.log('s3-us-west-2.amazonaws.com' + bucket + '/' + destPath);
+                console.log('s3-us-west-2.amazonaws.com' + bucket + '/' + destPath[name]);
               });
         }
       });
