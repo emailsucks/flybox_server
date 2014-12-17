@@ -16,11 +16,49 @@ describe('box routes', function() {
   before(function(done) {
     chai.request(appUrl)
     .post('/api/users')
-    .send({email: 'fakecreator@email.com', password: 'foobar'})
+    .send({email: 'flybox4real@gmail.com', password: 'flyboxme'})
     .end(function(err, res) {
       expect(err).to.eql(null);
       expect(res.body).to.have.property('jwt');
       jwtToken = res.body.jwt;
+      done();
+    });
+  });
+
+  before(function(done) {
+    chai.request(appUrl)
+    .post('/api/userSMTP')
+    .set({jwt: jwtToken})
+    .send({
+      host: 'smtp.gmail.com',
+      port: '465',
+      secure: true,
+      username: 'flybox4real@gmail.com',
+      password: 'flyboxme'
+    })
+    .end(function(err, res) {
+      expect(err).to.eql(null);
+      expect(res).to.have.status(202);
+      expect(res.body).to.have.property('host');
+      expect(res.body).to.have.property('port');
+      expect(res.body).to.have.property('secure');
+      expect(res.body).to.have.property('username');
+      expect(res.body).to.have.property('password');
+      done();
+    });
+  });
+
+  it('should make a box through mailHook', function(done) {
+    chai.request(appUrl)
+    .post('/api/mailHook')
+    .send({mailinMsg: {
+      html: '<h1>this is some html</h1> #to test@example.com #',
+      text: 'this is some text',
+      subject: 'a subject',
+      from: [{address: 'flybox4real@gmail.com', name: 'mr. box'}]
+    }})
+    .end(function(err, res) {
+      expect(err).to.eql(null);
       done();
     });
   });
