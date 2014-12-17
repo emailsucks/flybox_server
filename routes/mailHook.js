@@ -133,6 +133,7 @@ module.exports = function(app) {
               }
             }, function(err) {
               if (err) { throw err; }
+              console.log('finished all file uploads');
               // only after the file uploads have completed do we actually send them to the box
               var fileURLSObject = {
                 fileURLS: fileURLS
