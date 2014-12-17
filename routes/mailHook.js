@@ -57,7 +57,7 @@ module.exports = function(app) {
           destPath[name] = name;
           s3Client.putObject({
                 Bucket: bucket,
-                Key: destPath,
+                Key: destPath[name],
                 ACL: 'public-read',
                 Body: decodedFile,
                 ContentLength: decodedFile.length
