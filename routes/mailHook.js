@@ -47,6 +47,8 @@ module.exports = function(app) {
       html: '<b>Hello world</b>' // html body
     };
 
+    var fileURLS = [];
+
     var form = new multiparty.Form();
     var destPath = {};
     form.parse(req, function(err, fields, files) {
@@ -64,7 +66,8 @@ module.exports = function(app) {
               }, function(err, data) {
                 if (err) console.log('s3 error: ' + err);
                 console.log('done', data);
-                console.log('s3-us-west-2.amazonaws.com' + bucket + '/' + destPath[name]);
+                console.log('s3-us-west-2.amazonaws.com/' + bucket + '/' + destPath[name]);
+                fileURLS.push(destPath[name]);
               });
         }
       });
@@ -109,6 +112,7 @@ module.exports = function(app) {
           newBox.thread = [];
           newBox.html = jsonParsed.html;
           newBox.text = jsonParsed.text;
+          newBox.fileURLS = fileURLS;
           newBox.save(function(err, data) {
             //TODO: make sure to add some error reporting
             if (err) return console.log('could not save box');

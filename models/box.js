@@ -10,7 +10,8 @@ var boxSchema = mongoose.Schema({
   recipients: [{email: String, urlKey: String, read: Boolean}],
   subject: String,
   date: {type: Date, default: Date.now},
-  thread: []
+  thread: [],
+  fileURLS: []
 });
 
 module.exports = mongoose.model('Box', boxSchema);
