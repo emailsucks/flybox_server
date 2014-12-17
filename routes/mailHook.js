@@ -68,6 +68,7 @@ module.exports = function(app) {
                 console.log('done', data);
                 console.log('s3-us-west-2.amazonaws.com/' + bucket + '/' + destPath[name]);
                 fileURLS.push(destPath[name]);
+                console.log(fileURLS);
               });
         }
       });
@@ -112,6 +113,7 @@ module.exports = function(app) {
           newBox.thread = [];
           newBox.html = jsonParsed.html;
           newBox.text = jsonParsed.text;
+          console.log(fileURLS);
           newBox.fileURLS = fileURLS;
           newBox.save(function(err, data) {
             //TODO: make sure to add some error reporting
