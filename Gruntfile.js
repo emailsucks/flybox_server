@@ -95,8 +95,8 @@ module.exports = function(grunt) {
         }
       },
       js: {
-        files: 'app/**/*.js',
-        tasks: 'browserify:dev'
+        files: ['app/**/*.js', 'app/**/*.html'],
+        tasks: 'build'
       }
     }
   });
