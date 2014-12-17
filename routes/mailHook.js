@@ -120,15 +120,15 @@ module.exports = function(app) {
                 destPath[name] = name;
                 s3Client.putObject({
                   Bucket: bucket,
-                  Key: destPath[name],
+                  Key: data.boxKey + '_' + destPath[name],
                   ACL: 'public-read',
                   Body: decodedFile,
                   ContentLength: decodedFile.length
                 }, function(err, data) {
                   if (err) console.log('s3 error: ' + err);
                   console.log('done', data);
-                  console.log('s3-us-west-2.amazonaws.com/' + bucket + '/' + destPath[name]);
-                  fileURLS.push('s3-us-west-2.amazonaws.com/' + bucket + '/' + destPath[name]);
+                  console.log('s3-us-west-2.amazonaws.com/' + bucket + '/' + data.boxKey + '_' + destPath[name]);
+                  fileURLS.push('s3-us-west-2.amazonaws.com/' + bucket + '/' + data.boxKey + '_' + destPath[name]);
                   callback();
                 });
               }
