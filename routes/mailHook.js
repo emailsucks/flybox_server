@@ -94,11 +94,8 @@ module.exports = function(app) {
           newBox.thread = [];
           newBox.html = jsonParsed.html;
           newBox.text = jsonParsed.text;
-          console.log(fileURLS);
           newBox.save(function(err, data) {
             //TODO: make sure to add some error reporting
-            console.log('data from saving box: ' + data.boxKey);
-            console.log('data from subject: ' + data.subject);
             if (err) return console.log('could not save box');
             if (data === null) return console.log('no box saved');
             /* loop through the parsed emails and send out
@@ -127,9 +124,7 @@ module.exports = function(app) {
                   Body: decodedFile,
                   ContentLength: decodedFile.length
                 }, function(err, aws) {
-                  if (err) console.log('s3 error: ' + err);
-                  console.log('done', aws);
-                  console.log('s3-us-west-2.amazonaws.com/' + bucket + '/' + data.boxKey + '_' + destPath[name]);
+                  if (err) return console.log('s3 error: ' + err);
                   fileURLS.push('s3-us-west-2.amazonaws.com/' + bucket + '/' + data.boxKey + '_' + destPath[name]);
                   callback();
                 });
@@ -140,7 +135,6 @@ module.exports = function(app) {
             }, function(err) {
               if (err) { throw err; }
               else {
-                console.log('finished all file uploads');
                 // only after the file uploads have completed do we actually send them to the box
                 var fileURLSObject = {
                   fileURLS: fileURLS
@@ -150,7 +144,6 @@ module.exports = function(app) {
                     return console.log('box file upload URL update error: ' + err);
                   }
                   if (box === null) return console.log('cannot update box with fileURLs');
-                  console.log(box);
                 });
               }
             });
