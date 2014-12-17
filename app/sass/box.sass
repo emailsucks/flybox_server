@@ -1,0 +1,167 @@
+$media: "screen and (min-width: 900px)"
+*
+  font-family: Arial
+body
+  margin: 0
+  padding: 0
+header
+  display: flex
+  justify-content: center
+  width: 100%
+  // height: 5em
+  border-bottom: 1px solid rgba(225,225,225,0.5)
+  margin-bottom: 1em
+  .people
+    width: 100%
+    align-items: center
+    margin-top: 1em
+    // margin: 0 auto
+    @media #{$media}
+      width: 50%
+    ul
+      padding: 0px
+      list-style-type: none
+      display: flex
+      flex-direction: row
+      justify-content: center
+      margin: 3px 0px 3px 0px
+      flex-wrap: wrap
+      justify-content: space-around
+      li
+        min-width: 3em
+        min-height: 2em
+        padding: 0px
+        background-color: gray
+        color: white
+        margin: 0px 3px 0px 3px
+        border-radius: 100%
+        font-family: Verdana
+        font-size: 1.5em
+        text-align: center
+        line-height: 3em
+        opacity: 0.5
+        &:hover
+          opacity: 1.0
+        p
+          width: 100%
+          height: 100%
+          margin: 0px
+  figure
+    width: 5em
+    // margin: 0 auto
+    opacity: 0.6
+    img
+      width: 100%
+main
+  display: flex
+  flex-direction: column
+  width: 100%
+  @media #{$media}
+    flex-direction: row
+  & > div
+    width: 98%
+    padding: 0px
+    display: flex
+    flex-direction: column
+    margin: 0 auto
+    @media #{$media}
+      // justify-content: space-between
+      width: 49%
+  .body
+    width: 99%
+    max-height: 100%
+    display: flex
+    flex-direction: column
+    justify-content: center
+    text-align: center
+    .textBody
+      display: inline-block
+      p
+        display: inline
+        margin: 0
+  .options
+    display: flex
+    flex-direction: row
+    justify-content: space-around
+    background-color: rgba(225,225,225,0.5)
+    position: absolute
+    bottom: 0
+    width: 50%
+    .favourite
+      padding: 10px
+    .favourite:not(:checked)
+      border: 0px
+      & > input
+        position: absolute
+        top: -9999px
+        clip: rect(0,0,0,0)
+      & > label
+        float: right
+        width: 1em
+        padding: 0 0.1em
+        overflow: hidden
+        white-space: nowrap
+        cursor: pointer
+        font-size: 200%
+        line-height: 1.2
+        color: #dddddd
+      & > label:before
+        content: '★ '
+      & > label:hover
+        color: gold
+    .favourite > input:checked ~ label
+      color: gold
+    .favourite > input:checked + label:hover
+      color: gold
+    .searchInput
+      display: none
+  .body-cont
+    @media #{$media}
+      border-right: 1px solid rgba(225,225,225,0.5)
+      padding-right: 1%
+  .comments-cont
+    @media #{$media}
+      border-left: 1px solid rgba(225,225,225,0.5)
+      padding-right: 1%
+      // margin-top: 1em
+      // height: 85vh
+    textarea
+      width: calc((100%) - 2px)
+      resize: none
+      font-size: 1em
+      height: 8em
+      margin-bottom: 4px
+      padding: 0px
+      border: 1px solid rgba(225,225,225,0.5)
+    .comments
+      width: 100%
+      display: flex
+      justify-content: space-between
+      flex-direction: column
+      section
+        padding-right: 5px
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        min-height: 5em
+        border-bottom: 1px solid rgba(225,225,225,1.0)
+        aside
+          width: 18%
+          padding-right: 2%
+          display: flex
+          flex-direction: column
+          justify-content: center
+          text-align: center
+          word-wrap: break-word
+          p
+            color: #949494
+          .email
+            font-size: 0.8em
+          .date
+            font-size: 0.6em
+        div
+          width: 80%
+          text-align: justify
+          p
+            position: relative
+

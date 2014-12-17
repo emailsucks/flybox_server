@@ -21,6 +21,10 @@ app.config(['$routeProvider', function($routeProvider) {
   .when('/settings/', {
     templateUrl: 'templates/settings.html'
   })
+  .when('/n/:boxId/:keyId/', {
+    templateUrl: 'templates/box.html',
+    controller: 'BoxCtrl'
+  })
   .otherwise({
     redirectTo: '/'
   });
