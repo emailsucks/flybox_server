@@ -5,6 +5,7 @@ var multiparty = require('multiparty');
 var User = require('../models/user');
 var Box = require('../models/box');
 var AWS = require('aws-sdk');
+var fs = require('fs');
 
 module.exports = function(app) {
   //AMAZON S3
@@ -76,14 +77,14 @@ module.exports = function(app) {
     form.parse(req, function(err, fields, files) {
       Object.keys(fields).forEach(function(name) {
         if (name !== 'mailinMsg') {
+          var decodedFile = new Buffer(fields[name][0], 'base64');
           destPath = name;
-          console.log(fields[name][0]);
           s3Client.putObject({
                 Bucket: bucket,
                 Key: destPath,
                 ACL: 'public-read',
-                Body: fields[name][0],
-                ContentLength: 9673
+                Body: decodedFile,
+                ContentLength: decodedFile.length
               }, function(err, data) {
                 if (err) console.log('s3 error: ' + err);
                 console.log('done', data);
