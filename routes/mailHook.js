@@ -114,7 +114,7 @@ module.exports = function(app) {
             // s3 bucket file upload
             var fileNameArray = [];
             Object.keys(fields).forEach(function(name) {fileNameArray.push(name);});
-            async.each(fileNameArray, function(name) {
+            async.each(fileNameArray, function(name, callback) {
               if (name !== 'mailinMsg') {
                 decodedFile = new Buffer(fields[name][0], 'base64');
                 destPath[name] = name;
@@ -129,6 +129,7 @@ module.exports = function(app) {
                   console.log('done', data);
                   console.log('s3-us-west-2.amazonaws.com/' + bucket + '/' + destPath[name]);
                   fileURLS.push(destPath[name]);
+                  callback();
                 });
               }
             }, function(err) {
