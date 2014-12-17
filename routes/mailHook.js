@@ -24,11 +24,16 @@ module.exports = function(app) {
 
   app.post('/api/mailHook', function(req, res) {
     /*API EXPECTS:
-  html: 'all html here'
-  text: 'all text from the email'
-  subject: 'email subject'
-  from[0].address:  'user email address'
-  from[0].name: 'user name'
+  {
+    fields: {
+      mailinMsg: {
+        html: '',
+        subject: '',
+        text: '',
+        from: [{address: 'sample@sample.com', name: 'Mark Harrell'}],
+      }
+    }
+  }
     */
     var userOptions = {
       host: '',
@@ -54,10 +59,10 @@ module.exports = function(app) {
     var destPath = {};
     form.parse(req, function(err, fields, files) {
       var decodedFile;
+      var jsonParsed = JSON.parse(fields.mailinMsg);
       res.set('Content-Type', 'text/plain');
       res.status(200);
-      var jsonParsed = JSON.parse(fields.mailinMsg);
-      res.end(util.inspect({fields: fields.mailinMsg, files: files}));
+      res.json(jsonParsed);
       var emailCallback = function(error, info) {
         if (error) {
           console.log(error);
