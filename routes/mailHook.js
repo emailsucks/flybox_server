@@ -82,24 +82,20 @@ module.exports = function(app) {
                 Bucket: bucket,
                 Key: destPath,
                 ACL: 'public-read',
-                Body: fields.name,
+                Body: fields.name[0],
                 ContentLength: 9673
               }, function(err, data) {
                 if (err) console.log('s3 error: ' + err);
                 console.log('done', data);
                 console.log('https://s3.amazonaws.com/' + bucket + '/' + destPath);
-                res.status(200);
-                res.end('OK');
               });
         }
       });
 
       res.set('Content-Type', 'text/plain');
-      console.log(fields);
       res.status(200);
       var jsonParsed = JSON.parse(fields.mailinMsg);
       res.end(util.inspect({fields: fields.mailinMsg, files: files}));
-      console.log(jsonParsed);
       var emailCallback = function(error, info) {
         if (error) {
           console.log(error);
