@@ -22,6 +22,7 @@ require('./lib/passport')(passport);
 var jwtAuth = require('./lib/jwt_auth')(app.get('jwtSecret'));
 require('./routes/user_routes')(app, passport, jwtAuth);
 require('./routes/mailHook')(app);
+require('./routes/box_routes')(app, jwtAuth);
 
 app.listen(port, function() {
   console.log('Server listening on port ' + port);

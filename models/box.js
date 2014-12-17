@@ -10,7 +10,12 @@ var boxSchema = mongoose.Schema({
   recipients: [{email: String, urlKey: String, read: Boolean}],
   subject: String,
   date: {type: Date, default: Date.now},
-  thread: [],
+  thread: [{ //TODO: make this a new document for pagination/easy edit
+    author: String,
+    text: String,
+    time: Number,
+    mediaUrl: String
+  }],
   fileURLS: []
 });
 
