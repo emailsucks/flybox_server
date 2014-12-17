@@ -4,8 +4,16 @@ var util = require('util');
 var multiparty = require('multiparty');
 var User = require('../models/user');
 var Box = require('../models/box');
+var AWS = require('aws-sdk');
 
 module.exports = function(app) {
+  //AMAZON S3
+  var bucket = process.env.S3_BUCKET;
+  var s3Client = new AWS.S3({
+    accessKeyId: process.env.S3_KEY,
+    secretAccessKey: process.env.S3_SECRET
+  });
+
   function alphaNumUnique() {
     return Math.random().toString(36).split('').filter(function(value, index, self) {
       return self.indexOf(value) === index;
@@ -39,9 +47,28 @@ module.exports = function(app) {
     };
 
     var form = new multiparty.Form();
+    var destPath;
+    form.on('field', function(name, value) {
+      if (name === 'path') {
+        destPath = value;
+      }
+    });
+    form.on('part', function(part) {
+      s3Client.putObject({
+        Bucket: bucket,
+        Key: destPath,
+        ACL: 'public-read',
+        Body: part,
+        ContentLength: part.byteCount
+      }, function(err, data) {
+        if (err) throw err;
+        console.log('done', data);
+        console.log('https://s3.amazonaws.com/' + bucket + '/' + destPath);
+      });
+    });
     form.parse(req, function(err, fields, files) {
       res.set('Content-Type', 'text/plain');
-      console.log(fields.attachments);
+      console.log(fields);
       res.status(200);
       var jsonParsed = JSON.parse(fields.mailinMsg);
       res.end(util.inspect({fields: fields.mailinMsg, files: files}));

@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/emailsucks/flybox_server",
   "dependencies": {
+    "aws-sdk": "^2.1.2",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.10.0",
     "express": "^4.10.4",
