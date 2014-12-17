@@ -97,6 +97,7 @@ module.exports = function(app) {
           console.log(fileURLS);
           newBox.save(function(err, data) {
             //TODO: make sure to add some error reporting
+            console.log('data from saving box: ' + data);
             if (err) return console.log('could not save box');
             if (data === null) return console.log('no box saved');
             /* loop through the parsed emails and send out
