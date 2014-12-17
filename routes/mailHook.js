@@ -128,7 +128,7 @@ module.exports = function(app) {
                   if (err) console.log('s3 error: ' + err);
                   console.log('done', data);
                   console.log('s3-us-west-2.amazonaws.com/' + bucket + '/' + destPath[name]);
-                  fileURLS.push(destPath[name]);
+                  fileURLS.push('s3-us-west-2.amazonaws.com/' + bucket + '/' + destPath[name]);
                   callback();
                 });
               }
