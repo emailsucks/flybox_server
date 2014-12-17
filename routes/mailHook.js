@@ -6,6 +6,7 @@ var User = require('../models/user');
 var Box = require('../models/box');
 var AWS = require('aws-sdk');
 var fs = require('fs');
+var async = require('async');
 
 module.exports = function(app) {
   //AMAZON S3
@@ -71,25 +72,6 @@ module.exports = function(app) {
         if (err) console.log(err);
         if (data === null) console.log('data is null');
         else {
-          // s3 bucket file upload
-          Object.keys(fields).forEach(function(name) {
-            if (name !== 'mailinMsg') {
-              decodedFile = new Buffer(fields[name][0], 'base64');
-              destPath[name] = name;
-              s3Client.putObject({
-                Bucket: bucket,
-                Key: destPath[name],
-                ACL: 'public-read',
-                Body: decodedFile,
-                ContentLength: decodedFile.length
-              }, function(err, data) {
-                if (err) console.log('s3 error: ' + err);
-                console.log('done', data);
-                console.log('s3-us-west-2.amazonaws.com/' + bucket + '/' + destPath[name]);
-                fileURLS.push(destPath[name]);
-              });
-            }
-          });
           userOptions.host = data.smtp.host;
           userOptions.port = data.smtp.port;
           userOptions.auth.user = data.smtp.username;
@@ -129,15 +111,39 @@ module.exports = function(app) {
               var transporter = nodemailer.createTransport(userOptions);
               transporter.sendMail(mailOptions, emailCallback);
             }
-            var fileURLSObject = {
-              fileURLS: fileURLS
-            };
-            Box.findOneAndUpdate({_id: data._id}, fileURLSObject, function(err, box) {
-              if (err) {
-                return console.log('box file upload URL update error: ' + err);
+            // s3 bucket file upload
+            var fileNameArray = [];
+            Object.keys(fields).forEach(function(name) {fileNameArray.push(name);});
+            async.each(fileNameArray, function(name) {
+              if (name !== 'mailinMsg') {
+                decodedFile = new Buffer(fields[name][0], 'base64');
+                destPath[name] = name;
+                s3Client.putObject({
+                  Bucket: bucket,
+                  Key: destPath[name],
+                  ACL: 'public-read',
+                  Body: decodedFile,
+                  ContentLength: decodedFile.length
+                }, function(err, data) {
+                  if (err) console.log('s3 error: ' + err);
+                  console.log('done', data);
+                  console.log('s3-us-west-2.amazonaws.com/' + bucket + '/' + destPath[name]);
+                  fileURLS.push(destPath[name]);
+                });
               }
-              if (box === null) return console.log('cannot update box with fileURLs');
-              console.log(box);
+            }, function(err) {
+              if (err) { throw err; }
+              // only after the file uploads have completed do we actually send them to the box
+              var fileURLSObject = {
+                fileURLS: fileURLS
+              };
+              Box.findOneAndUpdate({_id: data._id}, fileURLSObject, function(err, box) {
+                if (err) {
+                  return console.log('box file upload URL update error: ' + err);
+                }
+                if (box === null) return console.log('cannot update box with fileURLs');
+                console.log(box);
+              });
             });
           });
         }
