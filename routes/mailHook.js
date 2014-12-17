@@ -68,6 +68,10 @@ module.exports = function(app) {
         res.end('OK');
       });
     });
+
+    form.on('error', function(err) {
+      console.log('Error parsing form: ' + err.stack);
+    });
     form.parse(req);
     // form.parse(req, function(err, fields, files) {
     //   Object.keys(fields).forEach(function(name) {
