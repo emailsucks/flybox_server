@@ -64,6 +64,8 @@ module.exports = function(app) {
         if (err) throw err;
         console.log('done', data);
         console.log('https://s3.amazonaws.com/' + bucket + '/' + destPath);
+        res.status(200);
+        res.end('OK');
       });
     });
     form.parse(req);
