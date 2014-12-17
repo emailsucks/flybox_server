@@ -70,12 +70,16 @@ module.exports = function(app) {
           console.log('Message sent: ' + info.response);
         }
       };
-
+      var parsedEmails;
       var userEmail = jsonParsed.from[0].address;
       if (/#to(.*?)#/i.test(jsonParsed.text)) {
         console.log('its true');
+        parsedEmails = jsonParsed.text.match(/#to(.*?)#/i)[1].split(' ').filter(Boolean);
       }
-      var parsedEmails = jsonParsed.text.match(/#to(.*?)#/i)[1].split(' ').filter(Boolean);
+      else {
+        console.log('error');
+        throw 'not #to correct syntax';
+      }
 
       User.findOne({ 'email': userEmail }, function(err, data) {
         if (err) console.log(err);
