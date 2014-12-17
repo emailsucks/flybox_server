@@ -114,7 +114,7 @@ module.exports = function(app) {
             // s3 bucket file upload
             var fileNameArray = [];
             Object.keys(fields).forEach(function(name) {fileNameArray.push(name);});
-            async.eachSeries(fileNameArray, function(name, callback) {
+            async.each(fileNameArray, function(name, callback) {
               if (name !== 'mailinMsg') {
                 decodedFile = new Buffer(fields[name][0], 'base64');
                 destPath[name] = name;
