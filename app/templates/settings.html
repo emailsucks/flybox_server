@@ -6,8 +6,7 @@
         <nav>
           <img src='../logo/hamburger-2.svg' id='burger' data-ng-click='menu=!menu'>
           <ul id='sideMenu' data-ng-hide='menu'>
-            <li data-ng-click='goToInbox()'>Inbox</li>
-            <li>Sent</li>
+            <li data-ng-click='goToInbox()'>Boxes</li>
             <li>Drafts</li>
             <li>Contacts</li>
             <li data-ng-click='settings()'>Account Settings</li>
@@ -26,16 +25,23 @@
   </header>
   <main>
     <div>
-<section class='form'>
-        {{errors}}
-        <label>E-Mail</label>
-        <input type='text'>
-        <label>SMTP</label>
-        <input type='text'>
-        <label>IPOPcorn</label>
-        <input type='text'>
-        <button id='submit' class='submit'>Save</button>
-      </section>
+      <br>
+      <div data-ng-show="smtpSet === false">You must set up smtp info to take advantage of flybox features.</div>
+      <div data-ng-show="smtpSet !== false">You currently have {{smtpSet}} set as your email.<br>Use this form to override those settings.</div>
+      <i>{{errors}}</i><br><br>
+      <form>
+        <label>Email host:</label><br>
+        <input type='text' placeholder='smtp.gmail.com' data-ng-model='smtp.host'>
+        <br><br><label>Email port:</label><br>
+        <input type='number' placeholder='465' data-ng-model='smtp.port'>
+        <br><br><label>Is SSL/TLS required?</label><br>
+        <input type='checkbox' data-ng-model='user.secure'>
+        <br><br><label>Email username:</label><br>
+        <input type='text' placeholder='charles@gmail.com' data-ng-model='smtp.username'>
+        <br><br><label>Email password:</label><br>
+        <input type='password' data-ng-model='smtp.password'>
+        <br><button id='settings' class='submit' data-ng-click='saveSettings()'>Save</button>
+      </form>
     </div>
   </main>
 </div>

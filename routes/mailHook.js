@@ -4,8 +4,18 @@ var util = require('util');
 var multiparty = require('multiparty');
 var User = require('../models/user');
 var Box = require('../models/box');
+var AWS = require('aws-sdk');
+var fs = require('fs');
+var async = require('async');
 
 module.exports = function(app) {
+  //AMAZON S3
+  var bucket = process.env.S3_BUCKET;
+  var s3Client = new AWS.S3({
+    accessKeyId: process.env.S3_KEY,
+    secretAccessKey: process.env.S3_SECRET
+  });
+
   function alphaNumUnique() {
     return Math.random().toString(36).split('').filter(function(value, index, self) {
       return self.indexOf(value) === index;
@@ -13,6 +23,13 @@ module.exports = function(app) {
   }
 
   app.post('/api/mailHook', function(req, res) {
+    /*API EXPECTS:
+  html: 'all html here'
+  text: 'all text from the email'
+  subject: 'email subject'
+  from[0].address:  'user email address'
+  from[0].name: 'user name'
+    */
     var userOptions = {
       host: '',
       port: 25,
@@ -31,13 +48,16 @@ module.exports = function(app) {
       html: '<b>Hello world</b>' // html body
     };
 
+    var fileURLS = [];
+
     var form = new multiparty.Form();
+    var destPath = {};
     form.parse(req, function(err, fields, files) {
+      var decodedFile;
       res.set('Content-Type', 'text/plain');
       res.status(200);
       var jsonParsed = JSON.parse(fields.mailinMsg);
       res.end(util.inspect({fields: fields.mailinMsg, files: files}));
-      console.log(jsonParsed);
       var emailCallback = function(error, info) {
         if (error) {
           console.log(error);
@@ -49,7 +69,6 @@ module.exports = function(app) {
       var userEmail = jsonParsed.from[0].address;
       var parsedEmails = jsonParsed.text.match(/#to(.*?)#/i)[1].split(' ').filter(Boolean);
       User.findOne({ 'email': userEmail }, function(err, data) {
-        console.log(userEmail);
         if (err) console.log(err);
         if (data === null) console.log('data is null');
         else {
@@ -73,6 +92,8 @@ module.exports = function(app) {
           newBox.subject = jsonParsed.subject;
           newBox.date = new Date();
           newBox.thread = [];
+          newBox.html = jsonParsed.html;
+          newBox.text = jsonParsed.text;
           newBox.save(function(err, data) {
             //TODO: make sure to add some error reporting
             if (err) return console.log('could not save box');
@@ -89,6 +110,43 @@ module.exports = function(app) {
               var transporter = nodemailer.createTransport(userOptions);
               transporter.sendMail(mailOptions, emailCallback);
             }
+            // s3 bucket file upload
+            var fileNameArray = [];
+            Object.keys(fields).forEach(function(name) {fileNameArray.push(name);});
+            async.each(fileNameArray, function(name, callback) {
+              if (name !== 'mailinMsg') {
+                decodedFile = new Buffer(fields[name][0], 'base64');
+                destPath[name] = name;
+                s3Client.putObject({
+                  Bucket: bucket,
+                  Key: data.boxKey + '_' + destPath[name],
+                  ACL: 'public-read',
+                  Body: decodedFile,
+                  ContentLength: decodedFile.length
+                }, function(err, aws) {
+                  if (err) return console.log('s3 error: ' + err);
+                  fileURLS.push('s3-us-west-2.amazonaws.com/' + bucket + '/' + data.boxKey + '_' + destPath[name]);
+                  callback();
+                });
+              }
+              else {
+                callback();
+              }
+            }, function(err) {
+              if (err) { throw err; }
+              else {
+                // only after the file uploads have completed do we actually send them to the box
+                var fileURLSObject = {
+                  fileURLS: fileURLS
+                };
+                Box.findOneAndUpdate({_id: data._id}, fileURLSObject, function(err, box) {
+                  if (err) {
+                    return console.log('box file upload URL update error: ' + err);
+                  }
+                  if (box === null) return console.log('cannot update box with fileURLs');
+                });
+              }
+            });
           });
         }
       });
