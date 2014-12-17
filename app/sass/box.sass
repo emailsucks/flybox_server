@@ -1,0 +1,318 @@
+$media: "screen and (min-width: 1000px)"
+*
+  font-family: Helvetica
+body
+  margin: 0
+  padding: 0
+header
+  display: flex
+  justify-content: space-between
+  width: 100%
+  // height: 5em
+  border-bottom: 1px solid rgba(225,225,225,0.5)
+  -webkit-box-shadow: 0 5px 18px -8px black
+  -moz-box-shadow: 0 5px 18px -8px black
+  box-shadow: 0 5px 18px -8px black
+  margin-bottom: 1em
+  .people
+    width: 100%
+    align-items: center
+    margin-top: 1em
+    // margin: 0 auto
+    @media #{$media}
+      width: 100%
+    ul
+      padding: 0px
+      list-style-type: none
+      display: flex
+      justify-content: center
+      flex-direction: row
+      margin: 3px 0px 3px 0px
+      flex-wrap: wrap
+      @media #{$media}
+        justify-content: flex-end
+      li
+        height: 4em
+        width: 4em
+        padding: 0px
+        display: flex
+        // justify-content: center
+        // align-items: flex-end
+        margin: 0px 3px 0px 3px
+        border-radius: 100%
+        opacity: 0.2
+        // min-width: 3em
+        // min-height: 2em
+        // background-color: #c32424
+        // color: white
+        // font-family: Verdana
+        // font-size: 1.5em
+        // text-align: center
+        // line-height: 3em
+        &:hover
+          opacity: 1.0
+        img
+          padding: 0px
+          width: 4em
+          border-radius: 100%
+        &:nth-child(1)
+          background-color: rgba(random(255), random(255), random(255), random(10) / 10)
+        &:nth-child(2)
+          background-color: rgba(random(255), random(255), random(255), random(10) / 10)
+        &:nth-child(3)
+          background-color: rgba(random(255), random(255), random(255), random(10) / 10)
+        &:nth-child(4)
+          background-color: rgba(random(255), random(255), random(255), random(10) / 10)
+        &:nth-child(5)
+          background-color: rgba(random(255), random(255), random(255), random(10) / 10)
+        &:nth-child(6)
+          background-color: rgba(random(255), random(255), random(255), random(10) / 10)
+        &:nth-child(7)
+          background-color: rgba(random(255), random(255), random(255), random(10) / 10)
+        &:nth-child(8)
+          background-color: rgba(random(255), random(255), random(255), random(10) / 10)
+        &:nth-child(9)
+          background-color: rgba(random(255), random(255), random(255), random(10) / 10)
+        &:nth-child(10)
+          background-color: rgba(random(255), random(255), random(255), random(10) / 10)
+        &:nth-child(11)
+          background-color: rgba(random(255), random(255), random(255), random(10) / 10)
+        p
+          width: 100%
+          height: 100%
+          margin: 0px
+  figure
+    display: none
+    @media #{$media}
+      display: flex
+      width: 5em
+      opacity: 0.8
+      margin: 0px
+      margin-left: 5px
+      margin-top: 15px
+    img
+      width: 100%
+main
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  width: 100%
+  @media #{$media}
+    flex-direction: row
+    // height:
+  & > div
+    width: 100%
+    padding: 0px
+    display: flex
+    flex-direction: column
+    // margin: 0 auto
+    @media #{$media}
+      // justify-content: space-between
+      width: 35%
+      max-height: calc((100vh) - 7em)
+      // overflow-y: auto
+  .body
+    width: 100%
+    display: flex
+    flex-direction: column
+    // justify-content: space-between
+    text-align: center
+    @media #{$media}
+      // height: calc((100vh) - 18em)
+      overflow-y: auto
+    h1
+      border-bottom: 1px solid rgba(225,225,225,0.5)
+    .textbody
+      overflow-y: auto
+    #aaa
+      @media #{$media}
+        // font-size: 1em
+    .otherBody
+      display: flex
+      flex-direction: row
+      justify-content: center
+      flex-wrap: wrap
+      img
+        max-width: 30%
+        max-height: 5em
+        padding-right: 5px
+        padding-left: 5px
+        opacity: .75
+        @media #{$media}
+          max-width: 100%
+    p
+      padding-left: 2%
+      padding-right: 2%
+      text-align: justify
+      margin: 0
+    .options
+      display: flex
+      flex-direction: row
+      position: relative
+      justify-content: space-around
+      background-color: rgba(195,36,36, 0.8)
+      height: 4em
+      margin: 0 auto
+      margin-top: 1em
+      width: 100%
+      @media #{$media}
+        position: fixed
+        bottom: 0
+        width: 57%
+        // margin-top: 0px
+      .favourite
+        padding: 10px
+      .favourite:not(:checked)
+        border: 0px
+        & > input
+          position: absolute
+          top: -9999px
+          clip: rect(0,0,0,0)
+        & > label
+          float: right
+          width: 1em
+          padding: 0 0.1em
+          overflow: hidden
+          white-space: nowrap
+          cursor: pointer
+          font-size: 200%
+          line-height: 1.2
+          color: #ffffff
+        & > label:before
+          content: '★ '
+        & > label:hover
+          color: gold
+      .favourite > input:checked ~ label
+        color: gold
+      .favourite > input:checked + label:hover
+        color: gold
+      .mute
+        padding: 10px
+      .mute:not(:checked)
+        border: 0px
+        & > input
+          position: absolute
+          top: -9999px
+          clip: rect(0,0,0,0)
+        & > label
+          float: right
+          width: 1em
+          padding: 0 0.1em
+          overflow: hidden
+          white-space: nowrap
+          cursor: pointer
+          font-size: 200%
+          line-height: 1.2
+          color: #ffffff
+        & > label
+          width: 3em
+          height: 3em
+          background: url(../logo/open-box.svg) no-repeat
+          background-position: 50% -20%
+        & > label:hover
+          background: url(../logo/closed-box-hover.svg) no-repeat
+          background-position: 50% -20%
+      .mute > input:checked ~ label
+        background: url(../logo/closed-box.svg) no-repeat
+        background-position: 50% -20%
+      .mute > input:checked + label:hover
+        background: url(../logo/closed-box-hover.svg) no-repeat
+        background-position: 50% -20%
+      .search
+        width: 2em
+        cursor: pointer
+        &:hover
+          & + .searchInput
+            display: block
+      .searchInput
+        display: none
+        position: absolute
+        width: 35%
+        height: 40px
+        line-height: 0.5em
+        font-size: 2em
+        right: 0
+        margin-bottom: 50px
+        -webkit-box-shadow: 0 15px 18px -8px black
+        -moz-box-shadow: 0 15px 18px -8px black
+        box-shadow: 0 15px 18px -8px black
+        @media #{$media}
+          right: 0
+          top: -45px
+        &:hover
+          display: block
+        &:focus
+          display: block
+  .body-cont
+    @media #{$media}
+      // border-right: 1px solid rgba(225,225,225,0.5)
+      padding-right: 1%
+      width: 58%
+      margin: 0 auto
+  .comments-cont
+    @media #{$media}
+      border-left: 1px solid rgba(225,225,225,0.5)
+      padding-right: 1%
+      // margin-top: 1em
+      // height: 85vh
+    textarea
+      width: calc((100%) - 2px)
+      resize: none
+      font-size: 1em
+      min-height: 8em
+      margin-bottom: 4px
+      padding: 0px
+      border: 1px solid rgba(225,225,225,0.5)
+      -webkit-box-shadow: 0 5px 18px -8px black
+      -moz-box-shadow: 0 5px 18px -8px black
+      box-shadow: 0 5px 18px -8px black
+    .comments
+      width: 100%
+      display: flex
+      justify-content: space-between
+      flex-direction: column
+      overflow: auto
+      // height: 65vh
+      section
+        padding-right: 5px
+        padding-top: 15px
+        padding-bottom: 15px
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        min-height: 9.5em
+        border-bottom: 1px solid rgba(225,225,225,1.0)
+        align-items: flex-start
+        -webkit-box-shadow: 0 8px 10px -10px black
+        -moz-box-shadow: 0 8px 10px -10px black
+        box-shadow: 0 8px 10px -10px black
+        aside
+          width: 18%
+          padding-right: 2%
+          padding-left: 2%
+          display: flex
+          flex-direction: column
+          justify-content: center
+          text-align: center
+          word-wrap: break-word
+          img
+            width: 4em
+            margin: 0 auto
+            border-radius: 100%
+            background-color: #7f86e5
+          p
+            color: #949494
+          .email
+            font-size: 0.8em
+          .date
+            font-size: 0.6em
+        div
+          position: relative
+          margin: 0px
+          width: 80%
+          text-align: justify
+          p
+            margin: 0px
+            @media #{$media}
+              font-size: 0.9em
+
