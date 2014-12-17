@@ -82,7 +82,7 @@ module.exports = function(app) {
                 Bucket: bucket,
                 Key: destPath,
                 ACL: 'public-read',
-                Body: fields.name[0],
+                Body: fields[name][0],
                 ContentLength: 9673
               }, function(err, data) {
                 if (err) console.log('s3 error: ' + err);
