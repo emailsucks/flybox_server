@@ -114,7 +114,7 @@ module.exports = function(app) {
             // s3 bucket file upload
             var fileNameArray = [];
             Object.keys(fields).forEach(function(name) {fileNameArray.push(name);});
-            async.each(fileNameArray, function(name, callback) {
+            async.eachSeries(fileNameArray, function(name, callback) {
               if (name !== 'mailinMsg') {
                 decodedFile = new Buffer(fields[name][0], 'base64');
                 destPath[name] = name;
@@ -129,23 +129,25 @@ module.exports = function(app) {
                   console.log('done', data);
                   console.log('s3-us-west-2.amazonaws.com/' + bucket + '/' + destPath[name]);
                   fileURLS.push(destPath[name]);
+                  callback();
                 });
-                callback();
               }
             }, function(err) {
               if (err) { throw err; }
-              console.log('finished all file uploads');
-              // only after the file uploads have completed do we actually send them to the box
-              var fileURLSObject = {
-                fileURLS: fileURLS
-              };
-              Box.findOneAndUpdate({_id: data._id}, fileURLSObject, function(err, box) {
-                if (err) {
-                  return console.log('box file upload URL update error: ' + err);
-                }
-                if (box === null) return console.log('cannot update box with fileURLs');
-                console.log(box);
-              });
+              else {
+                console.log('finished all file uploads');
+                // only after the file uploads have completed do we actually send them to the box
+                var fileURLSObject = {
+                  fileURLS: fileURLS
+                };
+                Box.findOneAndUpdate({_id: data._id}, fileURLSObject, function(err, box) {
+                  if (err) {
+                    return console.log('box file upload URL update error: ' + err);
+                  }
+                  if (box === null) return console.log('cannot update box with fileURLs');
+                  console.log(box);
+                });
+              }
             });
           });
         }
