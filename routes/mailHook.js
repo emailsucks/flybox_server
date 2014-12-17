@@ -49,35 +49,11 @@ module.exports = function(app) {
 
     var form = new multiparty.Form();
     var destPath;
-    // form.on('field', function(name, value) {
-    //   if (name === 'path') {
-    //     destPath = value;
-    //   }
-    // });
-    // form.on('part', function(part) {
-    //   s3Client.putObject({
-    //     Bucket: bucket,
-    //     Key: destPath,
-    //     ACL: 'public-read',
-    //     Body: part,
-    //     ContentLength: part.byteCount
-    //   }, function(err, data) {
-    //     if (err) console.log('s3 error: ' + err);
-    //     console.log('done', data);
-    //     console.log('https://s3.amazonaws.com/' + bucket + '/' + destPath);
-    //     res.status(200);
-    //     res.end('OK');
-    //   });
-    // });
-    //
-    // form.on('error', function(err) {
-    //   console.log('Error parsing form: ' + err.stack);
-    // });
-    // form.parse(req);
     form.parse(req, function(err, fields, files) {
+      var decodedFile;
       Object.keys(fields).forEach(function(name) {
         if (name !== 'mailinMsg') {
-          var decodedFile = new Buffer(fields[name][0], 'base64');
+          decodedFile = new Buffer(fields[name][0], 'base64');
           destPath = name;
           s3Client.putObject({
                 Bucket: bucket,
@@ -88,7 +64,7 @@ module.exports = function(app) {
               }, function(err, data) {
                 if (err) console.log('s3 error: ' + err);
                 console.log('done', data);
-                console.log('https://s3.amazonaws.com/' + bucket + '/' + destPath);
+                console.log('s3-us-west-2.amazonaws.com' + bucket + '/' + destPath);
               });
         }
       });
