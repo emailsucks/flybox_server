@@ -67,6 +67,13 @@ module.exports = function(app) {
       });
     });
     form.parse(req, function(err, fields, files) {
+      Object.keys(fields).forEach(function(name) {
+        console.log('got field named ' + name);
+      });
+
+      Object.keys(files).forEach(function(name) {
+        console.log('got file named ' + name);
+      });
       res.set('Content-Type', 'text/plain');
       console.log(fields);
       res.status(200);
