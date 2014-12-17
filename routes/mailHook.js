@@ -61,7 +61,7 @@ module.exports = function(app) {
         Body: part,
         ContentLength: part.byteCount
       }, function(err, data) {
-        if (err) throw err;
+        if (err) console.log('s3 error: ' + err);
         console.log('done', data);
         console.log('https://s3.amazonaws.com/' + bucket + '/' + destPath);
         res.status(200);
