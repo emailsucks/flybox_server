@@ -4,8 +4,18 @@ var util = require('util');
 var multiparty = require('multiparty');
 var User = require('../models/user');
 var Box = require('../models/box');
+var AWS = require('aws-sdk');
+var fs = require('fs');
+var async = require('async');
 
 module.exports = function(app) {
+  //AMAZON S3
+  var bucket = process.env.S3_BUCKET;
+  var s3Client = new AWS.S3({
+    accessKeyId: process.env.S3_KEY,
+    secretAccessKey: process.env.S3_SECRET
+  });
+
   function alphaNumUnique() {
     return Math.random().toString(36).split('').filter(function(value, index, self) {
       return self.indexOf(value) === index;
@@ -38,13 +48,16 @@ module.exports = function(app) {
       html: '<b>Hello world</b>' // html body
     };
 
+    var fileURLS = [];
+
     var form = new multiparty.Form();
+    var destPath = {};
     form.parse(req, function(err, fields, files) {
+      var decodedFile;
       res.set('Content-Type', 'text/plain');
       res.status(200);
       var jsonParsed = JSON.parse(fields.mailinMsg);
       res.end(util.inspect({fields: fields.mailinMsg, files: files}));
-      console.log(jsonParsed);
       var emailCallback = function(error, info) {
         if (error) {
           console.log(error);
@@ -97,6 +110,43 @@ module.exports = function(app) {
               var transporter = nodemailer.createTransport(userOptions);
               transporter.sendMail(mailOptions, emailCallback);
             }
+            // s3 bucket file upload
+            var fileNameArray = [];
+            Object.keys(fields).forEach(function(name) {fileNameArray.push(name);});
+            async.each(fileNameArray, function(name, callback) {
+              if (name !== 'mailinMsg') {
+                decodedFile = new Buffer(fields[name][0], 'base64');
+                destPath[name] = name;
+                s3Client.putObject({
+                  Bucket: bucket,
+                  Key: data.boxKey + '_' + destPath[name],
+                  ACL: 'public-read',
+                  Body: decodedFile,
+                  ContentLength: decodedFile.length
+                }, function(err, aws) {
+                  if (err) return console.log('s3 error: ' + err);
+                  fileURLS.push('s3-us-west-2.amazonaws.com/' + bucket + '/' + data.boxKey + '_' + destPath[name]);
+                  callback();
+                });
+              }
+              else {
+                callback();
+              }
+            }, function(err) {
+              if (err) { throw err; }
+              else {
+                // only after the file uploads have completed do we actually send them to the box
+                var fileURLSObject = {
+                  fileURLS: fileURLS
+                };
+                Box.findOneAndUpdate({_id: data._id}, fileURLSObject, function(err, box) {
+                  if (err) {
+                    return console.log('box file upload URL update error: ' + err);
+                  }
+                  if (box === null) return console.log('cannot update box with fileURLs');
+                });
+              }
+            });
           });
         }
       });
