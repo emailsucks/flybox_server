@@ -50,27 +50,27 @@ header {
           margin: 0 auto;
           border-radius: 100%; }
         header .people ul li:nth-child(1) {
-          background-color: rgba(67, 215, 249, 0.7); }
+          background-color: rgba(167, 87, 239, 0.7); }
         header .people ul li:nth-child(2) {
-          background-color: rgba(80, 51, 166, 0.4); }
+          background-color: #3e6edb; }
         header .people ul li:nth-child(3) {
-          background-color: rgba(104, 155, 216, 0.8); }
+          background-color: rgba(103, 201, 227, 0.1); }
         header .people ul li:nth-child(4) {
-          background-color: rgba(59, 2, 63, 0.6); }
+          background-color: rgba(167, 88, 70, 0.4); }
         header .people ul li:nth-child(5) {
-          background-color: rgba(162, 140, 252, 0.1); }
+          background-color: rgba(153, 250, 156, 0.7); }
         header .people ul li:nth-child(6) {
-          background-color: rgba(6, 188, 98, 0.3); }
+          background-color: rgba(119, 42, 36, 0.2); }
         header .people ul li:nth-child(7) {
-          background-color: rgba(12, 189, 232, 0.1); }
+          background-color: rgba(184, 136, 63, 0.9); }
         header .people ul li:nth-child(8) {
-          background-color: rgba(194, 50, 74, 0.3); }
+          background-color: #fb8db8; }
         header .people ul li:nth-child(9) {
-          background-color: rgba(93, 179, 19, 0.8); }
+          background-color: rgba(44, 27, 171, 0.7); }
         header .people ul li:nth-child(10) {
-          background-color: #b7cfd1; }
+          background-color: rgba(235, 241, 58, 0.2); }
         header .people ul li:nth-child(11) {
-          background-color: rgba(190, 6, 20, 0.4); }
+          background-color: rgba(32, 49, 250, 0.5); }
         header .people ul li p {
           width: 100%;
           height: 100%;
@@ -258,7 +258,7 @@ main {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    flex-direction: column;
+    flex-direction: column-reverse;
     overflow: auto; }
     main .comments-cont .comments section {
       padding-right: 5px;
