@@ -4,6 +4,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bp = require('body-parser');
 var passport = require('passport');
+var socket = require('./routes/.socket');
 
 var app = express();
 app.use(express.static(__dirname + '/build'));
@@ -24,6 +25,10 @@ require('./routes/user_routes')(app, passport, jwtAuth);
 require('./routes/mailHook')(app);
 require('./routes/box_routes')(app, jwtAuth);
 
-app.listen(port, function() {
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+io.sockets.on('connection', socket);
+
+server.listen(port, function() {
   console.log('Server listening on port ' + port);
 });
