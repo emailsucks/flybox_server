@@ -96,6 +96,7 @@ module.exports = function(app) {
     }
     $scope.menu = true;
     $scope.composing = true;
+    //getBoxes();
 
     if (!$cookies.smtpSet) {
       console.log('smtp cookie is not set');
@@ -132,6 +133,27 @@ module.exports = function(app) {
     };
     $scope.goToInbox = function() {
       return $location.path('/inbox');
+    };
+    
+    var getBoxes = function() {
+      $http({
+        method: 'GET',
+        url: '/api/boxes',
+        headers: {jwt: $cookies.jwt}
+      })
+      .success(function(data) {
+        $scope.boxes = data;
+        console.log(data);
+      })
+      .error(function(data) {
+        console.log('err', data);
+      });
+    };
+    
+    getBoxes();
+    
+    $scope.goToBox = function() {
+      console.log('going to fwd to a box, lol');
     };
 
     $scope.saveSettings = function() {
@@ -1601,7 +1623,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 },{}],11:[function(require,module,exports){
 /**
- * @license AngularJS v1.3.7
+ * @license AngularJS v1.3.6
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -1656,7 +1678,7 @@ function minErr(module, ErrorConstructor) {
       return match;
     });
 
-    message = message + '\nhttp://errors.angularjs.org/1.3.7/' +
+    message = message + '\nhttp://errors.angularjs.org/1.3.6/' +
       (module ? module + '/' : '') + code;
     for (i = 2; i < arguments.length; i++) {
       message = message + (i == 2 ? '?' : '&') + 'p' + (i - 2) + '=' +
@@ -1711,7 +1733,6 @@ function minErr(module, ErrorConstructor) {
   isWindow: true,
   isScope: true,
   isFile: true,
-  isFormData: true,
   isBlob: true,
   isBoolean: true,
   isPromiseLike: true,
@@ -2230,11 +2251,6 @@ function isScope(obj) {
 
 function isFile(obj) {
   return toString.call(obj) === '[object File]';
-}
-
-
-function isFormData(obj) {
-  return toString.call(obj) === '[object FormData]';
 }
 
 
@@ -3100,12 +3116,7 @@ function reloadWithDebugInfo() {
  * @param {DOMElement} element DOM element which is the root of angular application.
  */
 function getTestability(rootElement) {
-  var injector = angular.element(rootElement).injector();
-  if (!injector) {
-    throw ngMinErr('test',
-      'no injector found for element argument to getTestability');
-  }
-  return injector.get('$$testability');
+  return angular.element(rootElement).injector().get('$$testability');
 }
 
 var SNAKE_CASE_REGEXP = /[A-Z]/g;
@@ -3718,11 +3729,11 @@ function toDebugString(obj) {
  * - `codeName` – `{string}` – Code name of the release, such as "jiggling-armfat".
  */
 var version = {
-  full: '1.3.7',    // all of these placeholder strings will be replaced by grunt's
+  full: '1.3.6',    // all of these placeholder strings will be replaced by grunt's
   major: 1,    // package task
   minor: 3,
-  dot: 7,
-  codeName: 'leaky-obstruction'
+  dot: 6,
+  codeName: 'robofunky-danceblaster'
 };
 
 
@@ -8735,10 +8746,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
             // support ngAttr attribute binding
             ngAttrName = directiveNormalize(name);
             if (isNgAttr = NG_ATTR_BINDING.test(ngAttrName)) {
-              name = name.replace(PREFIX_REGEXP, '')
-                .substr(8).replace(/_(.)/g, function(match, letter) {
-                  return letter.toUpperCase();
-                });
+              name = snake_case(ngAttrName.substr(6), '-');
             }
 
             var directiveNName = ngAttrName.replace(/(Start|End)$/, '');
@@ -9650,10 +9658,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
 
     function addAttrInterpolateDirective(node, directives, value, name, allOrNothing) {
-      var trustedContext = getTrustedContext(node, name);
-      allOrNothing = ALL_OR_NOTHING_ATTRS[name] || allOrNothing;
-
-      var interpolateFn = $interpolate(value, true, trustedContext, allOrNothing);
+      var interpolateFn = $interpolate(value, true);
 
       // no interpolation found -> ignore
       if (!interpolateFn) return;
@@ -9678,15 +9683,15 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
                           "ng- versions (such as ng-click instead of onclick) instead.");
                 }
 
-                // If the attribute has changed since last $interpolate()ed
-                var newValue = attr[name];
-                if (newValue !== value) {
-                  // we need to interpolate again since the attribute value has been updated
-                  // (e.g. by another directive's compile function)
-                  // ensure unset/empty values make interpolateFn falsy
-                  interpolateFn = newValue && $interpolate(newValue, true, trustedContext, allOrNothing);
-                  value = newValue;
+                // If the attribute was removed, then we are done
+                if (!attr[name]) {
+                  return;
                 }
+
+                // we need to interpolate again, in case the attribute value has been updated
+                // (e.g. by another directive's compile function)
+                interpolateFn = $interpolate(attr[name], true, getTrustedContext(node, name),
+                    ALL_OR_NOTHING_ATTRS[name] || allOrNothing);
 
                 // if attribute was updated so that there is no interpolation going on we don't want to
                 // register any observers
@@ -10148,32 +10153,21 @@ function $ExceptionHandlerProvider() {
 
 var APPLICATION_JSON = 'application/json';
 var CONTENT_TYPE_APPLICATION_JSON = {'Content-Type': APPLICATION_JSON + ';charset=utf-8'};
-var JSON_START = /^\[|^\{(?!\{)/;
-var JSON_ENDS = {
-  '[': /]$/,
-  '{': /}$/
-};
+var JSON_START = /^\s*(\[|\{[^\{])/;
+var JSON_END = /[\}\]]\s*$/;
 var JSON_PROTECTION_PREFIX = /^\)\]\}',?\n/;
 
 function defaultHttpResponseTransform(data, headers) {
   if (isString(data)) {
-    // Strip json vulnerability protection prefix and trim whitespace
-    var tempData = data.replace(JSON_PROTECTION_PREFIX, '').trim();
-
-    if (tempData) {
-      var contentType = headers('Content-Type');
-      if ((contentType && (contentType.indexOf(APPLICATION_JSON) === 0)) || isJsonLike(tempData)) {
-        data = fromJson(tempData);
-      }
+    // strip json vulnerability protection prefix
+    data = data.replace(JSON_PROTECTION_PREFIX, '');
+    var contentType = headers('Content-Type');
+    if ((contentType && contentType.indexOf(APPLICATION_JSON) === 0 && data.trim()) ||
+        (JSON_START.test(data) && JSON_END.test(data))) {
+      data = fromJson(data);
     }
   }
-
   return data;
-}
-
-function isJsonLike(str) {
-    var jsonStart = str.match(JSON_START);
-    return jsonStart && JSON_ENDS[jsonStart[0]].test(str);
 }
 
 /**
@@ -10238,17 +10232,16 @@ function headersGetter(headers) {
  * This function is used for both request and response transforming
  *
  * @param {*} data Data to transform.
- * @param {function(string=)} headers HTTP headers getter fn.
- * @param {number} status HTTP status code of the response.
+ * @param {function(string=)} headers Http headers getter fn.
  * @param {(Function|Array.<Function>)} fns Function or an array of functions.
  * @returns {*} Transformed data.
  */
-function transformData(data, headers, status, fns) {
+function transformData(data, headers, fns) {
   if (isFunction(fns))
-    return fns(data, headers, status);
+    return fns(data, headers);
 
   forEach(fns, function(fn) {
-    data = fn(data, headers, status);
+    data = fn(data, headers);
   });
 
   return data;
@@ -10300,7 +10293,7 @@ function $HttpProvider() {
 
     // transform outgoing request data
     transformRequest: [function(d) {
-      return isObject(d) && !isFile(d) && !isBlob(d) && !isFormData(d) ? toJson(d) : d;
+      return isObject(d) && !isFile(d) && !isBlob(d) ? toJson(d) : d;
     }],
 
     // default headers
@@ -10527,7 +10520,7 @@ function $HttpProvider() {
      *
      * Both requests and responses can be transformed using transformation functions: `transformRequest`
      * and `transformResponse`. These properties can be a single function that returns
-     * the transformed value (`{function(data, headersGetter, status)`) or an array of such transformation functions,
+     * the transformed value (`{function(data, headersGetter)`) or an array of such transformation functions,
      * which allows you to `push` or `unshift` a new transformation function into the transformation chain.
      *
      * ### Default Transformations
@@ -10771,9 +10764,9 @@ function $HttpProvider() {
      *      See {@link ng.$http#overriding-the-default-transformations-per-request
      *      Overriding the Default Transformations}
      *    - **transformResponse** –
-     *      `{function(data, headersGetter, status)|Array.<function(data, headersGetter, status)>}` –
+     *      `{function(data, headersGetter)|Array.<function(data, headersGetter)>}` –
      *      transform function or an array of such functions. The transform function takes the http
-     *      response body, headers and status and returns its transformed (typically deserialized) version.
+     *      response body and headers and returns its transformed (typically deserialized) version.
      *      See {@link ng.$http#overriding-the-default-transformations-per-request
      *      Overriding the Default Transformations}
      *    - **cache** – `{boolean|Cache}` – If true, a default $http cache will be used to cache the
@@ -10896,23 +10889,24 @@ function $HttpProvider() {
 </example>
      */
     function $http(requestConfig) {
+      var config = {
+        method: 'get',
+        transformRequest: defaults.transformRequest,
+        transformResponse: defaults.transformResponse
+      };
+      var headers = mergeHeaders(requestConfig);
 
       if (!angular.isObject(requestConfig)) {
         throw minErr('$http')('badreq', 'Http request configuration must be an object.  Received: {0}', requestConfig);
       }
 
-      var config = extend({
-        method: 'get',
-        transformRequest: defaults.transformRequest,
-        transformResponse: defaults.transformResponse
-      }, requestConfig);
-
-      config.headers = mergeHeaders(requestConfig);
+      extend(config, requestConfig);
+      config.headers = headers;
       config.method = uppercase(config.method);
 
       var serverRequest = function(config) {
-        var headers = config.headers;
-        var reqData = transformData(config.data, headersGetter(headers), undefined, config.transformRequest);
+        headers = config.headers;
+        var reqData = transformData(config.data, headersGetter(headers), config.transformRequest);
 
         // strip content-type if data is undefined
         if (isUndefined(reqData)) {
@@ -10928,7 +10922,7 @@ function $HttpProvider() {
         }
 
         // send request
-        return sendReq(config, reqData).then(transformResponse, transformResponse);
+        return sendReq(config, reqData, headers).then(transformResponse, transformResponse);
       };
 
       var chain = [serverRequest, undefined];
@@ -10973,28 +10967,11 @@ function $HttpProvider() {
         if (!response.data) {
           resp.data = response.data;
         } else {
-          resp.data = transformData(response.data, response.headers, response.status, config.transformResponse);
+          resp.data = transformData(response.data, response.headers, config.transformResponse);
         }
         return (isSuccess(response.status))
           ? resp
           : $q.reject(resp);
-      }
-
-      function executeHeaderFns(headers) {
-        var headerContent, processedHeaders = {};
-
-        forEach(headers, function(headerFn, header) {
-          if (isFunction(headerFn)) {
-            headerContent = headerFn();
-            if (headerContent != null) {
-              processedHeaders[header] = headerContent;
-            }
-          } else {
-            processedHeaders[header] = headerFn;
-          }
-        });
-
-        return processedHeaders;
       }
 
       function mergeHeaders(config) {
@@ -11019,7 +10996,23 @@ function $HttpProvider() {
         }
 
         // execute if header value is a function for merged headers
-        return executeHeaderFns(reqHeaders);
+        execHeaders(reqHeaders);
+        return reqHeaders;
+
+        function execHeaders(headers) {
+          var headerContent;
+
+          forEach(headers, function(headerFn, header) {
+            if (isFunction(headerFn)) {
+              headerContent = headerFn();
+              if (headerContent != null) {
+                headers[header] = headerContent;
+              } else {
+                delete headers[header];
+              }
+            }
+          });
+        }
       }
     }
 
@@ -11162,12 +11155,11 @@ function $HttpProvider() {
      * !!! ACCESSES CLOSURE VARS:
      * $httpBackend, defaults, $log, $rootScope, defaultCache, $http.pendingRequests
      */
-    function sendReq(config, reqData) {
+    function sendReq(config, reqData, reqHeaders) {
       var deferred = $q.defer(),
           promise = deferred.promise,
           cache,
           cachedResp,
-          reqHeaders = config.headers,
           url = buildUrl(config.url, config.params);
 
       $http.pendingRequests.push(config);
@@ -12867,8 +12859,8 @@ function $LocationProvider() {
    * @param {string=} oldState History state object that was before it was changed.
    */
 
-  this.$get = ['$rootScope', '$browser', '$sniffer', '$rootElement', '$window',
-      function($rootScope, $browser, $sniffer, $rootElement, $window) {
+  this.$get = ['$rootScope', '$browser', '$sniffer', '$rootElement',
+      function($rootScope, $browser, $sniffer, $rootElement) {
     var $location,
         LocationMode,
         baseHref = $browser.baseHref(), // if base[href] is undefined, it defaults to ''
@@ -12950,7 +12942,7 @@ function $LocationProvider() {
           if ($location.absUrl() != $browser.url()) {
             $rootScope.$apply();
             // hack to work around FF6 bug 684208 when scenario runner clicks on links
-            $window.angular['ff-684208-preventDefault'] = true;
+            window.angular['ff-684208-preventDefault'] = true;
           }
         }
       }
@@ -13566,8 +13558,6 @@ Parser.prototype = {
       primary = this.arrayDeclaration();
     } else if (this.expect('{')) {
       primary = this.object();
-    } else if (this.peek().identifier && this.peek().text in CONSTANTS) {
-      primary = CONSTANTS[this.consume().text];
     } else if (this.peek().identifier) {
       primary = this.identifier();
     } else if (this.peek().constant) {
@@ -13670,7 +13660,7 @@ Parser.prototype = {
       id += this.consume().text + this.consume().text;
     }
 
-    return getterFn(id, this.options, this.text);
+    return CONSTANTS[id] || getterFn(id, this.options, this.text);
   },
 
   constant: function() {
@@ -13860,16 +13850,17 @@ Parser.prototype = {
   },
 
   fieldAccess: function(object) {
-    var getter = this.identifier();
+    var expression = this.text;
+    var field = this.consume().text;
+    var getter = getterFn(field, this.options, expression);
 
     return extend(function $parseFieldAccess(scope, locals, self) {
-      var o = self || object(scope, locals);
-      return (o == null) ? undefined : getter(o);
+      return getter(self || object(scope, locals));
     }, {
       assign: function(scope, value, locals) {
         var o = object(scope, locals);
         if (!o) object.assign(scope, o = {});
-        return getter.assign(o, value);
+        return setter(o, field, value, expression);
       }
     });
   },
@@ -15027,10 +15018,12 @@ function qFactory(nextTick, exceptionHandler) {
 function $$RAFProvider() { //rAF
   this.$get = ['$window', '$timeout', function($window, $timeout) {
     var requestAnimationFrame = $window.requestAnimationFrame ||
-                                $window.webkitRequestAnimationFrame;
+                                $window.webkitRequestAnimationFrame ||
+                                $window.mozRequestAnimationFrame;
 
     var cancelAnimationFrame = $window.cancelAnimationFrame ||
                                $window.webkitCancelAnimationFrame ||
+                               $window.mozCancelAnimationFrame ||
                                $window.webkitCancelRequestAnimationFrame;
 
     var rafSupported = !!requestAnimationFrame;
@@ -15159,6 +15152,7 @@ function $RootScopeProvider() {
          var child = parent.$new();
 
          parent.salutation = "Hello";
+         child.name = "World";
          expect(child.salutation).toEqual('Hello');
 
          child.salutation = "Welcome";
@@ -15796,7 +15790,7 @@ function $RootScopeProvider() {
           while (asyncQueue.length) {
             try {
               asyncTask = asyncQueue.shift();
-              asyncTask.scope.$eval(asyncTask.expression, asyncTask.locals);
+              asyncTask.scope.$eval(asyncTask.expression);
             } catch (e) {
               $exceptionHandler(e);
             }
@@ -16011,9 +16005,8 @@ function $RootScopeProvider() {
        *    - `string`: execute using the rules as defined in {@link guide/expression expression}.
        *    - `function(scope)`: execute the function with the current `scope` parameter.
        *
-       * @param {(object)=} locals Local variables object, useful for overriding values in scope.
        */
-      $evalAsync: function(expr, locals) {
+      $evalAsync: function(expr) {
         // if we are outside of an $digest loop and this is the first time we are scheduling async
         // task also schedule async auto-flush
         if (!$rootScope.$$phase && !asyncQueue.length) {
@@ -16024,7 +16017,7 @@ function $RootScopeProvider() {
           });
         }
 
-        asyncQueue.push({scope: this, expression: expr, locals: locals});
+        asyncQueue.push({scope: this, expression: expr});
       },
 
       $$postDigest: function(fn) {
@@ -18716,8 +18709,8 @@ var DATE_FORMATS_SPLIT = /((?:[^yMdHhmsaZEw']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|d
  *   * `'.sss' or ',sss'`: Millisecond in second, padded (000-999)
  *   * `'a'`: AM/PM marker
  *   * `'Z'`: 4 digit (+sign) representation of the timezone offset (-1200-+1200)
- *   * `'ww'`: Week of year, padded (00-53). Week 01 is the week with the first Thursday of the year
- *   * `'w'`: Week of year (0-53). Week 1 is the week with the first Thursday of the year
+ *   * `'ww'`: ISO-8601 week of year (00-53)
+ *   * `'w'`: ISO-8601 week of year (0-53)
  *
  *   `format` string can also be one of the following predefined
  *   {@link guide/i18n localizable formats}:
@@ -19202,37 +19195,29 @@ function orderByFilter($parse) {
           ? function(a, b) {return comp(b,a);}
           : comp;
     }
-
-    function isPrimitive(value) {
-      switch (typeof value) {
-        case 'number': /* falls through */
-        case 'boolean': /* falls through */
-        case 'string':
-          return true;
-        default:
-          return false;
-      }
-    }
-
-    function objectToString(value) {
-      if (value === null) return 'null';
-      if (typeof value.toString === 'function') {
-        value = value.toString();
-        if (isPrimitive(value)) return value;
-      }
-      if (typeof value.valueOf === 'function') {
-        value = value.valueOf();
-        if (isPrimitive(value)) return value;
-      }
-      return '';
-    }
-
     function compare(v1, v2) {
       var t1 = typeof v1;
       var t2 = typeof v2;
+      // Prepare values for Abstract Relational Comparison
+      // (http://www.ecma-international.org/ecma-262/5.1/#sec-11.8.5):
+      // If the resulting values are identical, return 0 to prevent
+      // incorrect re-ordering.
       if (t1 === t2 && t1 === "object") {
-        v1 = objectToString(v1);
-        v2 = objectToString(v2);
+        // If types are both numbers, emulate abstract ToPrimitive() operation
+        // in order to get primitive values suitable for comparison
+        t1 = typeof (v1.valueOf ? v1 = v1.valueOf() : v1);
+        t2 = typeof (v2.valueOf ? v2 = v2.valueOf() : v2);
+        if (t1 === t2 && t1 === "object") {
+          // Object.prototype.valueOf will return the original object, by
+          // default. If we do not receive a primitive value, use ToString()
+          // instead.
+          t1 = typeof (v1.toString ? v1 = v1.toString() : v1);
+          t2 = typeof (v2.toString ? v2 = v2.toString() : v2);
+
+          // If the end result of toString() for each item is the same, do not
+          // perform relational comparison, and do not re-order objects.
+          if (t1 === t2 && v1 === v2 || t1 === "object") return 0;
+        }
       }
       if (t1 === t2) {
         if (t1 === "string") {
@@ -25966,7 +25951,7 @@ var ngRepeatDirective = ['$parse', '$animate', function($parse, $animate) {
       var aliasAs = match[3];
       var trackByExp = match[4];
 
-      match = lhs.match(/^(?:(\s*[\$\w]+)|\(\s*([\$\w]+)\s*,\s*([\$\w]+)\s*\))$/);
+      match = lhs.match(/^(?:([\$\w]+)|\(([\$\w]+)\s*,\s*([\$\w]+)\))$/);
 
       if (!match) {
         throw ngRepeatMinErr('iidexp', "'_item_' in '_item_ in _collection_' should be an identifier or '(_key_, _value_)' expression, but got '{0}'.",

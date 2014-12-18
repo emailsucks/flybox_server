@@ -1,6 +1,6 @@
 'use strict';
 
-process.env.MONGO_URL = 'mongodb://localhost/flybox_test';
+process.env.MONGO_URL = 'mongodb://localhost/flybox_dev';
 var chai = require('chai');
 var chaihttp = require('chai-http');
 chai.use(chaihttp);
@@ -92,6 +92,7 @@ describe('box routes', function() {
     .get('/api/boxes')
     .set({jwt: jwtToken})
     .end(function(err, res) {
+      console.log('BOX:', res.body);
       expect(err).to.eql(null);
       expect(Array.isArray(res.body)).to.be.true;
       boxkey = res.body[0].boxKey;

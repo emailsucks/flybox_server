@@ -75,107 +75,27 @@
     </span>
     <ul>
       <li>
-        <img src="../logo/compose-2.svg">
+        Sender
       </li>
       <li>
-        <img src="../logo/compose-2.svg">
+        Subject
       </li>
       <li>
-        <img src="../logo/compose-2.svg">
-      </li>
-      <li>
-        <img src="../logo/compose-2.svg">
+        Date
       </li>
     </ul>
   </aside>
   <main>
     <div class='checkedNames'></div>
-    <section>
+    <section data-ng-repeat='_id in boxes' data-ng-click='goToBox()'>
       <span>
         <input type='checkbox' name='mail' value='openMail'>
         <label></label>
       </span>
       <div class='pars'>
-        <p>Sender</p>
-        <p>Title</p>
-        <p>Mail Preview(30-40 chars)</p>
-        <p>Date</p>
-      </div>
-      <div class='full-message'>
-        <section>
-          <h2>Title</h2>
-          <h4>Sender</h4>
-          <p>Date</p>
-        </section>
-        <p id='justMessage'>Mail-Full Content
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </div>
-    </section>
-    <section>
-      <span>
-        <input type='checkbox' name='mail' value='openMail'>
-        <label></label>
-      </span>
-      <div class='pars'>
-        <p>Sender</p>
-        <p>Title</p>
-        <p>Mail Preview(30-40 chars)</p>
-        <p>Date</p>
-      </div>
-      <div class='full-message'>
-        <section>
-          <h2>Title</h2>
-          <h4>Sender</h4>
-          <p>Date</p>
-        </section>
-        <p id='justMessage'>Mail-Full Content
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </div>
-    </section>
-    <section>
-      <span>
-        <input type='checkbox' name='mail' value='openMail'>
-        <label></label>
-      </span>
-      <div class='pars'>
-        <p>Sender</p>
-        <p>Title</p>
-        <p>Mail Preview(30-40 chars)</p>
-        <p>Date</p>
-      </div>
-      <div class='full-message'>
-        <section>
-          <h2>Title</h2>
-          <h4>Sender</h4>
-          <p>Date</p>
-        </section>
-        <p id='justMessage'>Mail-Full Content
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>{{_id.creator.email}}</p>
+        <p>{{_id.subject}}</p>
+        <p>{{_id.date | date}}</p>
       </div>
     </section>
   </main>
