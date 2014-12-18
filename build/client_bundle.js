@@ -84,6 +84,7 @@ module.exports = function(app) {
         headers: {jwt: $cookies.jwt}
       })
       .success(function(data) {
+        $scope.boxes = data;
         console.log(data);
       })
       .error(function(data) {
@@ -107,7 +108,7 @@ module.exports = function(app) {
         data: $scope.smtp,
         headers: {jwt: $cookies.jwt}
       })
-      .success(function(data) {
+      .success(function() {
         $location.path('/inbox');
       })
       .error(function(data) {

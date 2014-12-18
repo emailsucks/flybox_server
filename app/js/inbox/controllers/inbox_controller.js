@@ -54,6 +54,7 @@ module.exports = function(app) {
         headers: {jwt: $cookies.jwt}
       })
       .success(function(data) {
+        $scope.boxes = data;
         console.log(data);
       })
       .error(function(data) {
