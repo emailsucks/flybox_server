@@ -93,6 +93,10 @@ module.exports = function(app) {
     };
     
     getBoxes();
+    
+    $scope.goToBox = function() {
+      console.log('going to fwd to a box, lol');
+    };
 
     $scope.saveSettings = function() {
       $scope.errors = null;
