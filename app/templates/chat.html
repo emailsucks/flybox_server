@@ -1,28 +1,25 @@
-<link rel="stylesheet" type="text/css" href="chat.css">
-<div data-ng-controller="ChatCtrl"></div>
-<div class="col">
-  <h3>Messages</h3>
-  <div class="overflowable">
-    <p data-ng-repeat="message in messages">: </p>
+<div data-ng-controller="ChatCtrl">
+  <link rel="stylesheet" type="text/css" href="CSS/chat.css">
+  <div class="col">
+    <h3>Messages</h3>
+    <div class="overflowable">
+      <p data-ng-repeat="message in messages">: {{message}}</p>
+    </div>
   </div>
-</div>
-<div class="col">
-  <h3>Users</h3>
-  <div class="overflowable">
-    <p data-ng-repeat="user in users"> </p>
+  <div class="col">
+    <h3>Users</h3>
+    <div class="overflowable">
+      <p data-ng-repeat="user in users"> </p>
+    </div>
   </div>
-</div>
-<div class="clr">
-  <form data-ng-submit="sendMessage()">Message: 
-    <input size="60" data-ng-model="message"/>
-    <input type="submit" value="Send"/>
-  </form>
-</div>
-<div class="clr">
-  <h3>Change your name</h3>
-  <p>Your current user name is </p>
-  <form data-ng-submit="changeName()">
-    <input data-ng-model="newName"/>
-    <input type="submit" value="Change Name"/>
-  </form>
+  <div class="clr">
+    <form data-ng-submit="sendMessage()">Message: 
+      <input size="60" data-ng-model="message"/>
+      <input type="submit" value="Send"/>
+    </form>
+  </div>
+  <div class="clr">
+    <h3>Change your name</h3>
+    <p>Your current user name is {{name}}</p>
+  </div>
 </div>
