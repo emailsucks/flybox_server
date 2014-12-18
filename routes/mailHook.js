@@ -13,7 +13,8 @@ module.exports = function(app) {
   var bucket = process.env.S3_BUCKET;
   var s3Client = new AWS.S3({
     accessKeyId: process.env.S3_KEY,
-    secretAccessKey: process.env.S3_SECRET
+    secretAccessKey: process.env.S3_SECRET,
+    sslEnabled: false
   });
 
   function alphaNumUnique() {

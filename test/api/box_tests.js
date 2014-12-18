@@ -109,13 +109,14 @@ describe('box routes', function() {
       done();
     });
   });
-  
+
   it('should post to a box as a non-user', function(done) {
     chai.request(appUrl)
     .post('/api/n/' + boxkey + '/' + recipientKey)
     .send({text: 'hello there'})
     .end(function(err, res) {
       expect(err).to.eql(null);
+      done();
     });
   });
 });
