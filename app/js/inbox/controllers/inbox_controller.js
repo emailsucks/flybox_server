@@ -46,7 +46,7 @@ module.exports = function(app) {
     $scope.goToInbox = function() {
       return $location.path('/inbox');
     };
-    
+
     var getBoxes = function() {
       $http({
         method: 'GET',
@@ -61,9 +61,9 @@ module.exports = function(app) {
         console.log('err', data);
       });
     };
-    
+
     getBoxes();
-    
+
     $scope.goToBox = function() {
       console.log('going to fwd to a box, lol');
     };
