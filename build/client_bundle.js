@@ -2,6 +2,19 @@
 'use strict';
 
 module.exports = function(app) {
+  app.factory('socket', ['socketFactory', function(socketFactory) {
+    var socket = socketFactory({
+      ioSocket: window.io.connect()
+    });
+    socket.forward('error');
+    return socket();
+  }]);
+};
+
+},{}],2:[function(require,module,exports){
+'use strict';
+
+module.exports = function(app) {
   app.controller('ChatCtrl', ['$scope', 'socket', function($scope, socket) {
     socket.on('init', function(data) {
       $scope.name = data.name;
@@ -11,59 +24,6 @@ module.exports = function(app) {
     socket.on('send:message', function(message) {
       $scope.messages.push(message);
     });
-
-    socket.on('change:name', function(data) {
-      changeName(data.oldName, data.newName);
-    });
-
-    socket.on('user:join', function(data) {
-      $scope.messages.push({
-        user: 'chatroom',
-        text: 'User ' + data.name + ' has joined.'
-      });
-      $scope.users.push(data.name);
-    });
-
-    socket.on('user:left', function(data) {
-      $scope.messages.push({
-        user: 'chatroomt',
-        test: 'User ' + data.name + ' had left.'
-      });
-      var i, user;
-      for (i = 0; i < $scope.users.length; i++) {
-        user = $scope.users[i];
-        if (user === data.name) {
-          $scope.users.splice(i, 1);
-          break;
-        }
-      }
-    });
-
-    var changeName = function(oldName, newName) {
-      var i;
-      for (i = 0; i < $scope.users.length; i++) {
-        if ($scope.users[i] === oldName) {
-          $scope.users[i] = newName;
-        }
-      }
-      $scope.messages.push({
-        user: 'chatroom',
-        text: 'User ' + oldName + ' is now ' + newName
-      });
-    };
-    $scope.changeName = function() {
-      socket.emit('change:name', {
-        name: $scope.newName
-      }, function(result) {
-        if (!result) {
-          console.log('there was an error');
-        } else {
-          changeName($scope.name, $scope.newName);
-          $scope.name = $scope.newName;
-          $scope.newName = '';
-        }
-      });
-    };
 
     $scope.sendMessage = function() {
       socket.emit('send:message', {
@@ -81,36 +41,6 @@ module.exports = function(app) {
   }]);
 };
 
-},{}],2:[function(require,module,exports){
-'use strict';
-
-module.exports = function(app) {
-  app.factory('socket', ['$rootScope', function($rootScope) {
-
-    var socket = socket.connect();
-    return {
-      on: function(eventName, callback) {
-        socket.on(eventName, function() {
-          var args = arguments;
-          $rootScope.$apply(function() {
-            callback.apply(socket, args);
-          });
-        });
-      },
-      emit: function(eventName, data, callback) {
-        socket.emit(eventName, data, function() {
-          var args = arguments;
-          $rootScope.$apply(function() {
-            if (callback) {
-              callback.apply(socket, args);
-            }
-          });
-        });
-      }
-    };
-  }]);
-};
-
 },{}],3:[function(require,module,exports){
 'use strict';
 
@@ -118,13 +48,15 @@ require("./../../bower_components/angular/angular");
 require("./../../bower_components/angular-route/angular-route.js");
 require("./../../bower_components/angular-cookies/angular-cookies.js");
 require("./../../bower_components/angular-base64/angular-base64.js");
-require("./../../bower_components/socket.io-client/socket.io");
+window.io = require("./../../bower_components/socket.io-client/socket.io");
 require("./../../bower_components/angular-socket-io/socket.js");
 
-var app = angular.module('flyboxApp', ['ngRoute', 'ngCookies', 'base64', 'socket.io-client', 'angular-socket-io']);
+var app = angular.module('flyboxApp', ['ngRoute', 'ngCookies', 'base64', 'btford.socket-io']);
 
+require('./SocketService')(app);
 require('./users/users')(app);
 require('./inbox/inbox')(app);
+require('./chat_controller')(app);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
@@ -145,7 +77,7 @@ app.config(['$routeProvider', function($routeProvider) {
   });
 }]);
 
-},{"./../../bower_components/angular-base64/angular-base64.js":8,"./../../bower_components/angular-cookies/angular-cookies.js":9,"./../../bower_components/angular-route/angular-route.js":10,"./../../bower_components/angular-socket-io/socket.js":11,"./../../bower_components/angular/angular":12,"./../../bower_components/socket.io-client/socket.io":13,"./inbox/inbox":5,"./users/users":7}],4:[function(require,module,exports){
+},{"./../../bower_components/angular-base64/angular-base64.js":8,"./../../bower_components/angular-cookies/angular-cookies.js":9,"./../../bower_components/angular-route/angular-route.js":10,"./../../bower_components/angular-socket-io/socket.js":11,"./../../bower_components/angular/angular":12,"./../../bower_components/socket.io-client/socket.io":13,"./SocketService":1,"./chat_controller":2,"./inbox/inbox":5,"./users/users":7}],4:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app) {
