@@ -159,9 +159,23 @@ module.exports = function(app) {
         });
       }
       else {
-        console.log('error');
-        var parsingError = new Error ('parsing error on #to');
-        console.log('');
+        User.findOne({ 'email': userEmail }, function(err, data) {
+          if (err) console.log(err);
+          else if (data === null) console.log('data is null');
+          else {
+            userOptions.host = data.smtp.host;
+            userOptions.port = data.smtp.port;
+            userOptions.auth.user = data.smtp.username;
+            userOptions.auth.pass = data.smtp.password;
+            userOptions.secure = data.smtp.secure;
+            mailOptions.to = userEmail;
+            mailOptions.from = userEmail;
+            mailOptions.text = 'There was an issue with your #to formatting.  Please use #to test1@example.com test2@example.com #';
+            mailOptions.html = 'There was an issue with your <b>#to formatting</b>.  Please use #to test1@example.com test2@example.com #';
+            var transporter = nodemailer.createTransport(userOptions);
+            transporter.sendMail(mailOptions, emailCallback);
+          }
+        });
       }
     });
   });
