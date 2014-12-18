@@ -12,15 +12,20 @@ module.exports = function(app) {
     var userId = $routeParams.userId;
 
     //sample data
-    $scope.posts = [{author:'james', text: 'Kale chips sriracha Etsy, letterpress stumptown vegan cardigan church-key. Artisan farm-to-table VHS kogi, ethical banh mi semiotics raw denim Vice 8-bit dreamcatcher. Yr lo-fi iPhone, art party brunch locavore heirloom. Raw denim 90s slow-carb, Vice messenger bag McSweeneys Blue Bottle umami '}, {author: 'frank', text: 'Art party disrupt quinoa, Helvetica sriracha locavore tattooed lumbersexual pop-up food truck Neutra. Sriracha deep v'}, {author: 'dan', text: 'Polaroid normcore fanny pack, pop-up post-ironic Kickstarter bespoke chia. '}];
+    //$scope.posts = [{author:'james', text: 'Kale chips sriracha Etsy, letterpress stumptown vegan cardigan church-key. Artisan farm-to-table VHS kogi, ethical banh mi semiotics raw denim Vice 8-bit dreamcatcher. Yr lo-fi iPhone, art party brunch locavore heirloom. Raw denim 90s slow-carb, Vice messenger bag McSweeneys Blue Bottle umami '}, {author: 'frank', text: 'Art party disrupt quinoa, Helvetica sriracha locavore tattooed lumbersexual pop-up food truck Neutra. Sriracha deep v'}, {author: 'dan', text: 'Polaroid normcore fanny pack, pop-up post-ironic Kickstarter bespoke chia. '}];
 
-    $scope.refresh = function() {
-      $http.get('/api/n' + boxId + '/' + userId).success(function(data) {
+    (function() {
+      $http.get('/api/n/' + boxId + '/' + userId).success(function(data) {
+        console.log(data);
         $scope.posts = data.thread;
         $scope.recipients = data.recipients;
         $scope.subject = data.subject;
       });
-    };
+    })();
+
+    // $scope.refresh = function() {
+
+    // };
 
     $scope.logOut = function() {
       delete $cookies.jwt;
