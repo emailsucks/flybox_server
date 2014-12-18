@@ -10,13 +10,13 @@ module.exports = function(app, jwtAuth) {
         console.log(err);
         return res.status(500).send('Cannot retrieve thread');
       }
-      res.json(data);
+      res.json(data); //TODO: refine boxes to only necessary data
     });
   });
 
   //get box from personal url
   app.get('/api/n/:boxkey/:userkey', function(req, res) {
-    Box.findOne({boxKey: req.params.boxkey, recipients: {$elemMatch: {userkey: req.params.userkey}}}, function(err, data) {
+    Box.findOne({boxKey: req.params.boxkey, recipients: {$elemMatch: {urlKey: req.params.userkey}}}, function(err, data) {
       if (err) {
         console.log(err);
         return res.status(500).send('Cannot retrieve box');
@@ -27,7 +27,7 @@ module.exports = function(app, jwtAuth) {
 
   //post to a box thread
   app.post('/api/n/:boxkey/:userkey', function(req, res) {
-    Box.fineOne({boxKey: req.params.boxkey}, function(err, current) {
+    Box.findOne({boxKey: req.params.boxkey}, function(err, current) {
       if (err) {
         console.log(err);
         return res.status(500).send('No box');
@@ -40,9 +40,9 @@ module.exports = function(app, jwtAuth) {
       });
       newPost.text = req.body.text;
       newPost.time = Date.now();
-      newPost.mediaUrl = req.body.mediaUrl;
       current.thread.push(newPost);
       current.save();
+      res.json({msg: 'success'});
     });
   });
 
