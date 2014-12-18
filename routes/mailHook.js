@@ -58,7 +58,6 @@ module.exports = function(app) {
 
     var form = new multiparty.Form();
     var destPath = {};
-    console.log('???', req);
     form.parse(req, function(err, fields, files) {
       var decodedFile;
       console.log('before parse', fields);
