@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="CSS/box.css">
+  </head>
+  <body>
+    <header>
+      <figure><img src="../logo/flybox-4.0.4-64x64.svg"></figure>
+      <section class='people'>
+        <ul>
+          <li><img src="../logo/profilePic.svg"></li>
+          <li><img src="../logo/profilePic.svg"></li>
+          <li><img src="../logo/profilePic.svg"></li>
+          <li><img src="../logo/profilePic.svg"></li>
+          <li><img src="../logo/profilePic.svg"></li>
+          <li><img src="../logo/profilePic.svg"></li>
+          <li><img src="../logo/profilePic.svg"></li>
+        </ul>
+      </section>
+    </header>
+    <main>
+      <div class='body-cont'>
+        <article class='body'>
+          <h1>Title</h1>
+          <section class='otherBody'><img src="../logo/Space_Needle002.jpg"><img src="../logo/flybox-4.0.4-64x64.svg"><img src="../logo/flybox-4.0.4-64x64.svg"><img src="../logo/Space_Needle002.jpg"><img src="../logo/Space_Needle002.jpg"><img src="../logo/Space_Needle002.jpg"><img src="../logo/Space_Needle002.jpg"><img src="../logo/Space_Needle002.jpg"><img src="../logo/Space_Needle002.jpg"><img src="../logo/Space_Needle002.jpg"></section>
+          <section class='textBody'><p id='aaa'>Lorem
+           ipsum dolor sit amet, consectetur a Lorem ipsum dolor sit amlorem  Lorem ipsum dolor sit amloremlorem  Lorem ipsum dolor sit amet, consecteted
+          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></section>
+          <aside class='options'>
+            <fieldset class='favourite'>
+              <input id='star' type='checkbox'>
+              <label for='star'></label>
+            </fieldset>
+            <fieldset class='mute'>
+              <input id='mute' type='checkbox'>
+              <label for='mute'></label>
+            </fieldset>
+            <img src="../logo/search.svg" class='search'>
+            <input type='text' class='searchInput'>
+          </aside>
+        </article>
+      </div>
+      <div class='comments-cont'>
+        <textarea placeholder=' Write a Comment'></textarea>
+        <div>
+          <article class='comments'>
+
+            <section ng-repeat="post in posts">
+              <aside>
+                <img src={{post.mediaUrl}}>
+                <p class='email'>{{post.author}}</p>
+                <p class='date'>12/16/2014<br>10:38PM</p>
+              </aside>
+              <div><p>{{post.text}}</p>
+              </div>
+            </section>
+
+        </article>
+        </div>
+
+      </div>
+    </main>
+    <script type="text/javascript" src='../jquery-2.1.1.js'></script>
+    <script type="text/javascript" src='aa.js'></script>
+  </body>
+</html>
+
