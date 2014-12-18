@@ -8,6 +8,7 @@ module.exports = function(app) {
     }
     $scope.menu = true;
     $scope.composing = true;
+    //getBoxes();
 
     if (!$cookies.smtpSet) {
       console.log('smtp cookie is not set');
@@ -44,6 +45,27 @@ module.exports = function(app) {
     };
     $scope.goToInbox = function() {
       return $location.path('/inbox');
+    };
+    
+    var getBoxes = function() {
+      $http({
+        method: 'GET',
+        url: '/api/boxes',
+        headers: {jwt: $cookies.jwt}
+      })
+      .success(function(data) {
+        $scope.boxes = data;
+        console.log(data);
+      })
+      .error(function(data) {
+        console.log('err', data);
+      });
+    };
+    
+    getBoxes();
+    
+    $scope.goToBox = function() {
+      console.log('going to fwd to a box, lol');
     };
 
     $scope.saveSettings = function() {
