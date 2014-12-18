@@ -50,27 +50,27 @@ header {
           margin: 0 auto;
           border-radius: 100%; }
         header .people ul li:nth-child(1) {
-          background-color: rgba(181, 174, 151, 0.5); }
+          background-color: rgba(248, 69, 71, 0.3); }
         header .people ul li:nth-child(2) {
-          background-color: rgba(209, 191, 23, 0.4); }
+          background-color: rgba(45, 140, 188, 0.2); }
         header .people ul li:nth-child(3) {
-          background-color: rgba(225, 180, 185, 0.8); }
+          background-color: rgba(249, 191, 216, 0.6); }
         header .people ul li:nth-child(4) {
-          background-color: rgba(10, 110, 104, 0.3); }
+          background-color: rgba(20, 8, 142, 0.2); }
         header .people ul li:nth-child(5) {
-          background-color: rgba(170, 54, 111, 0.5); }
+          background-color: #c190dc; }
         header .people ul li:nth-child(6) {
-          background-color: rgba(124, 10, 118, 0.8); }
+          background-color: rgba(235, 102, 47, 0.5); }
         header .people ul li:nth-child(7) {
-          background-color: rgba(214, 175, 126, 0.8); }
+          background-color: rgba(11, 111, 163, 0.5); }
         header .people ul li:nth-child(8) {
-          background-color: rgba(117, 104, 27, 0.5); }
+          background-color: rgba(85, 215, 129, 0.8); }
         header .people ul li:nth-child(9) {
-          background-color: #62b9d1; }
+          background-color: rgba(119, 175, 123, 0.9); }
         header .people ul li:nth-child(10) {
-          background-color: rgba(79, 189, 44, 0.6); }
+          background-color: rgba(216, 24, 214, 0.4); }
         header .people ul li:nth-child(11) {
-          background-color: rgba(155, 151, 74, 0.4); }
+          background-color: rgba(184, 12, 148, 0.3); }
         header .people ul li p {
           width: 100%;
           height: 100%;
@@ -258,7 +258,7 @@ main {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    flex-direction: column;
+    flex-direction: column-reverse;
     overflow: auto; }
     main .comments-cont .comments section {
       padding-right: 5px;

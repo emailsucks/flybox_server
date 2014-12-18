@@ -19,7 +19,7 @@
       <div class='body-cont'>
         <article class='body'>
           <h1 data-ng-model="original">{{original.subject}}</h1>
-          <h2 data-ng-model="original">{{orininal.date}}</h2>
+          <h2 data-ng-model="original">{{orininal.date | date}}</h2>
           <section class='otherBody'><img src="../logo/flybox-4.0.4-64x64.svg"></section>
           <section class='textBody'><p id='aaa' data-ng-model="original">{{original.post}}</p></section>
           <aside class='options'>
@@ -37,21 +37,24 @@
         </article>
       </div>
       <div class='comments-cont'>
-        <textarea placeholder=' Write a Comment'></textarea>
+        <form>
+          <input type='text' placeholder=' Write a Comment' data-ng-model='post.text'>
+          <button data-ng-click='makeComment()'>Post</button>
+        </form>
         <div>
           <article class='comments'>
 
-            <section ng-repeat="post in posts">
+            <section ng-repeat="post in posts | orderBy:'date':reverse">
               <aside>
                 <img src="../logo/flybox-4.0.4-64x64.svg">
                 <p class='email'>{{post.author}}</p>
-                <p class='date'>12/16/2014<br>10:38PM</p>
+                <p class='date'>{{post.date | date}}<br></p>
               </aside>
               <div><p>{{post.text}}</p>
               </div>
             </section>
 
-        </article>
+          </article>
         </div>
 
       </div>
