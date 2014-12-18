@@ -57,9 +57,12 @@ module.exports = function(app) {
 
     var form = new multiparty.Form();
     var destPath = {};
+    console.log('???', req);
     form.parse(req, function(err, fields, files) {
       var decodedFile;
+      console.log('before parse', fields);
       var jsonParsed = JSON.parse(fields.mailinMsg);
+      console.log('after parse', jsonParsed);
       res.set('Content-Type', 'text/plain');
       res.status(200);
       res.json(jsonParsed);

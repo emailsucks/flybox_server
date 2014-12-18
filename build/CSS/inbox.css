@@ -38,7 +38,6 @@ header {
     width: 80px;
     z-index: 10; }
     header nav ul {
-      display: none;
       width: 300%;
       background-color: #f4f2ff;
       height: 88.25vh;
@@ -118,10 +117,12 @@ header {
             background: #f4f2ff; }
           header article #readMessage .full-message #justMessage:hover::-webkit-scrollbar-thumb {
             background: #5142f4; }
-    header article #writeMail #tools:hover {
-      background-color: #9298ff; }
-    header article #writeMail .toolsOpen {
-      background-color: #9298ff; }
+    header article #writeMail {
+      z-index: 222; }
+      header article #writeMail #tools:hover {
+        background-color: #9298ff; }
+      header article #writeMail .toolsOpen {
+        background-color: #9298ff; }
     header article #close {
       width: 45px;
       padding: 0px;
@@ -137,8 +138,6 @@ header {
       header article #close:hover {
         opacity: 1; }
     header article aside {
-      display: flex;
-      display: none;
       position: absolute;
       right: 0;
       top: 4.1em;
@@ -225,6 +224,23 @@ header {
             height: 32px; }
   header img {
     height: 4em; }
+
+.bannerAlert {
+  width: 240px;
+  position: relative;
+  transition: all 0.1s;
+  -webkit-transition: all 0.1s;
+  padding: 10px 10px;
+  display: block;
+  margin: 15px auto;
+  border-radius: 10px;
+  background-color: #F2CF66;
+  border-bottom: 5px solid #D1B358;
+  text-shadow: 0px -2px #D1B358; }
+  .bannerAlert:active {
+    transform: translate(0px, 5px);
+    -webskit-transform: translate(0px, 5px);
+    border-bottom: 1px solid; }
 
 .functions {
   display: flex;
