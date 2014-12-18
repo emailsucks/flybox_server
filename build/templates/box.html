@@ -7,21 +7,39 @@
   </head>
   <body>
     <header>
-      <figure><img src="../logo/flybox-4.0.4-64x64.svg"></figure>
-      <section class='people'>
+
+      <section id='menu'>
         <ul>
-          <li data-ng-model="original"><img title="{{original.author}}" src="../logo/flybox-4.0.4-64x64.svg"></li>
-          <li data-ng-repeat="recipient in recipients"><img title="{{recipient.email}}" src="../logo/flybox-4.0.4-64x64.svg"></li>
+          <li><a ng-click="goToInbox()" href="">Inbox</a></li>
+          <li><a ng-click="settings()" href="">Settings</a></li>
+          <li><a ng-click="logout()" href="">Logout</a></li>
         </ul>
       </section>
+
+      <section id='images'>
+        <figure><img src="../logo/flybox-4.0.4-64x64.svg"></figure>
+        <section class='people'>
+          <ul>
+            <li data-ng-model="original"><img title="{{original.author}}" src="../logo/flybox-4.0.4-64x64.svg"></li>
+            <li data-ng-repeat="recipient in recipients"><img title="{{recipient.email}}" src="../logo/flybox-4.0.4-64x64.svg"></li>
+          </ul>
+        </section>
+      </section>
     </header>
+
     <main>
+
       <div class='body-cont'>
         <article class='body'>
           <h1 data-ng-model="original">{{original.subject}}</h1>
+<<<<<<< HEAD
+          <h2 data-ng-model="original">{{original.date}}</h2>
+=======
           <h2 data-ng-model="original">{{orininal.date | date}}</h2>
+>>>>>>> 1af7f2611c3735c42bc9f34c85e9d7c5c0e3bcdf
           <section class='otherBody'><img src="../logo/flybox-4.0.4-64x64.svg"></section>
-          <section class='textBody'><p id='aaa' data-ng-model="original">{{original.post}}</p></section>
+          <section class='textBody'><p ng-hide="textBody.editing" ng-click="textBody.editing = true" id='aaa' data-ng-model="original"><img src="../logo/600px-Black_pencil.svg.png" id='edit'>{{original.post}}</p>
+            <textarea ng-hide="!textBody.editing" ng-model="textBody.text" id='editing'></textarea><button ng-hide="!textBody.editing" ng-click="doneEditing();" id='saveEdit'>Save</button></section>
           <aside class='options'>
             <fieldset class='favourite'>
               <input id='star' type='checkbox'>
@@ -36,11 +54,17 @@
           </aside>
         </article>
       </div>
+
       <div class='comments-cont'>
+<<<<<<< HEAD
+        <textarea placeholder=' Write a Comment'></textarea>
+        <button id='send'>Send</button>
+=======
         <form>
           <input type='text' placeholder=' Write a Comment' data-ng-model='post.text'>
           <button data-ng-click='makeComment()'>Post</button>
         </form>
+>>>>>>> 1af7f2611c3735c42bc9f34c85e9d7c5c0e3bcdf
         <div>
           <article class='comments'>
 

@@ -29,6 +29,8 @@ module.exports = function(app) {
       });
     })();
 
+<<<<<<< HEAD
+=======
     socket.on('init', function(data) {
       $scope.name = data.name;
       $scope.users = data.users;
@@ -51,6 +53,7 @@ module.exports = function(app) {
 
     // };
 
+>>>>>>> 1af7f2611c3735c42bc9f34c85e9d7c5c0e3bcdf
     $scope.logOut = function() {
       delete $cookies.jwt;
       return $location.path('/');
@@ -62,6 +65,12 @@ module.exports = function(app) {
 
     $scope.goToInbox = function() {
       return $location.path('/inbox');
+    };
+
+    $scope.doneEditing = function() {
+      $scope.textBody.editing = false;
+      $scope.original.post = $scope.textBody.text;
+      //TODO update db with socket
     };
 
   }]);
