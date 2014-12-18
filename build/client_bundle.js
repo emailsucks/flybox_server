@@ -141,7 +141,7 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'templates/chat.html'
   })
   .otherwise({
-    redirectTo: '/'
+    redirectTo: '/chat/'
   });
 }]);
 
