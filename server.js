@@ -9,6 +9,8 @@ var app = express();
 app.use(express.static(__dirname + '/build'));
 app.use(bp.json());
 app.use(passport.initialize());
+var server = require('http').Server(app);
+var io = require('socket.io').listen(server);
 
 var port = process.env.PORT || 3000;
 app.set('jwtSecret', process.env.JWT_SECRET || 'changethis');
@@ -23,6 +25,7 @@ var jwtAuth = require('./lib/jwt_auth')(app.get('jwtSecret'));
 require('./routes/user_routes')(app, passport, jwtAuth);
 require('./routes/mailHook')(app);
 require('./routes/box_routes')(app, jwtAuth);
+require('./routes/socket')(io);
 
 app.listen(port, function() {
   console.log('Server listening on port ' + port);
