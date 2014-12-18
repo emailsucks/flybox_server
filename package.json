@@ -1,7 +1,7 @@
 {
   "name": "flybox_server",
   "version": "1.0.0",
-  "description": "flybox_server =============",
+  "description": "flybox_server",
   "main": "server.js",
   "scripts": {
     "test": "grunt test"
