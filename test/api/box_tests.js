@@ -15,6 +15,9 @@ var util = require('util');
 
 describe('box routes', function() {
   var jwtToken;
+  var boxkey;
+  var userkey;
+  var recipientKey;
 
   before(function(done) {
     chai.request(appUrl)
@@ -55,7 +58,7 @@ describe('box routes', function() {
     var form = new FormData();
     var finalizedMessage = {
         html: '<h1>this is some html</h1> #to test@example.com #',
-        text: '#to test@example.com test1@example.com #',
+        text: '#to test@example.com test1@example.com flybox4real@gmail.com #',
         subject: 'a subject',
         from: [{address: 'flybox4real@gmail.com', name: 'mr. box'}]
     };
@@ -84,15 +87,35 @@ describe('box routes', function() {
     });
   });
 
-  it('should get an index of boxes', function(done) {
+  it('should get an index of boxes for a user', function(done) {
     chai.request(appUrl)
     .get('/api/boxes')
     .set({jwt: jwtToken})
     .end(function(err, res) {
       expect(err).to.eql(null);
-      console.log(res.body);
       expect(Array.isArray(res.body)).to.be.true;
+      boxkey = res.body[0].boxKey;
+      recipientKey = res.body[0].recipients[0].urlKey;
       done();
+    });
+  });
+
+  it('should get a single box', function(done) {
+    chai.request(appUrl)
+    .get('/api/n/' + boxkey + '/' + recipientKey)
+    .end(function(err, res) {
+      expect(err).to.eql(null);
+      expect(res.body).to.have.property('boxKey');
+      done();
+    });
+  });
+  
+  it('should post to a box as a non-user', function(done) {
+    chai.request(appUrl)
+    .post('/api/n/' + boxkey + '/' + recipientKey)
+    .send({text: 'hello there'})
+    .end(function(err, res) {
+      expect(err).to.eql(null);
     });
   });
 });
