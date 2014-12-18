@@ -150,7 +150,7 @@ main
       flex-direction: row
       position: relative
       justify-content: space-around
-      background-color: rgba(195,36,36, 0.8)
+      background-color: rgba(234,67,67, 1.0)
       height: 4em
       margin: 0 auto
       margin-top: 1em
@@ -158,7 +158,7 @@ main
       @media #{$media}
         position: fixed
         bottom: 0
-        width: 57%
+        width: 59%
         // margin-top: 0px
       .favourite
         padding: 10px
@@ -207,16 +207,16 @@ main
         & > label
           width: 3em
           height: 3em
-          background: url(../logo/open-box.svg) no-repeat
+          background: url(../../logo/open-box.svg) no-repeat
           background-position: 50% -20%
         & > label:hover
-          background: url(../logo/closed-box-hover.svg) no-repeat
+          background: url(../../logo/closed-box-hover.svg) no-repeat
           background-position: 50% -20%
       .mute > input:checked ~ label
-        background: url(../logo/closed-box.svg) no-repeat
+        background: url(../../logo/closed-box.svg) no-repeat
         background-position: 50% -20%
       .mute > input:checked + label:hover
-        background: url(../logo/closed-box-hover.svg) no-repeat
+        background: url(../../logo/closed-box-hover.svg) no-repeat
         background-position: 50% -20%
       .search
         width: 2em
@@ -246,6 +246,9 @@ main
   .body-cont
     @media #{$media}
       // border-right: 1px solid rgba(225,225,225,0.5)
+      -webkit-box-shadow: 0 5px 18px -8px black
+      -moz-box-shadow: 0 5px 18px -8px black
+      box-shadow: 0 5px 18px -8px black
       padding-right: 1%
       width: 58%
       margin: 0 auto
