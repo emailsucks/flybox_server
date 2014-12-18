@@ -60,7 +60,7 @@ module.exports = function(app) {
         data: $scope.smtp,
         headers: {jwt: $cookies.jwt}
       })
-      .success(function(data) {
+      .success(function() {
         $location.path('/inbox');
       })
       .error(function(data) {
