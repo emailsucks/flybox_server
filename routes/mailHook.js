@@ -60,9 +60,7 @@ module.exports = function(app) {
     var destPath = {};
     form.parse(req, function(err, fields, files) {
       var decodedFile;
-      console.log('before parse', fields);
       var jsonParsed = JSON.parse(fields.mailinMsg);
-      console.log('after parse', jsonParsed);
       res.set('Content-Type', 'text/plain');
       res.status(200);
       res.json(jsonParsed);
@@ -76,7 +74,6 @@ module.exports = function(app) {
       var parsedEmails;
       var userEmail = jsonParsed.from[0].address;
       if (/#to(.*?)#/i.test(jsonParsed.text)) {
-        console.log('its true');
         parsedEmails = jsonParsed.text.match(/#to(.*?)#/i)[1].split(' ').filter(Boolean);
         User.findOne({ 'email': userEmail }, function(err, data) {
           if (err) console.log(err);
@@ -87,7 +84,6 @@ module.exports = function(app) {
             userOptions.auth.user = data.smtp.username;
             userOptions.auth.pass = data.smtp.password;
             userOptions.secure = data.smtp.secure;
-            var random = '';
             /*create a Box using the user parsed info.  TODO: Think OOP. */
             var newBox = new Box();
             newBox.creator = {
