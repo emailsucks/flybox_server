@@ -73,8 +73,10 @@ module.exports = function(app) {
       };
       var parsedEmails;
       var userEmail = jsonParsed.from[0].address;
+      var userName = jsonParsed.from[0].name;
       if (/#to(.*?)#/i.test(jsonParsed.text)) {
         parsedEmails = jsonParsed.text.match(/#to(.*?)#/i)[1].split(' ').filter(Boolean);
+        parsedEmails.push(userEmail);
         User.findOne({ 'email': userEmail }, function(err, data) {
           if (err) console.log(err);
           if (data === null) console.log('data is null');
@@ -86,8 +88,9 @@ module.exports = function(app) {
             userOptions.secure = data.smtp.secure;
             /*create a Box using the user parsed info.  TODO: Think OOP. */
             var newBox = new Box();
+            var creatorBoxKey = alphaNumUnique();
             newBox.creator = {
-              email: userEmail, urlKey: '', read: false, userid: data._id
+              email: userEmail, urlKey: creatorBoxKey, read: false, userid: data._id
             };
             newBox.recipients = [];
             newBox.boxKey = alphaNumUnique();
@@ -111,8 +114,8 @@ module.exports = function(app) {
                 mailOptions.to = parsedEmails[i];
                 mailOptions.from = userEmail;
                 var flyboxURL = 'http://www.flybox.io/n/' + data.boxKey + '/' + data.recipients[i].urlKey;
-                mailOptions.text = 'You have a message from ' + userEmail + '.  To view the message visit: ' + flyboxURL;
-                mailOptions.html = '<b>To view your new email, <a href="' + flyboxURL + '">Click here</a></b> ';
+                mailOptions.text = userName + ' has started a new conversation with you.  To view this conversation: ' + flyboxURL;
+                mailOptions.html = userName + ' has started a new conversation with you.<b>To view this conversation, <a href="' + flyboxURL + '">Click here</a></b> ';
                 var transporter = nodemailer.createTransport(userOptions);
                 transporter.sendMail(mailOptions, emailCallback);
               }
