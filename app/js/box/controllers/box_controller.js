@@ -28,10 +28,6 @@ module.exports = function(app) {
       });
     })();
 
-    // $scope.refresh = function() {
-
-    // };
-
     $scope.logOut = function() {
       delete $cookies.jwt;
       return $location.path('/');
@@ -43,6 +39,12 @@ module.exports = function(app) {
 
     $scope.goToInbox = function() {
       return $location.path('/inbox');
+    };
+
+    $scope.doneEditing = function() {
+      $scope.textBody.editing = false;
+      $scope.original.post = $scope.textBody.text;
+      //TODO update db with socket
     };
 
   }]);
