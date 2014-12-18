@@ -14,7 +14,6 @@ module.exports = function(socket) {
     Box.findOne({boxKey: data.boxKey}, function(err, current) {
       if (err) {
         console.log(err);
-        return res.status(500).send('No box');
       }
       var newPost = {};
       current.recipients.forEach(function(recipient) { //TODO: add catch for creator post
@@ -27,7 +26,6 @@ module.exports = function(socket) {
       newPost.time = Date.now();
       current.thread.push(newPost);
       current.save();
-      res.json({msg: 'success'});
     });
 
     socket.broadcast.emit('send:post', {
