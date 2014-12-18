@@ -1,6 +1,54 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
+module.exports = function(app) {
+  require('./controllers/box_controller')(app);
+};
+
+},{"./controllers/box_controller":2}],2:[function(require,module,exports){
+'use strict';
+
+module.exports = function(app) {
+  app.controller('BoxCtrl', ['$scope', '$http', '$base64', '$cookies', '$location', '$routeParams', function($scope, $http, $base64, $cookies, $location, $routeParams) {
+    console.log('running in box ctrl');
+    // if (!$cookies.jwt) {
+    //   console.log('redirecting');
+    //   $location.path('/');
+    // }
+
+    var boxId = $routeParams.boxId;
+    var userId = $routeParams.userId;
+
+    //sample data
+    $scope.posts = [{author:'james', text: 'Kale chips sriracha Etsy, letterpress stumptown vegan cardigan church-key. Artisan farm-to-table VHS kogi, ethical banh mi semiotics raw denim Vice 8-bit dreamcatcher. Yr lo-fi iPhone, art party brunch locavore heirloom. Raw denim 90s slow-carb, Vice messenger bag McSweeneys Blue Bottle umami '}, {author: 'frank', text: 'Art party disrupt quinoa, Helvetica sriracha locavore tattooed lumbersexual pop-up food truck Neutra. Sriracha deep v'}, {author: 'dan', text: 'Polaroid normcore fanny pack, pop-up post-ironic Kickstarter bespoke chia. '}];
+
+    $scope.refresh = function() {
+      $http.get('/api/n' + boxId + '/' + userId).success(function(data) {
+        $scope.posts = data.thread;
+        $scope.recipients = data.recipients;
+        $scope.subject = data.subject;
+      });
+    };
+
+    $scope.logOut = function() {
+      delete $cookies.jwt;
+      return $location.path('/');
+    };
+
+    $scope.settings = function() {
+      return $location.path('/settings');
+    };
+
+    $scope.goToInbox = function() {
+      return $location.path('/inbox');
+    };
+
+  }]);
+};
+
+},{}],3:[function(require,module,exports){
+'use strict';
+
 require("./../../bower_components/angular/angular");
 require("./../../bower_components/angular-route/angular-route.js");
 require("./../../bower_components/angular-cookies/angular-cookies.js");
@@ -10,6 +58,7 @@ var app = angular.module('flyboxApp', ['ngRoute', 'ngCookies', 'base64']);
 
 require('./users/users')(app);
 require('./inbox/inbox')(app);
+require('./box/box')(app);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
@@ -22,12 +71,16 @@ app.config(['$routeProvider', function($routeProvider) {
   .when('/settings/', {
     templateUrl: 'templates/settings.html'
   })
+  .when('/n/:boxId/:userId/', {
+    templateUrl: 'templates/box.html',
+    controller: 'BoxCtrl'
+  })
   .otherwise({
     redirectTo: '/'
   });
 }]);
 
-},{"./../../bower_components/angular-base64/angular-base64.js":6,"./../../bower_components/angular-cookies/angular-cookies.js":7,"./../../bower_components/angular-route/angular-route.js":8,"./../../bower_components/angular/angular":9,"./inbox/inbox":3,"./users/users":5}],2:[function(require,module,exports){
+},{"./../../bower_components/angular-base64/angular-base64.js":8,"./../../bower_components/angular-cookies/angular-cookies.js":9,"./../../bower_components/angular-route/angular-route.js":10,"./../../bower_components/angular/angular":11,"./box/box":1,"./inbox/inbox":5,"./users/users":7}],4:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app) {
@@ -101,14 +154,14 @@ module.exports = function(app) {
   }]);
 };
 
-},{}],3:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app) {
   require('./controllers/inbox_controller')(app);
 };
 
-},{"./controllers/inbox_controller":2}],4:[function(require,module,exports){
+},{"./controllers/inbox_controller":4}],6:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app) {
@@ -161,14 +214,14 @@ module.exports = function(app) {
   }]);
 };
 
-},{}],5:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app) {
   require('./controllers/users_controller')(app);
 };
 
-},{"./controllers/users_controller":4}],6:[function(require,module,exports){
+},{"./controllers/users_controller":6}],8:[function(require,module,exports){
 (function() {
     'use strict';
 
@@ -336,7 +389,7 @@ module.exports = function(app) {
 
 })();
 
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /**
  * @license AngularJS v1.3.7
  * (c) 2010-2014 Google, Inc. http://angularjs.org
@@ -544,7 +597,7 @@ angular.module('ngCookies', ['ng']).
 
 })(window, window.angular);
 
-},{}],8:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 /**
  * @license AngularJS v1.3.7
  * (c) 2010-2014 Google, Inc. http://angularjs.org
@@ -1541,7 +1594,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 })(window, window.angular);
 
-},{}],9:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /**
  * @license AngularJS v1.3.7
  * (c) 2010-2014 Google, Inc. http://angularjs.org
@@ -27579,4 +27632,4 @@ var styleDirective = valueFn({
 })(window, document);
 
 !window.angular.$$csp() && window.angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}</style>');
-},{}]},{},[1,2,3,4,5]);
+},{}]},{},[1,2,3,4,5,6,7]);
