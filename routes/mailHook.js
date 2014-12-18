@@ -13,7 +13,8 @@ module.exports = function(app) {
   var bucket = process.env.S3_BUCKET;
   var s3Client = new AWS.S3({
     accessKeyId: process.env.S3_KEY,
-    secretAccessKey: process.env.S3_SECRET
+    secretAccessKey: process.env.S3_SECRET,
+    sslEnabled: false
   });
 
   function alphaNumUnique() {
@@ -23,12 +24,17 @@ module.exports = function(app) {
   }
 
   app.post('/api/mailHook', function(req, res) {
-    /*API EXPECTS:
-  html: 'all html here'
-  text: 'all text from the email'
-  subject: 'email subject'
-  from[0].address:  'user email address'
-  from[0].name: 'user name'
+    /*API EXPECTS Multi-part form:
+  {
+    fields: {
+      mailinMsg: {
+        html: '',
+        subject: '',
+        text: '',
+        from: [{address: 'sample@sample.com', name: 'Mark Harrell'}],
+      }
+    }
+  }
     */
     var userOptions = {
       host: '',
@@ -43,7 +49,7 @@ module.exports = function(app) {
     var mailOptions = {
       from: '', // sender address
       to: '', // list of receivers
-      subject: 'Hello', // Subject line
+      subject: 'You have a new Flybox Message', // Subject line
       text: 'Hello world', // plaintext body
       html: '<b>Hello world</b>' // html body
     };
@@ -54,10 +60,12 @@ module.exports = function(app) {
     var destPath = {};
     form.parse(req, function(err, fields, files) {
       var decodedFile;
+      console.log('before parse', fields);
+      var jsonParsed = JSON.parse(fields.mailinMsg);
+      console.log('after parse', jsonParsed);
       res.set('Content-Type', 'text/plain');
       res.status(200);
-      var jsonParsed = JSON.parse(fields.mailinMsg);
-      res.end(util.inspect({fields: fields.mailinMsg, files: files}));
+      res.json(jsonParsed);
       var emailCallback = function(error, info) {
         if (error) {
           console.log(error);
@@ -65,95 +73,114 @@ module.exports = function(app) {
           console.log('Message sent: ' + info.response);
         }
       };
-
+      var parsedEmails;
       var userEmail = jsonParsed.from[0].address;
-      var parsedEmails = jsonParsed.text.match(/#to(.*?)#/i)[1].split(' ').filter(Boolean);
-      User.findOne({ 'email': userEmail }, function(err, data) {
-        if (err) console.log(err);
-        if (data === null) console.log('data is null');
-        else {
-          userOptions.host = data.smtp.host;
-          userOptions.port = data.smtp.port;
-          userOptions.auth.user = data.smtp.username;
-          userOptions.auth.pass = data.smtp.password;
-          userOptions.secure = data.smtp.secure;
-          var random = '';
-          /*create a Box using the user parsed info.  TODO: Think OOP. */
-          var newBox = new Box();
-          newBox.creator = {
-            email: userEmail, urlKey: '', read: false, userid: data._id
-          };
-          newBox.recipients = [];
-          newBox.boxKey = alphaNumUnique();
-          for (var j = 0; j < parsedEmails.length; j++) {
-            newBox.recipients.push({email: parsedEmails[j], urlKey: '', read: false});
-            newBox.recipients[j].urlKey = alphaNumUnique();
-          }
-          newBox.subject = jsonParsed.subject;
-          newBox.date = new Date();
-          newBox.thread = [];
-          newBox.html = jsonParsed.html;
-          newBox.text = jsonParsed.text;
-          newBox.save(function(err, data) {
-            //TODO: make sure to add some error reporting
-            if (err) return console.log('could not save box');
-            if (data === null) return console.log('no box saved');
-            /* loop through the parsed emails and send out
-            the email with the created box link.
-            */
-            for (var i = 0; i < parsedEmails.length; i++) {
-              mailOptions.to = parsedEmails[i];
-              mailOptions.from = userEmail;
-              var flyboxURL = 'http://www.flybox.io/n/' + data.boxKey + '/' + data.recipients[i].urlKey;
-              mailOptions.text = 'You have a message from ' + userEmail + '.  To view the message visit: ' + flyboxURL;
-              mailOptions.html = '<b>To view your new email, <a href="' + flyboxURL + '">Click here</a></b> ';
-              var transporter = nodemailer.createTransport(userOptions);
-              transporter.sendMail(mailOptions, emailCallback);
+      if (/#to(.*?)#/i.test(jsonParsed.text)) {
+        console.log('its true');
+        parsedEmails = jsonParsed.text.match(/#to(.*?)#/i)[1].split(' ').filter(Boolean);
+        User.findOne({ 'email': userEmail }, function(err, data) {
+          if (err) console.log(err);
+          if (data === null) console.log('data is null');
+          else {
+            userOptions.host = data.smtp.host;
+            userOptions.port = data.smtp.port;
+            userOptions.auth.user = data.smtp.username;
+            userOptions.auth.pass = data.smtp.password;
+            userOptions.secure = data.smtp.secure;
+            var random = '';
+            /*create a Box using the user parsed info.  TODO: Think OOP. */
+            var newBox = new Box();
+            newBox.creator = {
+              email: userEmail, urlKey: '', read: false, userid: data._id
+            };
+            newBox.recipients = [];
+            newBox.boxKey = alphaNumUnique();
+            for (var j = 0; j < parsedEmails.length; j++) {
+              newBox.recipients.push({email: parsedEmails[j], urlKey: '', read: false});
+              newBox.recipients[j].urlKey = alphaNumUnique();
             }
-            // s3 bucket file upload
-            var fileNameArray = [];
-            Object.keys(fields).forEach(function(name) {fileNameArray.push(name);});
-            async.each(fileNameArray, function(name, callback) {
-              if (name !== 'mailinMsg') {
-                decodedFile = new Buffer(fields[name][0], 'base64');
-                destPath[name] = name;
-                s3Client.putObject({
-                  Bucket: bucket,
-                  Key: data.boxKey + '_' + destPath[name],
-                  ACL: 'public-read',
-                  Body: decodedFile,
-                  ContentLength: decodedFile.length
-                }, function(err, aws) {
-                  if (err) return console.log('s3 error: ' + err);
-                  fileURLS.push('s3-us-west-2.amazonaws.com/' + bucket + '/' + data.boxKey + '_' + destPath[name]);
+            newBox.subject = jsonParsed.subject;
+            newBox.date = new Date();
+            newBox.thread = [];
+            newBox.html = jsonParsed.html;
+            newBox.text = jsonParsed.text;
+            newBox.save(function(err, data) {
+              //TODO: make sure to add some error reporting
+              if (err) return console.log('could not save box');
+              if (data === null) return console.log('no box saved');
+              /* loop through the parsed emails and send out
+              the email with the created box link.
+              */
+              for (var i = 0; i < parsedEmails.length; i++) {
+                mailOptions.to = parsedEmails[i];
+                mailOptions.from = userEmail;
+                var flyboxURL = 'http://www.flybox.io/n/' + data.boxKey + '/' + data.recipients[i].urlKey;
+                mailOptions.text = 'You have a message from ' + userEmail + '.  To view the message visit: ' + flyboxURL;
+                mailOptions.html = '<b>To view your new email, <a href="' + flyboxURL + '">Click here</a></b> ';
+                var transporter = nodemailer.createTransport(userOptions);
+                transporter.sendMail(mailOptions, emailCallback);
+              }
+              // s3 bucket file upload
+              var fileNameArray = [];
+              Object.keys(fields).forEach(function(name) {fileNameArray.push(name);});
+              async.each(fileNameArray, function(name, callback) {
+                if (name !== 'mailinMsg') {
+                  decodedFile = new Buffer(fields[name][0], 'base64');
+                  destPath[name] = name;
+                  s3Client.putObject({
+                    Bucket: bucket,
+                    Key: data.boxKey + '_' + destPath[name],
+                    ACL: 'public-read',
+                    Body: decodedFile,
+                    ContentLength: decodedFile.length
+                  }, function(err, aws) {
+                    if (err) return console.log('s3 error: ' + err);
+                    fileURLS.push('s3-us-west-2.amazonaws.com/' + bucket + '/' + data.boxKey + '_' + destPath[name]);
+                    callback();
+                  });
+                }
+                else {
                   callback();
-                });
-              }
-              else {
-                callback();
-              }
-            }, function(err) {
-              if (err) { throw err; }
-              else {
-                // only after the file uploads have completed do we actually send them to the box
-                var fileURLSObject = {
-                  fileURLS: fileURLS
-                };
-                Box.findOneAndUpdate({_id: data._id}, fileURLSObject, function(err, box) {
-                  if (err) {
-                    return console.log('box file upload URL update error: ' + err);
-                  }
-                  if (box === null) return console.log('cannot update box with fileURLs');
-                });
-              }
+                }
+              }, function(err) {
+                if (err) { throw err; }
+                else {
+                  // only after the file uploads have completed do we actually send them to the box
+                  var fileURLSObject = {
+                    fileURLS: fileURLS
+                  };
+                  Box.findOneAndUpdate({_id: data._id}, fileURLSObject, function(err, box) {
+                    if (err) {
+                      return console.log('box file upload URL update error: ' + err);
+                    }
+                    if (box === null) return console.log('cannot update box with fileURLs');
+                  });
+                }
+              });
             });
-          });
-        }
-      });
+          }
+        });
+      }
+      else {
+        User.findOne({ 'email': userEmail }, function(err, data) {
+          if (err) console.log(err);
+          else if (data === null) console.log('data is null');
+          else {
+            userOptions.host = data.smtp.host;
+            userOptions.port = data.smtp.port;
+            userOptions.auth.user = data.smtp.username;
+            userOptions.auth.pass = data.smtp.password;
+            userOptions.secure = data.smtp.secure;
+            mailOptions.to = userEmail;
+            mailOptions.from = userEmail;
+            mailOptions.subject = 'Flybox had a problem with your msg!';
+            mailOptions.text = 'There was an issue with your #to formatting.  Please use #to test1@example.com test2@example.com #';
+            mailOptions.html = 'There was an issue with your <b>#to formatting</b>.  Please use #to test1@example.com test2@example.com #';
+            var transporter = nodemailer.createTransport(userOptions);
+            transporter.sendMail(mailOptions, emailCallback);
+          }
+        });
+      }
     });
-  });
-
-  app.get('/api/mailHook', function(req, res) {
-    res.status(200).send('works!');
   });
 };
