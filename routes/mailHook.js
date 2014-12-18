@@ -74,6 +74,7 @@ module.exports = function(app) {
       var parsedEmails;
       var userEmail = jsonParsed.from[0].address;
       var userName = jsonParsed.from[0].name;
+      console.log(jsonParsed.text);
       if (/#to(.*?)#/i.test(jsonParsed.text)) {
         parsedEmails = jsonParsed.text.match(/#to(.*?)#/i)[1].split(' ').filter(Boolean);
         parsedEmails.push(userEmail);
