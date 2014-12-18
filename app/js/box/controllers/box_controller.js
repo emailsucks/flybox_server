@@ -1,18 +1,11 @@
 'use strict';
 
 module.exports = function(app) {
-  app.controller('BoxCtrl', ['$scope', '$http', '$base64', '$cookies', '$location', '$routeParams', function($scope, $http, $base64, $cookies, $location, $routeParams) {
+  app.controller('BoxCtrl', ['$scope', '$http', '$base64', '$cookies', '$location', '$routeParams', 'socket', function($scope, $http, $base64, $cookies, $location, $routeParams, socket) {
     console.log('running in box ctrl');
-    // if (!$cookies.jwt) {
-    //   console.log('redirecting');
-    //   $location.path('/');
-    // }
 
     var boxId = $routeParams.boxId;
     var userId = $routeParams.userId;
-
-    //sample data
-    //$scope.posts = [{author:'james', text: 'Kale chips sriracha Etsy, letterpress stumptown vegan cardigan church-key. Artisan farm-to-table VHS kogi, ethical banh mi semiotics raw denim Vice 8-bit dreamcatcher. Yr lo-fi iPhone, art party brunch locavore heirloom. Raw denim 90s slow-carb, Vice messenger bag McSweeneys Blue Bottle umami '}, {author: 'frank', text: 'Art party disrupt quinoa, Helvetica sriracha locavore tattooed lumbersexual pop-up food truck Neutra. Sriracha deep v'}, {author: 'dan', text: 'Polaroid normcore fanny pack, pop-up post-ironic Kickstarter bespoke chia. '}];
 
     (function() {
       $http.get('/api/n/' + boxId + '/' + userId).success(function(data) {
@@ -27,6 +20,24 @@ module.exports = function(app) {
         $scope.recipients = data.recipients;
       });
     })();
+
+    socket.on('init', function(data) {
+      $scope.name = data.name;
+      $scope.users = data.users;
+    });
+    socket.on('send:post', function(post) {
+      $scope.posts.push(post);
+    });
+
+    $scope.makeComment = function() {
+      socket.emit('send:post', {
+        message: $scope.post.text,
+        boxKey: boxId,
+        userId: userId
+      });
+      $scope.posts.push($scope.post);
+      $scope.post.text = '';
+    };
 
     // $scope.refresh = function() {
 

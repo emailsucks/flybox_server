@@ -37,7 +37,10 @@
         </article>
       </div>
       <div class='comments-cont'>
-        <textarea placeholder=' Write a Comment'></textarea>
+        <form>
+          <input type='text' placeholder=' Write a Comment' data-ng-model='post.text'>
+          <button data-ng-click='makeComment()'>Post</button>
+        </form>
         <div>
           <article class='comments'>
 
@@ -51,7 +54,7 @@
               </div>
             </section>
 
-        </article>
+          </article>
         </div>
 
       </div>
