@@ -44,7 +44,7 @@ module.exports = function(app) {
         userId: userId
       });
       $scope.posts.push($scope.post);
-      $scope.post.text = '';
+      $scope.post = {};
     };
 
     // $scope.refresh = function() {
