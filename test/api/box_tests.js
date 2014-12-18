@@ -106,6 +106,8 @@ describe('box routes', function() {
     .end(function(err, res) {
       expect(err).to.eql(null);
       expect(res.body).to.have.property('boxKey');
+      console.log(res.body);
+      console.log(boxkey + '/' + recipientKey);
       done();
     });
   });

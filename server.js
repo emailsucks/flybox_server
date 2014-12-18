@@ -16,7 +16,7 @@ app.set('secret', process.env.SECRET || 'changethis');
 mongoose.connect(process.env.MONGO_URL ||
                 process.env.MONGOLAB_URI ||
                 process.env.MONGOHQ_URL ||
-                'mongodb://localhost/flybox_development');
+                'mongodb://localhost/flybox_test');
 
 require('./lib/passport')(passport);
 var jwtAuth = require('./lib/jwt_auth')(app.get('jwtSecret'));
