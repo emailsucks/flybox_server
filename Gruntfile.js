@@ -24,7 +24,7 @@ module.exports = function(grunt) {
       options: {
         config: '.jscsrc'
       },
-      src: ['Gruntfile.js', 'server.js']
+      src: ['Gruntfile.js', 'server.js', 'app/**/*.js']
     },
 
     mongo_drop: {
