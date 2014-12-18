@@ -3,7 +3,7 @@
   <div class="col">
     <h3>Messages</h3>
     <div class="overflowable">
-      <p data-ng-repeat="message in messages">: {{message}}</p>
+      <p data-ng-repeat="post in posts">: {{post.message}}</p>
     </div>
   </div>
   <div class="col">
@@ -14,7 +14,7 @@
   </div>
   <div class="clr">
     <form data-ng-submit="sendMessage()">Message: 
-      <input size="60" data-ng-model="message"/>
+      <input size="60" type="text" data-ng-model="post.message"/>
       <input type="submit" value="Send"/>
     </form>
   </div>

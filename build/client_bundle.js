@@ -4,10 +4,10 @@
 module.exports = function(app) {
   app.factory('socket', ['socketFactory', function(socketFactory) {
     var socket = socketFactory({
-      ioSocket: window.io.connect()
+      ioSocket: window.io.connect('http://localhost:8080')
     });
     socket.forward('error');
-    return socket();
+    return socket;
   }]);
 };
 
@@ -16,32 +16,61 @@ module.exports = function(app) {
 
 module.exports = function(app) {
   app.controller('ChatCtrl', ['$scope', 'socket', function($scope, socket) {
+    $scope.posts = [];
+
     socket.on('init', function(data) {
       $scope.name = data.name;
       $scope.users = data.users;
     });
 
-    socket.on('send:message', function(message) {
-      $scope.messages.push(message);
+    socket.on('send:message', function(post) {
+      $scope.posts.push(post);
     });
 
     $scope.sendMessage = function() {
       socket.emit('send:message', {
-        message: $scope.messages
+        message: $scope.post
       });
+      console.log($scope.posts);
+      $scope.posts.push($scope.post);
 
-      $scope.messages.push({
-        user: $scope.name,
-        text: $scope.messages
-      });
-
-      $scope.message = '';
+      $scope.post.message = '';
     };
 
   }]);
 };
 
 },{}],3:[function(require,module,exports){
+'use strict';
+
+module.exports = function(app) {
+  app.factory('socket', ['$rootScope', function($rootScope) {
+
+    var socket = socket.connect();
+    return {
+      on: function(eventName, callback) {
+        socket.on(eventName, function() {
+          var args = arguments;
+          $rootScope.$apply(function() {
+            callback.apply(socket, args);
+          });
+        });
+      },
+      emit: function(eventName, data, callback) {
+        socket.emit(eventName, data, function() {
+          var args = arguments;
+          $rootScope.$apply(function() {
+            if (callback) {
+              callback.apply(socket, args);
+            }
+          });
+        });
+      }
+    };
+  }]);
+};
+
+},{}],4:[function(require,module,exports){
 'use strict';
 
 require("./../../bower_components/angular/angular");
@@ -77,7 +106,7 @@ app.config(['$routeProvider', function($routeProvider) {
   });
 }]);
 
-},{"./../../bower_components/angular-base64/angular-base64.js":8,"./../../bower_components/angular-cookies/angular-cookies.js":9,"./../../bower_components/angular-route/angular-route.js":10,"./../../bower_components/angular-socket-io/socket.js":11,"./../../bower_components/angular/angular":12,"./../../bower_components/socket.io-client/socket.io":13,"./SocketService":1,"./chat_controller":2,"./inbox/inbox":5,"./users/users":7}],4:[function(require,module,exports){
+},{"./../../bower_components/angular-base64/angular-base64.js":9,"./../../bower_components/angular-cookies/angular-cookies.js":10,"./../../bower_components/angular-route/angular-route.js":11,"./../../bower_components/angular-socket-io/socket.js":12,"./../../bower_components/angular/angular":13,"./../../bower_components/socket.io-client/socket.io":14,"./SocketService":1,"./chat_controller":2,"./inbox/inbox":6,"./users/users":8}],5:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app) {
@@ -151,14 +180,14 @@ module.exports = function(app) {
   }]);
 };
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app) {
   require('./controllers/inbox_controller')(app);
 };
 
-},{"./controllers/inbox_controller":4}],6:[function(require,module,exports){
+},{"./controllers/inbox_controller":5}],7:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app) {
@@ -211,14 +240,14 @@ module.exports = function(app) {
   }]);
 };
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app) {
   require('./controllers/users_controller')(app);
 };
 
-},{"./controllers/users_controller":6}],8:[function(require,module,exports){
+},{"./controllers/users_controller":7}],9:[function(require,module,exports){
 (function() {
     'use strict';
 
@@ -386,7 +415,7 @@ module.exports = function(app) {
 
 })();
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 /**
  * @license AngularJS v1.3.7
  * (c) 2010-2014 Google, Inc. http://angularjs.org
@@ -594,7 +623,7 @@ angular.module('ngCookies', ['ng']).
 
 })(window, window.angular);
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /**
  * @license AngularJS v1.3.7
  * (c) 2010-2014 Google, Inc. http://angularjs.org
@@ -1591,7 +1620,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 })(window, window.angular);
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /*
  * @license
  * angular-socket-io v0.7.0
@@ -1696,7 +1725,7 @@ angular.module('btford.socket-io', []).
     }];
   });
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /**
  * @license AngularJS v1.3.6
  * (c) 2010-2014 Google, Inc. http://angularjs.org
@@ -27697,7 +27726,7 @@ var styleDirective = valueFn({
 })(window, document);
 
 !window.angular.$$csp() && window.angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}</style>');
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 (function (global){
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.io=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 
@@ -34414,4 +34443,4 @@ function toArray(list, index) {
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}]},{},[1,2,3,4,5,6,7]);
+},{}]},{},[1,2,3,4,5,6,7,8]);
