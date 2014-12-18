@@ -17,9 +17,14 @@ module.exports = function(app) {
     (function() {
       $http.get('/api/n/' + boxId + '/' + userId).success(function(data) {
         console.log(data);
+        $scope.original = {
+          subject: data.subject,
+          post: data.text,
+          date: data.date,
+          author: data.creator.email
+        };
         $scope.posts = data.thread;
         $scope.recipients = data.recipients;
-        $scope.subject = data.subject;
       });
     })();
 

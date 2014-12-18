@@ -25,9 +25,14 @@ module.exports = function(app) {
     (function() {
       $http.get('/api/n/' + boxId + '/' + userId).success(function(data) {
         console.log(data);
+        $scope.original = {
+          subject: data.subject,
+          post: data.text,
+          date: data.date,
+          author: data.creator.email
+        };
         $scope.posts = data.thread;
         $scope.recipients = data.recipients;
-        $scope.subject = data.subject;
       });
     })();
 
@@ -134,7 +139,7 @@ module.exports = function(app) {
     $scope.goToInbox = function() {
       return $location.path('/inbox');
     };
-    
+
     var getBoxes = function() {
       $http({
         method: 'GET',
@@ -149,9 +154,9 @@ module.exports = function(app) {
         console.log('err', data);
       });
     };
-    
+
     getBoxes();
-    
+
     $scope.goToBox = function() {
       console.log('going to fwd to a box, lol');
     };
