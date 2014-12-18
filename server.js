@@ -4,7 +4,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bp = require('body-parser');
 var passport = require('passport');
-var socket = require('./routes/.socket');
+var socket = require('./routes/socket');
 
 var app = express();
 app.use(express.static(__dirname + '/build'));
