@@ -9,6 +9,7 @@ var app = angular.module('flyboxApp', ['ngRoute', 'ngCookies', 'base64']);
 
 require('./users/users')(app);
 require('./inbox/inbox')(app);
+require('./box/box')(app);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
@@ -20,6 +21,10 @@ app.config(['$routeProvider', function($routeProvider) {
   })
   .when('/settings/', {
     templateUrl: 'templates/settings.html'
+  })
+  .when('/n/:boxId/:userId/', {
+    templateUrl: 'templates/box.html',
+    controller: 'BoxCtrl'
   })
   .otherwise({
     redirectTo: '/'
