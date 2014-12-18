@@ -45,6 +45,20 @@ module.exports = function(app) {
     $scope.goToInbox = function() {
       return $location.path('/inbox');
     };
+    
+    $scope.getBoxes = function() {
+      $http({
+        method: 'GET',
+        url: '/api/boxes',
+        headers: {jwt: $cookies.jwt}
+      })
+      .success(function(data) {
+        console.log(data);
+      })
+      .error(function(data) {
+        console.log('err', data);
+      });
+    };
 
     $scope.saveSettings = function() {
       $scope.errors = null;
