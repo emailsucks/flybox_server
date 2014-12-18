@@ -9,14 +9,14 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="468px"
-   height="60px"
-   id="svg3507"
+   width="32px"
+   height="32px"
+   id="svg2985"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="New document 15">
+   sodipodi:docname="profilePic.svg">
   <defs
-     id="defs3509" />
+     id="defs2987" />
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -24,19 +24,20 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.2"
-     inkscape:cx="209.16639"
-     inkscape:cy="-22.244018"
-     inkscape:document-units="px"
+     inkscape:zoom="11.197802"
+     inkscape:cx="14.437193"
+     inkscape:cy="5.9927738"
      inkscape:current-layer="layer1"
-     showgrid="false"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
      inkscape:window-width="1333"
      inkscape:window-height="744"
      inkscape:window-x="33"
      inkscape:window-y="24"
      inkscape:window-maximized="1" />
   <metadata
-     id="metadata3512">
+     id="metadata2990">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -52,10 +53,24 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
     <path
-       style="fill:none;stroke:#2d2dff;stroke-width:59.97978973;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="M 438.01011,29.989896 29.989893,30.010104"
-       id="path3517"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cc" />
+       sodipodi:type="arc"
+       style="fill:#5d5d5d;fill-opacity:1;stroke:none"
+       id="path2993"
+       sodipodi:cx="15.762022"
+       sodipodi:cy="16.907753"
+       sodipodi:rx="7.3675175"
+       sodipodi:ry="5.8047104"
+       d="m 23.129539,16.907753 a 7.3675175,5.8047104 0 1 1 -14.7350345,0 7.3675175,5.8047104 0 1 1 14.7350345,0 z"
+       transform="matrix(1,0,0,1.1923077,0.23797798,-5.768652)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#5d5d5d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       id="path2995"
+       sodipodi:cx="15.940628"
+       sodipodi:cy="26.865065"
+       sodipodi:rx="12.279196"
+       sodipodi:ry="6.2065754"
+       d="m 28.219824,26.865065 a 12.279196,6.2065754 0 1 1 -24.5583917,0 12.279196,6.2065754 0 1 1 24.5583917,0 z"
+       transform="matrix(1.4129589,0,0,2.5827216,-6.5234523,-32.457839)" />
   </g>
 </svg>
