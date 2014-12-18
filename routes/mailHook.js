@@ -48,7 +48,7 @@ module.exports = function(app) {
     var mailOptions = {
       from: '', // sender address
       to: '', // list of receivers
-      subject: 'Hello', // Subject line
+      subject: 'You have a new Flybox Message', // Subject line
       text: 'Hello world', // plaintext body
       html: '<b>Hello world</b>' // html body
     };
@@ -170,6 +170,7 @@ module.exports = function(app) {
             userOptions.secure = data.smtp.secure;
             mailOptions.to = userEmail;
             mailOptions.from = userEmail;
+            mailOptions.subject = 'Flybox had a problem with your msg!';
             mailOptions.text = 'There was an issue with your #to formatting.  Please use #to test1@example.com test2@example.com #';
             mailOptions.html = 'There was an issue with your <b>#to formatting</b>.  Please use #to test1@example.com test2@example.com #';
             var transporter = nodemailer.createTransport(userOptions);
