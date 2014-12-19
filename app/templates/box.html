@@ -37,7 +37,7 @@
           <section class='otherBody'><a class='lightbox-prev' data-ng-repeat="file in attachments" href='{{file.source}}'>
             <img src="{{file.image}}">
             </a>
-            <a href="#_" class='lightbox' id='img1'><img src="{{file.image}}"></a>
+            <a href="#_" class='lightbox' id='{{file.image}}'><img src="{{file.image}}"></a>
           </section>
           <section class='textBody'><p ng-hide="textBody.editing" ng-click="textBody.editing = true" id='aaa' data-ng-model="original"><img src="../logo/600px-Black_pencil.svg.png" id='edit'>{{original.post}}</p>
 
