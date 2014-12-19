@@ -26,6 +26,7 @@ module.exports = function(app) {
         };
         $scope.posts = data.thread;
         $scope.recipients = data.recipients;
+        $scope.textBody = {text:$scope.original.post};
       });
     })();
 
@@ -39,12 +40,15 @@ module.exports = function(app) {
 
     $scope.makeComment = function() {
       socket.emit('send:post', {
-        message: $scope.post.text,
+        message: $scope.newPost.text,
         boxKey: boxId,
         userId: userId
       });
-      $scope.posts.push($scope.post);
-      $scope.post = {};
+      var tempPost = $scope.newPost;
+      tempPost.author = 'me';
+      tempPost.time = Date.now();
+      $scope.posts.push(tempPost);
+      $scope.newPost = {};
     };
 
     // $scope.refresh = function() {
@@ -62,6 +66,13 @@ module.exports = function(app) {
 
     $scope.goToInbox = function() {
       return $location.path('/inbox');
+    };
+
+    $scope.doneEditing = function() {
+      $scope.textBody.editing = false;
+      $scope.original.post = $scope.textBody.text;
+
+      //TODO update db with socket
     };
 
   }]);

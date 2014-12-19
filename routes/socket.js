@@ -26,12 +26,11 @@ module.exports = function(socket) {
       newPost.time = Date.now();
       current.thread.push(newPost);
       current.save();
-    });
-
-    socket.broadcast.emit('send:post', {
-      text: data.message,
-      author: name,
-      date: Date.now()
+      socket.broadcast.emit('send:post', {
+        text: data.message,
+        author: name,
+        time: Date.now()
+      });
     });
   });
 };

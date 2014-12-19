@@ -7,6 +7,7 @@ body
 header
   display: flex
   justify-content: space-between
+  flex-direction: column
   width: 100%
   // height: 5em
   border-bottom: 1px solid rgba(225,225,225,0.5)
@@ -14,13 +15,43 @@ header
   -moz-box-shadow: 0 5px 18px -8px black
   box-shadow: 0 5px 18px -8px black
   margin-bottom: 1em
+  #menu
+    display: flex
+    width: 100%
+    height: 1.3em
+    // left: 5em
+    ul
+      padding: 0px
+      margin: 0px
+      margin: 0 auto
+      display: flex
+      flex-direction: row
+      list-style-type: none
+      border-bottom: 1px solid #dddbdb
+      @media #{$media}
+        margin: 0 auto
+        padding: 0px
+      li
+        padding-right: 1em
+        padding-left: 1em
+        a
+          text-decoration: none
+          color: #8c8c8c
+          &:hover
+            color: #5e5e5e
+  #images
+    display: flex
+    flex-direction: row
+    @media #{$media}
+      margin-top: -1.3em
   .people
     width: 100%
     align-items: center
-    margin-top: 1em
+    margin-top: 2px
     // margin: 0 auto
     @media #{$media}
       width: 100%
+      margin-top: 0px
     ul
       padding: 0px
       list-style-type: none
@@ -29,6 +60,7 @@ header
       flex-direction: row
       margin: 3px 0px 3px 0px
       flex-wrap: wrap
+      text-align: center
       @media #{$media}
         justify-content: flex-end
       li
@@ -40,7 +72,7 @@ header
         // align-items: flex-end
         margin: 0px 3px 0px 3px
         border-radius: 100%
-        opacity: 0.2
+        opacity: 0.8
         // min-width: 3em
         // min-height: 2em
         // background-color: #c32424
@@ -49,24 +81,25 @@ header
         // font-size: 1.5em
         // text-align: center
         // line-height: 3em
+        p
+          font-size: 3.5em
+          color: white
         &:hover
           opacity: 1.0
         img
           padding: 0px
-          width: 3.5em
-          height: 3.5em
-          margin: 0 auto
+          width: 4em
           border-radius: 100%
         &:nth-child(1)
-          background-color: rgba(random(255), random(255), random(255), random(10) / 10)
+          background-color: rgba(random(80), random(100), 255 - random(100), 1)
         &:nth-child(2)
-          background-color: rgba(random(255), random(255), random(255), random(10) / 10)
+          background-color: rgba(random(80), random(100), 255 - random(80), 1)
         &:nth-child(3)
-          background-color: rgba(random(255), random(255), random(255), random(10) / 10)
+          background-color: rgba(random(80), random(100), 255 - random(90), 1)
         &:nth-child(4)
-          background-color: rgba(random(255), random(255), random(255), random(10) / 10)
+          background-color: rgba(random(80), random(100), 255 - random(100), 1)
         &:nth-child(5)
-          background-color: rgba(random(255), random(255), random(255), random(10) / 10)
+          background-color: rgba(random(10), random(50), random(255), random(10) / 10)
         &:nth-child(6)
           background-color: rgba(random(255), random(255), random(255), random(10) / 10)
         &:nth-child(7)
@@ -91,7 +124,6 @@ header
       opacity: 0.8
       margin: 0px
       margin-left: 5px
-      margin-top: 15px
     img
       width: 100%
 main
@@ -125,15 +157,26 @@ main
     h1
       border-bottom: 1px solid rgba(225,225,225,0.5)
     .textbody
+      position: relative
       overflow-y: auto
-    #aaa
-      @media #{$media}
-        // font-size: 1em
+    #editing
+      resize: none
+      width: 95%
+      margin: 0 auto
+      height: 30vh
+    #saveEdit
+      width: 8em
+      min-height: 2em
+      background-color: #708edf
+      border: 0px
+      color: white
+      font-weight: bold
+      // margin: 0 auto
     .otherBody
       display: flex
       flex-direction: row
       justify-content: center
-      flex-wrap: wrap
+      // flex-wrap: wrap
       img
         max-width: 30%
         max-height: 5em
@@ -143,16 +186,32 @@ main
         @media #{$media}
           max-width: 100%
     p
+      cursor: pointer
       padding-left: 2%
       padding-right: 2%
       text-align: justify
       margin: 0
+      position: relative
+      &:hover
+        & > #edit
+          display: block
+      #edit
+        width: 1.5em
+        position: absolute
+        top: -2em
+        left: 1em
+        display: none
+        opacity: 0.6
+        z-index: 3242
+        &:hover
+          opacity: 1.0
+          display: block
     .options
       display: flex
       flex-direction: row
       position: relative
       justify-content: space-around
-      background-color: rgba(195,36,36, 0.8)
+      background-color: rgba(234,67,67, 1.0)
       height: 4em
       margin: 0 auto
       margin-top: 1em
@@ -160,7 +219,7 @@ main
       @media #{$media}
         position: fixed
         bottom: 0
-        width: 57%
+        width: 59%
         // margin-top: 0px
       .favourite
         padding: 10px
@@ -209,16 +268,16 @@ main
         & > label
           width: 3em
           height: 3em
-          background: url(../logo/open-box.svg) no-repeat
+          background: url(../../logo/open-box.svg) no-repeat
           background-position: 50% -20%
         & > label:hover
-          background: url(../logo/closed-box-hover.svg) no-repeat
+          background: url(../../logo/closed-box-hover.svg) no-repeat
           background-position: 50% -20%
       .mute > input:checked ~ label
-        background: url(../logo/closed-box.svg) no-repeat
+        background: url(../../logo/closed-box.svg) no-repeat
         background-position: 50% -20%
       .mute > input:checked + label:hover
-        background: url(../logo/closed-box-hover.svg) no-repeat
+        background: url(../../logo/closed-box-hover.svg) no-repeat
         background-position: 50% -20%
       .search
         width: 2em
@@ -247,10 +306,15 @@ main
           display: block
   .body-cont
     @media #{$media}
-      // border-right: 1px solid rgba(225,225,225,0.5)
+      border-right: 1px solid rgba(225,225,225,0.5)
+      border-left: 1px solid rgba(225,225,225,0.5)
+      // -webkit-box-shadow: 0 5px 18px -8px black
+      // -moz-box-shadow: 0 5px 18px -8px black
+      // box-shadow: 0 5px 18px -8px black
       padding-right: 1%
       width: 58%
       margin: 0 auto
+      height: calc((90vh) - 6em)
   .comments-cont
     @media #{$media}
       border-left: 1px solid rgba(225,225,225,0.5)
@@ -265,9 +329,21 @@ main
       margin-bottom: 4px
       padding: 0px
       border: 1px solid rgba(225,225,225,0.5)
-      -webkit-box-shadow: 0 5px 18px -8px black
-      -moz-box-shadow: 0 5px 18px -8px black
-      box-shadow: 0 5px 18px -8px black
+      -webkit-box-shadow: 0 5px 10px -8px black
+      -moz-box-shadow: 0 5px 10px -8px black
+      box-shadow: 0 5px 10px -8px black
+    #send
+      width: 10em
+      min-height: 2.5em
+      background-color: #708edf
+      border: 0px
+      color: white
+      font-weight: bold
+      margin: 0 auto
+      &:hover
+        background-color: #7d99e5
+      &:active
+        width: 9.8em
     .comments
       width: 100%
       display: flex
@@ -297,11 +373,14 @@ main
           justify-content: center
           text-align: center
           word-wrap: break-word
-          img
+          .circle
             width: 4em
             margin: 0 auto
             border-radius: 100%
             background-color: #7f86e5
+            letter
+              text-align: center
+              color: #fff
           p
             color: #949494
           .email
