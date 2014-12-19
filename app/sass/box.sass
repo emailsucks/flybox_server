@@ -50,22 +50,6 @@ header
     @media #{$media}
       width: 80%
       margin-top: 0px
-      overflow-y: auto
-      &::-webkit-scrollbar
-        width: 6px
-        height: 6px
-      &::-webkit-scrollbar-track
-        background: #bababa
-      &::-webkit-scrollbar-thumb
-        background: #888888
-      &:hover
-        &::-webkit-scrollbar
-          width: 6px
-          height: 6px
-        &::-webkit-scrollbar-track
-          background: #bababa
-        &::-webkit-scrollbar-thumb
-          background: #888888
     ul
       padding: 0px
       list-style-type: none
@@ -77,6 +61,7 @@ header
       text-align: center
       @media #{$media}
         justify-content: flex-end
+        overflow-y: auto
       li
         height: 4em
         width: 4em
@@ -84,7 +69,6 @@ header
         display: flex
         margin: 0px 3px 0px 3px
         opacity: 0.8
-        cursor: default
         p
           text-transform: uppercase
           font-size: 3.5em
@@ -189,7 +173,7 @@ main
       flex-direction: row
       position: relative
       justify-content: space-around
-      background-color: #bb0c0c
+      background-color: rgba(234,67,67, 1.0)
       height: 4em
       margin: 0 auto
       margin-top: 1em
@@ -226,7 +210,7 @@ main
       .favourite > input:checked + label:hover
         color: gold
       .mute
-        width: 3em
+        width: 4em
       .mute:not(:checked)
         border: 0px
         & > input
@@ -236,22 +220,18 @@ main
         & > label
           margin: 0 auto
           float: right
-          width: 3em
-          height: 3em
+          width: 4em
+          height: 4em
           overflow: hidden
           white-space: nowrap
           cursor: pointer
           background: url(../logo/following.svg) no-repeat
-          background-size: 3em 3em
         & > label:hover
           background: url(../logo/mute.svg) no-repeat
-          background-size: 3em 3em
+          background-position: 50%
       .mute > input:checked ~ label
-        background: url(../logo/mute.svg) no-repeat
-        background-size: 3em 3em
-      .mute > input:checked + label:hover
-        background: url(../logo/following.svg) no-repeat
-        background-size: 3em 3em
+          background: url(../logo/following.svg) no-repeat
+      // .mute > input:checked + label:hover
 
       .search
         width: 2em
