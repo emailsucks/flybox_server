@@ -64,8 +64,8 @@ module.exports = function(app) {
 
     getBoxes();
 
-    $scope.goToBox = function() {
-      console.log('going to fwd to a box, lol');
+    $scope.goToBox = function(boxKey, creatorKey) {
+      return $location.path('/n/' + boxKey + '/' + creatorKey);
     };
 
     $scope.saveSettings = function() {

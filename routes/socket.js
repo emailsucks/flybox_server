@@ -17,9 +17,11 @@ module.exports = function(socket) {
       }
       var newPost = {};
       current.recipients.forEach(function(recipient) { //TODO: add catch for creator post
+        recipient.read = false;
         if (recipient.urlKey === data.userId) {
           newPost.author = recipient.email;
           name = recipient.email;
+          recipient.read = true;
         }
       });
       newPost.text = data.message;

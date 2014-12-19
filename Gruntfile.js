@@ -7,7 +7,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-simple-mocha');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-sass');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-express-server');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -54,10 +54,14 @@ module.exports = function(grunt) {
     },
 
     sass: {
-      dev: {
+      options: {
+        sourceMap: true
+      },
+      dist: {
         files: {
           'build/CSS/inbox.css': 'app/sass/inbox.sass',
           'build/CSS/style.css': 'app/sass/style.sass',
+          'build/CSS/colors.css': 'app/sass/colors.sass',
           'build/CSS/box.css': 'app/sass/box.sass'
         }
       }
@@ -95,7 +99,7 @@ module.exports = function(grunt) {
     watch: {
       sass: {
         files: 'app/sass/*',
-        tasks: 'sass:dev'
+        tasks: 'sass'
       },
       express: {
         files: 'server.js',
@@ -127,7 +131,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['test']);
   grunt.registerTask('test', ['jshint', 'jscs', 'mongo_drop', 'simplemocha']);
   grunt.registerTask('test:client', ['jshint', 'jscs', 'mongo_drop', 'build:test', 'karma']);
-  grunt.registerTask('build', ['jshint', 'jscs', 'clean:dev', 'copy:dev', 'sass:dev', 'browserify:dev']);
   grunt.registerTask('build:test', ['jshint', 'jscs', 'clean:dev', 'copy:dev', 'sass:dev', 'browserify:test']);
+  grunt.registerTask('build', ['jshint', 'jscs', 'clean:dev', 'copy:dev', 'sass', 'browserify:dev']);
   grunt.registerTask('serve', ['build:dev', 'express:dev', 'watch']);
 };

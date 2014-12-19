@@ -23,9 +23,11 @@ module.exports = function(app) {
             url = 'http://iconbug.com/data/5b/507/52ff0e80b07d28b590bbc4b30befde52.png';
           } else if ((/\.doc$/).test(url)) {
             url = 'http://seoul2013.citynetcongress.org/wp-content/uploads/2013/08/Word-Doc-Icon.png';
+          } else {
+            url = 'http://' + url;
           }
           $scope.attachments.push({
-            source: file,
+            source: 'http://' + file,
             image: url
           });
         });
@@ -35,18 +37,18 @@ module.exports = function(app) {
       });
     })();
 
-//    console.log('before the crash', $document.document.bod);
-//    console.log('before the crash set', $document.body.offsetWidth);
-//    var width = $document[0].body.offsetWidth;
-//    if (width > 1000) {
-//      console.log('running the if');
-//      var sections = $document.querySelector('.comments').getElementsByTagName('section');
-//      var len = sections.length;
-//      for (var i = 0; i < len; i++) {
-//        var divH = sections[i].querySelectorAll('div')[0].offsetHeight;
-//        sections[i].style.minHeight = divH + 'px';
-//      }
-//    }
+    //    console.log('before the crash', $document.document.bod);
+    //    console.log('before the crash set', $document.body.offsetWidth);
+    //    var width = $document[0].body.offsetWidth;
+    //    if (width > 1000) {
+    //      console.log('running the if');
+    //      var sections = $document.querySelector('.comments').getElementsByTagName('section');
+    //      var len = sections.length;
+    //      for (var i = 0; i < len; i++) {
+    //        var divH = sections[i].querySelectorAll('div')[0].offsetHeight;
+    //        sections[i].style.minHeight = divH + 'px';
+    //      }
+    //    }
 
     socket.on('init', function(data) {
       $scope.name = data.name;

@@ -77,7 +77,7 @@ module.exports = function(app) {
       var lineBreakCleaned = jsonParsed.text.replace(/(\r\n|\n|\r)/gm, ' ');
       if (/#to(.*?)#/i.test(lineBreakCleaned)) {
         parsedEmails = lineBreakCleaned.match(/#to(.*?)#/i)[1].split(' ').filter(Boolean);
-        parsedEmails.push(userEmail);
+        parsedEmails.unshift(userEmail);
         User.findOne({ 'email': userEmail }, function(err, data) {
           if (err) console.log(err);
           if (data === null) console.log('data is null');
