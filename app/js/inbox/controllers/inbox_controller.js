@@ -55,10 +55,11 @@ module.exports = function(app) {
       })
       .success(function(data) {
         $scope.boxes = data;
-        console.log(data);
+        console.log('got them Boxes', data);
       })
       .error(function(data) {
-        console.log('err', data);
+        console.log('err from getBoxes', data);
+        $scope.logOut();
       });
     };
 
