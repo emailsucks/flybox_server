@@ -74,7 +74,7 @@ module.exports = function(app) {
       var parsedEmails;
       var userEmail = jsonParsed.from[0].address;
       var userName = jsonParsed.from[0].name;
-      var lineBreakCleaned = jsonParsed.text.replace(/(\r\n|\n|\r)/gm, '');
+      var lineBreakCleaned = jsonParsed.text.replace(/(\r\n|\n|\r)/gm, ' ');
       if (/#to(.*?)#/i.test(lineBreakCleaned)) {
         parsedEmails = lineBreakCleaned.match(/#to(.*?)#/i)[1].split(' ').filter(Boolean);
         parsedEmails.push(userEmail);
