@@ -43,9 +43,6 @@ header {
   header #images {
     display: flex;
     flex-direction: row; }
-    @media screen and (min-width: 1000px) {
-      header #images {
-        margin-top: -1.3em; } }
   header .people {
     width: 100%;
     align-items: center;
@@ -84,51 +81,27 @@ header {
           width: 4em;
           border-radius: 100%; }
         header .people ul li:nth-child(1) {
-<<<<<<< HEAD
-          background-color: #2c4bd3; }
+          background-color: #4528ca; }
         header .people ul li:nth-child(2) {
-          background-color: #3617c4; }
+          background-color: #0d58b3; }
         header .people ul li:nth-child(3) {
-          background-color: #100bfd; }
+          background-color: #3851e6; }
         header .people ul li:nth-child(4) {
-          background-color: #0957f5; }
+          background-color: #060fdb; }
         header .people ul li:nth-child(5) {
-          background-color: rgba(8, 28, 74, 0.5); }
+          background-color: rgba(2, 16, 8, 0.8); }
         header .people ul li:nth-child(6) {
-          background-color: rgba(189, 245, 130, 0.5); }
+          background-color: rgba(113, 207, 93, 0.8); }
         header .people ul li:nth-child(7) {
-          background-color: rgba(160, 181, 177, 0.3); }
+          background-color: rgba(7, 219, 72, 0.6); }
         header .people ul li:nth-child(8) {
-          background-color: rgba(66, 208, 69, 0.4); }
+          background-color: rgba(228, 7, 166, 0.3); }
         header .people ul li:nth-child(9) {
-          background-color: rgba(219, 189, 247, 0.7); }
+          background-color: rgba(63, 73, 143, 0.2); }
         header .people ul li:nth-child(10) {
-          background-color: rgba(36, 210, 106, 0.9); }
+          background-color: rgba(182, 43, 232, 0.6); }
         header .people ul li:nth-child(11) {
-          background-color: #89103d; }
-=======
-          background-color: #0d5eb0; }
-        header .people ul li:nth-child(2) {
-          background-color: #1a14dc; }
-        header .people ul li:nth-child(3) {
-          background-color: #213dde; }
-        header .people ul li:nth-child(4) {
-          background-color: #3738a7; }
-        header .people ul li:nth-child(5) {
-          background-color: rgba(8, 9, 154, 0.3); }
-        header .people ul li:nth-child(6) {
-          background-color: rgba(253, 84, 181, 0.5); }
-        header .people ul li:nth-child(7) {
-          background-color: rgba(235, 236, 189, 0.1); }
-        header .people ul li:nth-child(8) {
-          background-color: rgba(234, 29, 145, 0.7); }
-        header .people ul li:nth-child(9) {
-          background-color: rgba(55, 148, 182, 0.4); }
-        header .people ul li:nth-child(10) {
-          background-color: rgba(69, 70, 15, 0.5); }
-        header .people ul li:nth-child(11) {
-          background-color: rgba(171, 78, 93, 0.1); }
->>>>>>> 1d89735673d7ad9a4577397a8fb6c6408c9a0f90
+          background-color: rgba(246, 45, 7, 0.2); }
         header .people ul li p {
           width: 100%;
           height: 100%;
@@ -329,7 +302,11 @@ main {
   @media screen and (min-width: 1000px) {
     main .comments-cont {
       border-left: 1px solid rgba(225, 225, 225, 0.5);
-      padding-right: 1%; } }
+      padding-right: 1%; }
+      main .comments-cont #extraCont {
+        min-height: calc((100vh) - 17em);
+        max-height: calc((100vh) - 17em);
+        overflow-y: auto; } }
   main .comments-cont textarea {
     width: calc((100%) - 2px);
     resize: none;
@@ -358,7 +335,7 @@ main {
     display: flex;
     justify-content: space-between;
     flex-direction: column-reverse;
-    overflow: auto; }
+    overflow-y: auto; }
     main .comments-cont .comments section {
       padding-right: 5px;
       padding-top: 15px;
@@ -381,14 +358,22 @@ main {
         justify-content: center;
         text-align: center;
         word-wrap: break-word; }
-        main .comments-cont .comments section aside .circle {
+        main .comments-cont .comments section aside ul {
           width: 4em;
+          margin: 0px;
           margin: 0 auto;
+          min-height: 4em;
+          padding: 0px;
           border-radius: 100%;
           background-color: #7f86e5; }
-          main .comments-cont .comments section aside .circle letter {
+          main .comments-cont .comments section aside ul li {
             text-align: center;
-            color: #fff; }
+            color: #fff;
+            padding: 0;
+            margin: 0px;
+            width: 100%;
+            font-weight: bold;
+            font-size: 3.5em; }
         main .comments-cont .comments section aside p {
           color: #949494; }
         main .comments-cont .comments section aside .email {
