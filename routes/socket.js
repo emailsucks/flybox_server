@@ -29,7 +29,7 @@ module.exports = function(socket) {
       socket.broadcast.emit('send:post', {
         text: data.message,
         author: name,
-        date: Date.now()
+        time: Date.now()
       });
     });
   });

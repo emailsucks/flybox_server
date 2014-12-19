@@ -46,6 +46,7 @@ module.exports = function(app) {
       });
       var tempPost = $scope.newPost;
       tempPost.author = 'me';
+      tempPost.time = Date.now();
       $scope.posts.push(tempPost);
       $scope.newPost = {};
     };
