@@ -7,5 +7,4 @@ bower_components
 .DS_store
 build
 test/test_bundle.js
-build
 **/*bundle.js
