@@ -7,6 +7,7 @@ var Box = require('../models/box');
 var AWS = require('aws-sdk');
 var fs = require('fs');
 var async = require('async');
+var _ = require('underscore');
 
 module.exports = function(app) {
   //AMAZON S3
@@ -70,6 +71,7 @@ module.exports = function(app) {
         } else {
           console.log('Message sent: ' + info.response);
         }
+
       };
       var parsedEmails;
       var userEmail = jsonParsed.from[0].address;
@@ -112,20 +114,45 @@ module.exports = function(app) {
               /* loop through the parsed emails and send out
               the email with the created box link.
               */
-              for (var i = 0; i < parsedEmails.length; i++) {
-                mailOptions.to = parsedEmails[i];
+              var mailFunc = function(email, callback) {
+                mailOptions.to = email;
                 mailOptions.from = userEmail;
-                var flyboxURL = 'http://www.flybox.io/#/n/' + data.boxKey + '/' + data.recipients[i].urlKey;
+                var flyboxURL = 'http://www.flybox.io/#/n/' + data.boxKey + '/' + data.recipients[parsedEmails.indexOf(email)].urlKey;
                 mailOptions.text = userName + ' has started a new conversation with you.  To view this conversation: ' + flyboxURL;
                 mailOptions.html = '<center>' + userName + ' has started a new conversation with you.<br><b>To view this conversation, <a href="' + flyboxURL + '">Click here</a></b><br><br><br><br><img src="http://www.flybox.io/logo/flybox.png" width="50px" height="18px"><br>This service provided by <a href="www.flybox.io">flybox.io</center> ';
                 var transporter = nodemailer.createTransport(userOptions);
-                transporter.sendMail(mailOptions, emailCallback);
-              }
+                transporter.sendMail(mailOptions, function(error, info) {
+                  if (error) {
+                    console.log(error);
+                    callback(error);
+                  } else {
+                    console.log('Message sent: ' + info.response);
+                    callback();
+                  }
+                });
+              };
+              async.eachLimit(parsedEmails, 2, mailFunc, function(err) {
+                if (err) console.log(err);
+                console.log('next async');
+              });
+
+              // for (var i = 0; i < parsedEmails.length; i++) {
+              //   mailOptions.to = parsedEmails[i];
+              //   mailOptions.from = userEmail;
+              //   var flyboxURL = 'http://www.flybox.io/#/n/' + data.boxKey + '/' + data.recipients[i].urlKey;
+              //   mailOptions.text = userName + ' has started a new conversation with you.  To view this conversation: ' + flyboxURL;
+              //   mailOptions.html = '<center>' + userName + ' has started a new conversation with you.<br><b>To view this conversation, <a href="' + flyboxURL + '">Click here</a></b><br><br><br><br><img src="http://www.flybox.io/logo/flybox.png" width="50px" height="18px"><br>This service provided by <a href="www.flybox.io">flybox.io</center> ';
+              //   var transporter = nodemailer.createTransport(userOptions);
+              //   transporter.sendMail(mailOptions, emailCallback);
+              // }
               // s3 bucket file upload
               var fileNameArray = [];
+              console.log(jsonParsed.attachments);
               Object.keys(fields).forEach(function(name) {fileNameArray.push(name);});
               async.each(fileNameArray, function(name, callback) {
                 if (name !== 'mailinMsg') {
+                  var cType = _.findWhere(jsonParsed.attachments, {fileName: name});
+                  console.log(cType);
                   decodedFile = new Buffer(fields[name][0], 'base64');
                   destPath[name] = name;
                   s3Client.putObject({
@@ -133,7 +160,8 @@ module.exports = function(app) {
                     Key: data.boxKey + '_' + destPath[name],
                     ACL: 'public-read',
                     Body: decodedFile,
-                    ContentLength: decodedFile.length
+                    ContentLength: decodedFile.length,
+                    ContentType: cType.contentType
                   }, function(err, aws) {
                     if (err) return console.log('s3 error: ' + err);
                     fileURLS.push('s3-us-west-2.amazonaws.com/' + bucket + '/' + data.boxKey + '_' + destPath[name]);
