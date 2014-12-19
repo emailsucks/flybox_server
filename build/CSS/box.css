@@ -43,9 +43,6 @@ header {
   header #images {
     display: flex;
     flex-direction: row; }
-    @media screen and (min-width: 1000px) {
-      header #images {
-        margin-top: -1.3em; } }
   header .people {
     width: 100%;
     align-items: center;
@@ -84,27 +81,27 @@ header {
           width: 4em;
           border-radius: 100%; }
         header .people ul li:nth-child(1) {
-          background-color: #3b0fef; }
+          background-color: #340c9e; }
         header .people ul li:nth-child(2) {
-          background-color: #1b60df; }
+          background-color: #4c16ee; }
         header .people ul li:nth-child(3) {
-          background-color: #1c57cf; }
+          background-color: #0c55be; }
         header .people ul li:nth-child(4) {
-          background-color: #161a9e; }
+          background-color: #4b02bf; }
         header .people ul li:nth-child(5) {
-          background-color: rgba(3, 9, 208, 0.1); }
+          background-color: rgba(7, 26, 139, 0.3); }
         header .people ul li:nth-child(6) {
-          background-color: rgba(10, 148, 113, 0.9); }
+          background-color: rgba(152, 116, 247, 0.1); }
         header .people ul li:nth-child(7) {
-          background-color: #77b9ce; }
+          background-color: rgba(249, 243, 197, 0.5); }
         header .people ul li:nth-child(8) {
-          background-color: rgba(250, 125, 163, 0.8); }
+          background-color: rgba(99, 163, 212, 0.6); }
         header .people ul li:nth-child(9) {
-          background-color: rgba(136, 125, 247, 0.4); }
+          background-color: rgba(151, 159, 202, 0.5); }
         header .people ul li:nth-child(10) {
-          background-color: rgba(136, 102, 127, 0.9); }
+          background-color: rgba(6, 201, 57, 0.3); }
         header .people ul li:nth-child(11) {
-          background-color: rgba(221, 171, 22, 0.4); }
+          background-color: rgba(103, 59, 60, 0.9); }
         header .people ul li p {
           width: 100%;
           height: 100%;
@@ -305,7 +302,11 @@ main {
   @media screen and (min-width: 1000px) {
     main .comments-cont {
       border-left: 1px solid rgba(225, 225, 225, 0.5);
-      padding-right: 1%; } }
+      padding-right: 1%; }
+      main .comments-cont #extraCont {
+        min-height: calc((100vh) - 17em);
+        max-height: calc((100vh) - 17em);
+        overflow-y: auto; } }
   main .comments-cont textarea {
     width: calc((100%) - 2px);
     resize: none;
@@ -334,7 +335,7 @@ main {
     display: flex;
     justify-content: space-between;
     flex-direction: column-reverse;
-    overflow: auto; }
+    overflow-y: auto; }
     main .comments-cont .comments section {
       padding-right: 5px;
       padding-top: 15px;
@@ -357,14 +358,22 @@ main {
         justify-content: center;
         text-align: center;
         word-wrap: break-word; }
-        main .comments-cont .comments section aside .circle {
+        main .comments-cont .comments section aside ul {
           width: 4em;
+          margin: 0px;
           margin: 0 auto;
+          min-height: 4em;
+          padding: 0px;
           border-radius: 100%;
           background-color: #7f86e5; }
-          main .comments-cont .comments section aside .circle letter {
+          main .comments-cont .comments section aside ul li {
             text-align: center;
-            color: #fff; }
+            color: #fff;
+            padding: 0;
+            margin: 0px;
+            width: 100%;
+            font-weight: bold;
+            font-size: 3.5em; }
         main .comments-cont .comments section aside p {
           color: #949494; }
         main .comments-cont .comments section aside .email {
