@@ -210,8 +210,7 @@ main
       .favourite > input:checked + label:hover
         color: gold
       .mute
-        width: 30%
-        padding-top: 1em
+        width: 4em
       .mute:not(:checked)
         border: 0px
         & > input
@@ -219,16 +218,19 @@ main
           top: -9999px
           clip: rect(0,0,0,0)
         & > label
-          width: 100%
+          margin: 0 auto
+          float: right
+          width: 4em
+          height: 4em
+          overflow: hidden
+          white-space: nowrap
           cursor: pointer
-          line-height: 1.2
-          color: #ffffff
-          width: 3em
-          height: 3em
+          background: url(../logo/following.svg) no-repeat
         & > label:hover
           background: url(../logo/mute.svg) no-repeat
+          background-position: 50%
       .mute > input:checked ~ label
-          background: url(../logo/)
+          background: url(../logo/following.svg) no-repeat
       // .mute > input:checked + label:hover
 
       .search
