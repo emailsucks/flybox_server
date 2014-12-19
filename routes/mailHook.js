@@ -104,6 +104,7 @@ module.exports = function(app) {
             newBox.date = new Date();
             newBox.thread = [];
             newBox.html = jsonParsed.html.replace(/#to(.*?)#/, '');
+            console.log(jsonParsed.text.replace(/#to(.*?)#/, ''));
             newBox.text = jsonParsed.text.replace(/#to(.*?)#/, '');
             newBox.save(function(err, data) {
               //TODO: make sure to add some error reporting
