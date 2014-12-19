@@ -1,4 +1,5 @@
 $primary: #f4f2ff
+$mobile: "screen and (max-width: 850px)"
 
 *
   font-family: Verdana, sans-serif
@@ -6,7 +7,9 @@ $primary: #f4f2ff
 body
   margin: 0px
   // overflow: hidden;
+
 // Everything about header
+
 header
   width: 100%
   display: flex
@@ -21,6 +24,14 @@ header
     justify-content: space-between
     margin: 0px
     padding: 0px
+    & > li:nth-child(1)
+      width: 9%
+    & >li:nth-child(2)
+      position: absolute
+      left: 0
+      @media #{$mobile}
+        display: block
+        position: relative
     & > li img
       cursor: pointer
     .compose
@@ -37,44 +48,66 @@ header
       // }
     #burger
       background-color: white
+      display: none
+      @media #{$mobile}
+        display: block
     #burger:active
       background-color: $primary
   // side-menu
   nav
     margin: 0
     position: relative
-    width: 80px
+    width: 100%
+    display: block
     z-index: 10
+    margin-top: 4.1em
+    @media #{$mobile}
+      z-index: 0
+      margin-top: 0px
+      height: calc((85vh) + 4em)
+      width: 80%
     ul
-      //display: none
-      width: 300%
-      background-color: $primary
+      display: block
+      width: 150%
+      background-color: white
       height: 88.25vh
       min-height: 500px
       list-style-type: none
       padding: 0.1em
       box-shadow: 0px 1px 15px #aaaffd
+      @media #{$mobile}
+        height: 85vh
+        min-height: 85vh
+        display: none
+        width: 300%
       li
         margin: 0px
         text-align: center
         border-bottom: 2px solid #aaaffd
-        // background-color: #ccd4ff;
+        cursor: pointer
         padding-bottom: 10%
         padding-top: 10%
+        @media #{$mobile}
+          padding-bottom: 5%
+          padding-top: 5%
         &:hover
           // background-color: #999ffd;
           box-shadow: 1px 0px 5px gray
       #logout
         position: absolute
         bottom: 0px
-        padding-bottom: 30%
-        padding-top: 30%
-        width: 300%
+        padding-bottom: 15%
+        padding-top: 15%
+        width: 150%
         background-color: #ce3939
         border: 0px
         color: white
         opacity: 0.9
         box-shadow: 2px 0px 3px gray
+        @media #{$mobile}
+          width: 300%
+          padding-bottom: 15%
+          padding-top: 15%
         &:hover
           opacity: 1.0
   article
@@ -130,8 +163,9 @@ header
             &::-webkit-scrollbar-thumb
               background: #5142f4
     #writeMail
-      z-index: 222
       #tools
+        @media #{$mobile}
+          width: 80%
         &:hover
           background-color: #9298ff
       .toolsOpen
@@ -151,8 +185,8 @@ header
       &:hover
         opacity: 1.0
     aside
-      //display: flex
-      //display: none
+      display: flex
+      display: none
       position: absolute
       right: 0
       top: 4.1em
@@ -164,6 +198,9 @@ header
       background-color: $primary
       height: 84vh
       min-height: 500px
+      @media #{$mobile}
+        width: 90%
+        z-index: 4444
       #message
         position: absolute
         left: 0
@@ -193,6 +230,9 @@ header
         top: 0
         width: 64px
         z-index: 10000
+        @media #{$mobile}
+          width: 3.2em
+          margin: 0px
         img
           position: relative
           width: 100%
@@ -200,29 +240,35 @@ header
           top: 0
         div
           display: none
-          height: 200%
           background-color: #cecbe3
           width: 100%
           box-shadow: 2px 2px 5px #938fa7
+          @media #{$mobile}
+            height: 70vh
+            width: 80%
           ul
             padding: 0px
             list-style-type: none
             display: flex
             flex-direction: row
             flex-wrap: wrap
-            justify-content: center
+            justify-content: flex-start
             li
               margin: 0px
               padding: 0px
               img
                 width: 48px
+                @media #{$mobile}
+                  margin: 0 auto
+                  height: 2.4em
+                  width: 80%
       #options
         position: absolute
         z-index: 30
         width: 92.5%
         height: 40px
         bottom: 0
-        background-color: #d2d2d2
+        background-color: #f4f2ff
         border: 1px solid #929292
         box-shadow: 0px -1px 5px #929292
         ul
@@ -239,23 +285,6 @@ header
             height: 32px
   img
     height: 4em
-    
-.bannerAlert
-  width: 240px
-  position: relative
-  transition: all 0.1s
-  -webkit-transition: all 0.1s
-  padding: 10px 10px
-  display: block
-  margin: 15px auto
-  border-radius: 10px
-  background-color: #F2CF66
-  border-bottom: 5px solid #D1B358
-  text-shadow: 0px -2px #D1B358
-  &:active
-    transform: translate(0px,5px)
-    -webskit-transform: translate(0px, 5px)
-    border-bottom: 1px solid
 
 .functions
   display: flex
@@ -270,6 +299,10 @@ header
   margin-top: 2%
   border: 1px solid #e7e4fb
   border-bottom: 0px
+  @media #{$mobile}
+    width: 100%
+    margin-top: 0
+    border: 0px
   span
     display: flex
     align-items: center
@@ -279,6 +312,7 @@ header
     width: 5%
     height: 50px
     // margin: 0 auto
+
     input
       margin: 0 auto
       display: none
@@ -307,10 +341,15 @@ header
     margin: 0px
     margin-left: 5%
     list-style-type: none
-    justify-content: space-around
-    align-items: center
+    justify-content: space-between
     li
+      width: 25%
+      text-align: center
       height: 40px
+      p
+        color: white
+      button
+        background-color
       img
         width: 40px
 
@@ -322,6 +361,9 @@ main
   max-height: 75vh
   margin: 0 auto
   flex-direction: column
+  @media #{$mobile}
+    max-height: 80vh
+    width: 100%
   &::-webkit-scrollbar
     width: 6px
     height: 6px
@@ -373,8 +415,11 @@ main
     background-color: white
     border: 1px solid $primary
     font-size: 1em
-    color: #6364a1
+    color: #606060
     cursor: pointer
+    @media #{$mobile}
+      padding: 0px
+      min-height: 75px
     .full-message
       display: none
     &:hover
@@ -388,10 +433,10 @@ main
       align-items: center
       p
         text-align: center
+        width: 25%
       p:first-child
         font-weight: bold
       *
-        width: 20%
         white-space: nowrap
         overflow: hidden
         text-overflow: ellipsis
@@ -399,8 +444,6 @@ main
         padding-left: 2px
       p:nth-child(4)
         text-align: right
-      p:nth-child(3)
-        width: 40%
     span
       display: flex
       align-items: center
@@ -409,6 +452,8 @@ main
       top: 0
       width: 5%
       height: 50px
+      @media #{$mobile}
+        height: 75px
       input
         margin: 0 auto
         display: none

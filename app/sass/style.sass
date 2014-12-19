@@ -1,8 +1,11 @@
+$mobile: "screen and (max-width: 850px)"
 *
   font-family: Verdana, sans-serif
 
 article
-  height: 95vh
+  height: 93vh
+  @media #{$mobile}
+    height: 83vh
   display: flex
   align-items: center
 
@@ -34,14 +37,22 @@ main
   flex-direction: row
   align-items: center
   margin: 0 auto
+  @media #{$mobile}
+    flex-direction: column
   #logo
     width: 100%
     margin-right: 10%
-    max-height: 60vh
+    max-width: 60vh
     opacity: 0.6
+    @media #{$mobile}
+      margin: 0 auto
+      max-height: 38vh
+      max-width: 38vh
   section
     display: flex
     margin-left: 10%
+    @media #{$mobile}
+      margin: 0 auto
     input
       width: 60%
       margin: 0 auto
@@ -62,6 +73,8 @@ main
     flex-direction: column
     margin-top: 10%
     margin-bottom: 5%
+    @media #{$mobile}
+      margin-top: 20vh
     button
       padding: 5% 2% 5% 2%
       font-size: 1.2em
@@ -78,5 +91,7 @@ main
     flex-direction: column
     justify-content: center
     text-align: center
+    @media #{$mobile}
+      margin-top: 4vh
     label
       margin-top: 5%
