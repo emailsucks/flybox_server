@@ -64,6 +64,12 @@ module.exports = function(app) {
       return $location.path('/inbox');
     };
 
+    $scope.doneEditing = function() {
+      $scope.textBody.editing = false;
+      $scope.original.post = $scope.textBody.text;
+      //TODO update db with socket
+    };
+
   }]);
 };
 
