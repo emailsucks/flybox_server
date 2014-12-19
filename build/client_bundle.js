@@ -64,8 +64,8 @@ module.exports = function(app) {
       return $location.path('/settings');
     };
 
-    $scope.goToInbox = function(boxKey, creatorKey) {
-      return $location.path('/n/' + boxKey + '/' + creatorKey);
+    $scope.goToInbox = function() {
+      return $location.path('/inbox');
     };
 
     $scope.doneEditing = function() {
@@ -182,8 +182,8 @@ module.exports = function(app) {
 
     getBoxes();
 
-    $scope.goToBox = function() {
-      console.log('going to fwd to a box, lol');
+    $scope.goToBox = function(boxKey, creatorKey) {
+      return $location.path('/n/' + boxKey + '/' + creatorKey);
     };
 
     $scope.saveSettings = function() {
