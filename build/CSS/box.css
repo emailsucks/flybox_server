@@ -1,4 +1,3 @@
-@charset "UTF-8";
 * {
   font-family: Helvetica; }
 
@@ -69,7 +68,6 @@ header {
         padding: 0px;
         display: flex;
         margin: 0px 3px 0px 3px;
-        border-radius: 100%;
         opacity: 0.8; }
         header .people ul li p {
           text-transform: uppercase;
@@ -81,28 +79,6 @@ header {
           padding: 0px;
           width: 4em;
           border-radius: 100%; }
-        header .people ul li:nth-child(1) {
-          background-color: #2125a9; }
-        header .people ul li:nth-child(2) {
-          background-color: #0c28ec; }
-        header .people ul li:nth-child(3) {
-          background-color: #3240d8; }
-        header .people ul li:nth-child(4) {
-          background-color: #5010fc; }
-        header .people ul li:nth-child(5) {
-          background-color: #080b45; }
-        header .people ul li:nth-child(6) {
-          background-color: rgba(78, 188, 193, 0.8); }
-        header .people ul li:nth-child(7) {
-          background-color: #701e66; }
-        header .people ul li:nth-child(8) {
-          background-color: #37f0db; }
-        header .people ul li:nth-child(9) {
-          background-color: rgba(193, 11, 73, 0.7); }
-        header .people ul li:nth-child(10) {
-          background-color: rgba(52, 116, 164, 0.9); }
-        header .people ul li:nth-child(11) {
-          background-color: rgba(46, 50, 243, 0.1); }
         header .people ul li p {
           width: 100%;
           height: 100%;
@@ -228,7 +204,7 @@ main {
           line-height: 1.2;
           color: #ffffff; }
         main .body .options .favourite:not(:checked) > label:before {
-          content: "★ "; }
+          content: '★ '; }
         main .body .options .favourite:not(:checked) > label:hover {
           color: gold; }
       main .body .options .favourite > input:checked ~ label {
@@ -365,8 +341,6 @@ main {
           margin: 0 auto;
           height: 4em;
           padding: 0px;
-          border-radius: 100%;
-          background-color: #7f86e5;
           list-style-type: none; }
           main .comments-cont .comments section aside ul li {
             text-align: center;

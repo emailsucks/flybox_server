@@ -5,3 +5,7 @@ db
 bower_components
 .sass-cache
 .DS_store
+build
+test/test_bundle.js
+build
+**/*bundle.js
