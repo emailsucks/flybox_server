@@ -87,12 +87,12 @@
   </aside>
   <main>
     <div class='checkedNames'></div>
-    <section data-ng-repeat='_id in boxes' data-ng-click='goToBox()'>
+    <section data-ng-repeat='_id in boxes'>
       <span>
         <input type='checkbox' name='mail' value='openMail'>
         <label></label>
       </span>
-      <div class='pars' data-ng-click='goToBox(_id.boxKey, _id.creator.urlKey)'>
+      <div class='pars' data-ng-click='goToBox(_id.boxKey, _id.recipients[0].urlKey)'>
         <p>{{_id.creator.email}}</p>
         <p>{{_id.subject}}</p>
         <p>{{_id.date | date}}</p>
