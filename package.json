@@ -4,7 +4,8 @@
   "description": "flybox_server",
   "main": "server.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "postinstall": "grunt build"
   },
   "repository": {
     "type": "git",
