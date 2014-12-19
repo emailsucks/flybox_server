@@ -4,8 +4,8 @@ module.exports = function(app) {
   app.controller('BoxCtrl', ['$scope', '$http', '$base64', '$cookies', '$location', '$routeParams', 'socket', function($scope, $http, $base64, $cookies, $location, $routeParams, socket) {
     console.log('running in box ctrl');
 
-    var boxId = $routeParams.boxId;
-    var userId = $routeParams.userId;
+    var boxId = 'sampleBoxKey' || $routeParams.boxId;
+    var userId = 'sampleUserKey' || $routeParams.userId;
 
     (function() {
       $http.get('/api/n/' + boxId + '/' + userId).success(function(data) {
@@ -58,7 +58,11 @@ module.exports = function(app) {
     });
 
     $scope.makeComment = function() {
+// <<<<<<< HEAD
+//       $scope.newPost = {text: ' '} || $scope.newPost;
+// =======
       if ($scope.newPost.text === '') return;
+// >>>>>>> 3d485d027d6b0c690606a37cf1cef3e9fc3298e8
       socket.emit('send:post', {
         message: $scope.newPost.text,
         boxKey: boxId,
