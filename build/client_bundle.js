@@ -26,11 +26,10 @@ module.exports = function(app) {
         };
         $scope.posts = data.thread;
         $scope.recipients = data.recipients;
+        $scope.textBody = {text:$scope.original.post};
       });
     })();
 
-<<<<<<< HEAD
-=======
     socket.on('init', function(data) {
       $scope.name = data.name;
       $scope.users = data.users;
@@ -41,19 +40,20 @@ module.exports = function(app) {
 
     $scope.makeComment = function() {
       socket.emit('send:post', {
-        message: $scope.post.text,
+        message: $scope.newPost.text,
         boxKey: boxId,
         userId: userId
       });
-      $scope.posts.push($scope.post);
-      $scope.post = {};
+      var tempPost = $scope.newPost;
+      tempPost.author = 'me';
+      $scope.posts.push(tempPost);
+      $scope.newPost = {};
     };
 
     // $scope.refresh = function() {
 
     // };
 
->>>>>>> 1af7f2611c3735c42bc9f34c85e9d7c5c0e3bcdf
     $scope.logOut = function() {
       delete $cookies.jwt;
       return $location.path('/');
@@ -70,6 +70,7 @@ module.exports = function(app) {
     $scope.doneEditing = function() {
       $scope.textBody.editing = false;
       $scope.original.post = $scope.textBody.text;
+
       //TODO update db with socket
     };
 
