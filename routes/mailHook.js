@@ -7,6 +7,7 @@ var Box = require('../models/box');
 var AWS = require('aws-sdk');
 var fs = require('fs');
 var async = require('async');
+var _ = require('underscore');
 
 module.exports = function(app) {
   //AMAZON S3
@@ -148,6 +149,8 @@ module.exports = function(app) {
               var fileNameArray = [];
               Object.keys(fields).forEach(function(name) {fileNameArray.push(name);});
               async.each(fileNameArray, function(name, callback) {
+                var cType = _.findWhere(jsonParsed.attachments, {fileName: name}).contentType;
+                console.log('content type is: ' + cType);
                 if (name !== 'mailinMsg') {
                   decodedFile = new Buffer(fields[name][0], 'base64');
                   destPath[name] = name;
@@ -156,7 +159,8 @@ module.exports = function(app) {
                     Key: data.boxKey + '_' + destPath[name],
                     ACL: 'public-read',
                     Body: decodedFile,
-                    ContentLength: decodedFile.length
+                    ContentLength: decodedFile.length,
+                    ContentType: cType
                   }, function(err, aws) {
                     if (err) return console.log('s3 error: ' + err);
                     fileURLS.push('s3-us-west-2.amazonaws.com/' + bucket + '/' + data.boxKey + '_' + destPath[name]);
