@@ -18,7 +18,7 @@
       </section>
 
       <section id='images'>
-        <figure><img src="../logo/flybox-4.0.4-64x64.svg"></figure>
+        <figure><img src="../logo/flybox.png"></figure>
         <section class='people'>
           <ul>
             <li data-ng-model="original"><p title="{{original.author}}">{{original.author[0]}}</p></li>
@@ -34,9 +34,10 @@
         <article class='body'>
           <h1 data-ng-model="original">{{original.subject}}</h1>
           <h2 data-ng-model="original">{{orininal.date | date}}</h2>
-          <section class='otherBody'><a data-ng-repeat="file in attachments" href='{{file.source}}'>
+          <section class='otherBody'><a class='lightbox-prev' data-ng-repeat="file in attachments" href='{{file.source}}'>
             <img src="{{file.image}}">
             </a>
+            <a href="#_" class='lightbox' id='{{file.image}}'><img src="{{file.image}}"></a>
           </section>
           <section class='textBody'><p ng-hide="textBody.editing" ng-click="textBody.editing = true" id='aaa' data-ng-model="original"><img src="../logo/600px-Black_pencil.svg.png" id='edit'>{{original.post}}</p>
 
@@ -52,8 +53,8 @@
               <label for='star'></label>
             </fieldset>
             <fieldset class='mute'>
-              <input id='mute' type='checkbox'>
-              <label for='mute'></label>
+              <input id='unfollow' type='checkbox'>
+              <label for='unfollow'></label>
             </fieldset>
             <img src="../logo/search.svg" class='search'>
             <input type='text' class='searchInput'>

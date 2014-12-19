@@ -9,7 +9,6 @@ module.exports = function(app) {
 
     (function() {
       $http.get('/api/n/' + boxId + '/' + userId).success(function(data) {
-        console.log(data);
         $scope.original = {
           subject: data.subject,
           post: data.text,
@@ -59,7 +58,11 @@ module.exports = function(app) {
     });
 
     $scope.makeComment = function() {
-      $scope.newPost = {text: ' '} || $scope.newPost;
+// <<<<<<< HEAD
+//       $scope.newPost = {text: ' '} || $scope.newPost;
+// =======
+      if ($scope.newPost.text === '') return;
+// >>>>>>> 3d485d027d6b0c690606a37cf1cef3e9fc3298e8
       socket.emit('send:post', {
         message: $scope.newPost.text,
         boxKey: boxId,

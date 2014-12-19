@@ -87,15 +87,15 @@
   </aside>
   <main>
     <div class='checkedNames'></div>
-    <section data-ng-repeat='_id in boxes | orderBy:"date":true'>
+    <section data-ng-repeat='box in boxes | orderBy:"date":true'>
       <span>
         <input type='checkbox' name='mail' value='openMail'>
         <label></label>
       </span>
-      <div class='pars' data-ng-click='goToBox(_id.boxKey, _id.recipients[0].urlKey)'>
-        <p>{{_id.email}}</p>
-        <p>{{_id.subject}}</p>
-        <p>{{_id.date | date}} and {{_id.date | date:'hh:mm'}}</p>
+      <div class='pars' data-ng-click='goToBox(box.boxKey, box.userKey)'>
+        <p>{{box.email}}</p>
+        <p>{{box.subject}}</p>
+        <p>{{box.date | date}} and {{box.date | date:'hh:mm'}}</p>
       </div>
     </section>
   </main>
