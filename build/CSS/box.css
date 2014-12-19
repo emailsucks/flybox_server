@@ -84,27 +84,27 @@ header {
           width: 4em;
           border-radius: 100%; }
         header .people ul li:nth-child(1) {
-          background-color: #0720aa; }
+          background-color: #0d5eb0; }
         header .people ul li:nth-child(2) {
-          background-color: #2e1ec3; }
+          background-color: #1a14dc; }
         header .people ul li:nth-child(3) {
-          background-color: #444ab2; }
+          background-color: #213dde; }
         header .people ul li:nth-child(4) {
-          background-color: #1d1ead; }
+          background-color: #3738a7; }
         header .people ul li:nth-child(5) {
-          background-color: rgba(5, 14, 230, 0.5); }
+          background-color: rgba(8, 9, 154, 0.3); }
         header .people ul li:nth-child(6) {
-          background-color: rgba(211, 84, 27, 0.7); }
+          background-color: rgba(253, 84, 181, 0.5); }
         header .people ul li:nth-child(7) {
-          background-color: rgba(157, 243, 175, 0.8); }
+          background-color: rgba(235, 236, 189, 0.1); }
         header .people ul li:nth-child(8) {
-          background-color: rgba(236, 117, 135, 0.5); }
+          background-color: rgba(234, 29, 145, 0.7); }
         header .people ul li:nth-child(9) {
-          background-color: rgba(131, 12, 40, 0.7); }
+          background-color: rgba(55, 148, 182, 0.4); }
         header .people ul li:nth-child(10) {
-          background-color: rgba(191, 142, 51, 0.2); }
+          background-color: rgba(69, 70, 15, 0.5); }
         header .people ul li:nth-child(11) {
-          background-color: rgba(149, 146, 220, 0.3); }
+          background-color: rgba(171, 78, 93, 0.1); }
         header .people ul li p {
           width: 100%;
           height: 100%;

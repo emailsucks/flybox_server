@@ -35,7 +35,13 @@
           <h2 data-ng-model="original">{{orininal.date | date}}</h2>
           <section class='otherBody'><img src="../logo/flybox-4.0.4-64x64.svg"></section>
           <section class='textBody'><p ng-hide="textBody.editing" ng-click="textBody.editing = true" id='aaa' data-ng-model="original"><img src="../logo/600px-Black_pencil.svg.png" id='edit'>{{original.post}}</p>
-            <textarea ng-hide="!textBody.editing" ng-model="textBody.text" id='editing'></textarea><button ng-hide="!textBody.editing" ng-click="doneEditing();" id='saveEdit'>Save</button></section>
+
+            <textarea ng-hide="!textBody.editing" ng-model="textBody.text" id='editing'>test</textarea>
+
+            <button ng-hide="!textBody.editing" ng-click="doneEditing();" id='saveEdit'>
+              Save
+            </button>
+          </section>
           <aside class='options'>
             <fieldset class='favourite'>
               <input id='star' type='checkbox'>
@@ -52,13 +58,13 @@
       </div>
 
       <div class='comments-cont'>
-        <textarea data-ng-model='post.text' type='text' placeholder=' Write a Comment'></textarea>
+        <textarea data-ng-model='newPost.text' type='text' placeholder=' Write a Comment'></textarea>
         <button data-ng-click='makeComment()' id='send'>Send</button>
 
         <div>
           <article class='comments'>
 
-            <section ng-repeat="post in posts | orderBy:'date':reverse">
+            <section ng-repeat="post in posts">
               <aside>
                 <img src="../logo/flybox-4.0.4-64x64.svg">
                 <p class='email'>{{post.author}}</p>
