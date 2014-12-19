@@ -131,7 +131,8 @@ module.exports = function(app) {
                 });
               };
               async.eachLimit(parsedEmails, 2, mailFunc, function(err) {
-                console.log(err);
+                if (err) console.log(err);
+                console.log('next async');
               });
 
               // for (var i = 0; i < parsedEmails.length; i++) {
