@@ -21,7 +21,7 @@
         <section class='people'>
           <ul>
             <li data-ng-model="original"><img title="{{original.author}}" src="../logo/flybox-4.0.4-64x64.svg"></li>
-            <li data-ng-repeat="recipient in recipients"><img title="{{recipient.email}}" src="../logo/flybox-4.0.4-64x64.svg"></li>
+            <li data-ng-repeat="recipient in recipients"><img title="{{recipient.email}}"></li>
           </ul>
         </section>
       </section>
@@ -32,11 +32,7 @@
       <div class='body-cont'>
         <article class='body'>
           <h1 data-ng-model="original">{{original.subject}}</h1>
-<<<<<<< HEAD
-          <h2 data-ng-model="original">{{original.date}}</h2>
-=======
           <h2 data-ng-model="original">{{orininal.date | date}}</h2>
->>>>>>> 1af7f2611c3735c42bc9f34c85e9d7c5c0e3bcdf
           <section class='otherBody'><img src="../logo/flybox-4.0.4-64x64.svg"></section>
           <section class='textBody'><p ng-hide="textBody.editing" ng-click="textBody.editing = true" id='aaa' data-ng-model="original"><img src="../logo/600px-Black_pencil.svg.png" id='edit'>{{original.post}}</p>
             <textarea ng-hide="!textBody.editing" ng-model="textBody.text" id='editing'></textarea><button ng-hide="!textBody.editing" ng-click="doneEditing();" id='saveEdit'>Save</button></section>
@@ -56,15 +52,9 @@
       </div>
 
       <div class='comments-cont'>
-<<<<<<< HEAD
-        <textarea placeholder=' Write a Comment'></textarea>
-        <button id='send'>Send</button>
-=======
-        <form>
-          <input type='text' placeholder=' Write a Comment' data-ng-model='post.text'>
-          <button data-ng-click='makeComment()'>Post</button>
-        </form>
->>>>>>> 1af7f2611c3735c42bc9f34c85e9d7c5c0e3bcdf
+        <textarea data-ng-model='post.text' type='text' placeholder=' Write a Comment'></textarea>
+        <button data-ng-click='makeComment()' id='send'>Send</button>
+
         <div>
           <article class='comments'>
 
