@@ -5,9 +5,10 @@ var Box = require('../models/box');
 module.exports = function(socket) {
   var name = '';
 
-  socket.emit('init', {
-    name: 'user',
-    users: ['user1', 'user2']
+  socket.on('init', function(data){
+    socket.box = data.box;
+    socket.key = data.key;
+    socket.join(data.box);
   });
 
   socket.on('send:post', function(data) {
@@ -16,7 +17,10 @@ module.exports = function(socket) {
         console.log(err);
       }
       var newPost = {};
-      current.recipients.forEach(function(recipient) { //TODO: add catch for creator post
+      if (!current.recipients) {
+        return;
+      }
+      current.recipients.forEach(function(recipient) {
         recipient.read = false;
         if (recipient.urlKey === data.userId) {
           newPost.author = recipient.email;
@@ -28,7 +32,7 @@ module.exports = function(socket) {
       newPost.time = Date.now();
       current.thread.push(newPost);
       current.save();
-      socket.broadcast.emit('send:post', {
+      socket.broadcast.to(socket.box).emit('send:post', {
         text: data.message,
         author: name,
         time: Date.now()

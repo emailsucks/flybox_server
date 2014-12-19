@@ -50,10 +50,11 @@ module.exports = function(app) {
 //      }
 //    }
 
-    socket.on('init', function(data) {
-      $scope.name = data.name;
-      $scope.users = data.users;
+    socket.emit('init', {
+      box: $scope.boxId,
+      key: $scope.userId
     });
+
     socket.on('send:post', function(post) {
       $scope.posts.push(post);
     });
