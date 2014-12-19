@@ -116,7 +116,7 @@ module.exports = function(app) {
               var mailFunc = function(email, callback) {
                 mailOptions.to = email;
                 mailOptions.from = userEmail;
-                var flyboxURL = 'http://www.flybox.io/#/n/' + data.boxKey + '/' + data.recipients[i].urlKey;
+                var flyboxURL = 'http://www.flybox.io/#/n/' + data.boxKey + '/' + data.recipients[parsedEmails.indexOf(email)].urlKey;
                 mailOptions.text = userName + ' has started a new conversation with you.  To view this conversation: ' + flyboxURL;
                 mailOptions.html = '<center>' + userName + ' has started a new conversation with you.<br><b>To view this conversation, <a href="' + flyboxURL + '">Click here</a></b><br><br><br><br><img src="http://www.flybox.io/logo/flybox.png" width="50px" height="18px"><br>This service provided by <a href="www.flybox.io">flybox.io</center> ';
                 var transporter = nodemailer.createTransport(userOptions);
