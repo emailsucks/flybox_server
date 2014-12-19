@@ -86,6 +86,40 @@ describe('box routes', function() {
       r._form = form;
     });
   });
+  
+  it('should make a 2nd box through mailHook', function(done) {
+    var form = new FormData();
+    var finalizedMessage = {
+        html: '<h1>this is some new html</h1> #to test@example.com #',
+        text: '#to test@example.com test1@example.com flybox4real@gmail.com #',
+        subject: '2 subject',
+        from: [{address: 'flybox4real@gmail.com', name: 'mr. box'}]
+    };
+
+    form.append('mailinMsg', JSON.stringify(finalizedMessage));
+
+    form.getLength(function(err, length) {
+
+      var headers = form.getHeaders();
+      headers['Content-Length'] = length;
+
+      var r = request.post({
+        url: appUrl + '/api/mailHook/',
+        timeout: 30000,
+        headers: headers
+      }, function(err, resp, body) {
+        var jsonParsed = JSON.parse(resp.body);
+        if (err || resp.statusCode !== 200) {
+          return console.log('error posting to webhook ' + err || resp);
+        }
+        expect(resp.statusCode).to.eql(200);
+        expect(jsonParsed.subject).to.eql('2 subject');
+        done();
+      });
+      r._form = form;
+    });
+  });
+
 
   it('should get an index of boxes for a user', function(done) {
     chai.request(appUrl)
