@@ -33,7 +33,8 @@
         <article class='body'>
           <h1 data-ng-model="original">{{original.subject}}</h1>
           <h2 data-ng-model="original">{{orininal.date | date}}</h2>
-          <section class='otherBody'><a data-ng-repeat="file in attachments" href={{file.source}}"><img src="{{file.image}}"></a></section>
+          <section class='otherBody'><a data-ng-repeat="file in attachments" href={{file.source}}><img src="{{file.image}}"></a>
+          </section>
           <section class='textBody'><p ng-hide="textBody.editing" ng-click="textBody.editing = true" id='aaa' data-ng-model="original"><img src="../logo/600px-Black_pencil.svg.png" id='edit'>{{original.post}}</p>
 
             <textarea ng-hide="!textBody.editing" ng-model="textBody.text" id='editing'>test</textarea>
