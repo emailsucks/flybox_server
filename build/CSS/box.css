@@ -43,9 +43,6 @@ header {
   header #images {
     display: flex;
     flex-direction: row; }
-    @media screen and (min-width: 1000px) {
-      header #images {
-        margin-top: -1.3em; } }
   header .people {
     width: 100%;
     align-items: center;
@@ -75,6 +72,7 @@ header {
         border-radius: 100%;
         opacity: 0.8; }
         header .people ul li p {
+          text-transform: uppercase;
           font-size: 3.5em;
           color: white; }
         header .people ul li:hover {
@@ -84,27 +82,27 @@ header {
           width: 4em;
           border-radius: 100%; }
         header .people ul li:nth-child(1) {
-          background-color: #3b0fef; }
+          background-color: #163ac8; }
         header .people ul li:nth-child(2) {
-          background-color: #1b60df; }
+          background-color: #2c17e6; }
         header .people ul li:nth-child(3) {
-          background-color: #1c57cf; }
+          background-color: #322ab0; }
         header .people ul li:nth-child(4) {
-          background-color: #161a9e; }
+          background-color: #0463a9; }
         header .people ul li:nth-child(5) {
-          background-color: rgba(3, 9, 208, 0.1); }
+          background-color: rgba(1, 46, 239, 0.4); }
         header .people ul li:nth-child(6) {
-          background-color: rgba(10, 148, 113, 0.9); }
+          background-color: rgba(160, 214, 219, 0.8); }
         header .people ul li:nth-child(7) {
-          background-color: #77b9ce; }
+          background-color: rgba(88, 61, 39, 0.6); }
         header .people ul li:nth-child(8) {
-          background-color: rgba(250, 125, 163, 0.8); }
+          background-color: rgba(124, 243, 249, 0.4); }
         header .people ul li:nth-child(9) {
-          background-color: rgba(136, 125, 247, 0.4); }
+          background-color: rgba(170, 217, 85, 0.2); }
         header .people ul li:nth-child(10) {
-          background-color: rgba(136, 102, 127, 0.9); }
+          background-color: rgba(47, 126, 181, 0.5); }
         header .people ul li:nth-child(11) {
-          background-color: rgba(221, 171, 22, 0.4); }
+          background-color: rgba(173, 137, 34, 0.8); }
         header .people ul li p {
           width: 100%;
           height: 100%;
@@ -305,7 +303,11 @@ main {
   @media screen and (min-width: 1000px) {
     main .comments-cont {
       border-left: 1px solid rgba(225, 225, 225, 0.5);
-      padding-right: 1%; } }
+      padding-right: 1%; }
+      main .comments-cont #extraCont {
+        min-height: calc((100vh) - 17em);
+        max-height: calc((100vh) - 17em);
+        overflow-y: auto; } }
   main .comments-cont textarea {
     width: calc((100%) - 2px);
     resize: none;
@@ -334,7 +336,7 @@ main {
     display: flex;
     justify-content: space-between;
     flex-direction: column-reverse;
-    overflow: auto; }
+    overflow-y: auto; }
     main .comments-cont .comments section {
       padding-right: 5px;
       padding-top: 15px;
@@ -357,14 +359,26 @@ main {
         justify-content: center;
         text-align: center;
         word-wrap: break-word; }
-        main .comments-cont .comments section aside .circle {
+        main .comments-cont .comments section aside ul {
           width: 4em;
+          margin: 0px;
           margin: 0 auto;
+          height: 4em;
+          padding: 0px;
           border-radius: 100%;
-          background-color: #7f86e5; }
-          main .comments-cont .comments section aside .circle letter {
+          background-color: #7f86e5;
+          list-style-type: none; }
+          main .comments-cont .comments section aside ul li {
             text-align: center;
-            color: #fff; }
+            text-transform: uppercase;
+            padding: 0;
+            margin: 0px;
+            width: 100%; }
+            main .comments-cont .comments section aside ul li p {
+              padding: 0px;
+              margin: 0px;
+              font-size: 3.5em;
+              color: #fff; }
         main .comments-cont .comments section aside p {
           color: #949494; }
         main .comments-cont .comments section aside .email {
