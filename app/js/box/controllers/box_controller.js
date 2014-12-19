@@ -23,9 +23,11 @@ module.exports = function(app) {
             url = 'http://iconbug.com/data/5b/507/52ff0e80b07d28b590bbc4b30befde52.png';
           } else if ((/\.doc$/).test(url)) {
             url = 'http://seoul2013.citynetcongress.org/wp-content/uploads/2013/08/Word-Doc-Icon.png';
+          } else {
+            url = 'http://' + url;
           }
           $scope.attachments.push({
-            source: file,
+            source: 'http://' + file,
             image: url
           });
         });
