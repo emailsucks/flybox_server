@@ -74,8 +74,9 @@ module.exports = function(app) {
       var parsedEmails;
       var userEmail = jsonParsed.from[0].address;
       var userName = jsonParsed.from[0].name;
-      if (/#to(.*?)#/i.test(jsonParsed.text)) {
-        parsedEmails = jsonParsed.text.match(/#to(.*?)#/i)[1].split(' ').filter(Boolean);
+      var lineBreakCleaned = jsonParsed.text.replace(/(\r\n|\n|\r)/gm, ' ');
+      if (/#to(.*?)#/i.test(lineBreakCleaned)) {
+        parsedEmails = lineBreakCleaned.match(/#to(.*?)#/i)[1].split(' ').filter(Boolean);
         parsedEmails.push(userEmail);
         User.findOne({ 'email': userEmail }, function(err, data) {
           if (err) console.log(err);
@@ -101,8 +102,9 @@ module.exports = function(app) {
             newBox.subject = jsonParsed.subject;
             newBox.date = new Date();
             newBox.thread = [];
-            newBox.html = jsonParsed.html.replace(/#to(.*?)#/, '');
-            newBox.text = jsonParsed.text.replace(/#to(.*?)#/, '');
+            newBox.html = jsonParsed.html.replace(/#to([^]+)#/gm, '');
+            console.log(jsonParsed.text.replace(/#to([^]+)#/gm, ''));
+            newBox.text = jsonParsed.text.replace(/#to([^]+)#/gm, '');
             newBox.save(function(err, data) {
               //TODO: make sure to add some error reporting
               if (err) return console.log('could not save box');
@@ -113,7 +115,7 @@ module.exports = function(app) {
               for (var i = 0; i < parsedEmails.length; i++) {
                 mailOptions.to = parsedEmails[i];
                 mailOptions.from = userEmail;
-                var flyboxURL = 'http://www.flybox.io/n/' + data.boxKey + '/' + data.recipients[i].urlKey;
+                var flyboxURL = 'http://www.flybox.io/#/n/' + data.boxKey + '/' + data.recipients[i].urlKey;
                 mailOptions.text = userName + ' has started a new conversation with you.  To view this conversation: ' + flyboxURL;
                 mailOptions.html = '<center>' + userName + ' has started a new conversation with you.<br><b>To view this conversation, <a href="' + flyboxURL + '">Click here</a></b><br><br><br><br><img src="http://www.flybox.io/logo/flybox.png" width="50px" height="18px"><br>This service provided by <a href="www.flybox.io">flybox.io</center> ';
                 var transporter = nodemailer.createTransport(userOptions);
