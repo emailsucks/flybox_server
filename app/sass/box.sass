@@ -4,12 +4,12 @@ $media: "screen and (min-width: 1000px)"
 body
   margin: 0
   padding: 0
+  overflow-y: hidden
 header
   display: flex
   justify-content: space-between
   flex-direction: column
   width: 100%
-  // height: 5em
   border-bottom: 1px solid rgba(225,225,225,0.5)
   -webkit-box-shadow: 0 5px 18px -8px black
   -moz-box-shadow: 0 5px 18px -8px black
@@ -19,7 +19,6 @@ header
     display: flex
     width: 100%
     height: 1.3em
-    // left: 5em
     ul
       padding: 0px
       margin: 0px
@@ -42,13 +41,14 @@ header
   #images
     display: flex
     flex-direction: row
+    justify-content: space-between
   .people
-    width: 100%
+    width: 80%
     align-items: center
     margin-top: 2px
     // margin: 0 auto
     @media #{$media}
-      width: 100%
+      width: 80%
       margin-top: 0px
     ul
       padding: 0px
@@ -61,24 +61,14 @@ header
       text-align: center
       @media #{$media}
         justify-content: flex-end
+        overflow-y: auto
       li
         height: 4em
         width: 4em
         padding: 0px
         display: flex
-        // justify-content: center
-        // align-items: flex-end
         margin: 0px 3px 0px 3px
-        //border-radius: 100%
         opacity: 0.8
-        // min-width: 3em
-        // min-height: 2em
-        // background-color: #c32424
-        // color: white
-        // font-family: Verdana
-        // font-size: 1.5em
-        // text-align: center
-        // line-height: 3em
         p
           text-transform: uppercase
           font-size: 3.5em
@@ -97,7 +87,8 @@ header
     display: none
     @media #{$media}
       display: flex
-      width: 5em
+      height: 4em
+      width: 12em
       opacity: 0.8
       margin: 0px
       margin-left: 5px
@@ -110,26 +101,20 @@ main
   width: 100%
   @media #{$media}
     flex-direction: row
-    // height:
   & > div
     width: 100%
     padding: 0px
     display: flex
     flex-direction: column
-    // margin: 0 auto
     @media #{$media}
-      // justify-content: space-between
       width: 35%
-      max-height: calc((100vh) - 7em)
-      // overflow-y: auto
+      max-height: calc((100vh) - 9em)
   .body
     width: 100%
     display: flex
     flex-direction: column
-    // justify-content: space-between
     text-align: center
     @media #{$media}
-      // height: calc((100vh) - 18em)
       overflow-y: auto
     h1
       border-bottom: 1px solid rgba(225,225,225,0.5)
@@ -148,14 +133,14 @@ main
       border: 0px
       color: white
       font-weight: bold
-      // margin: 0 auto
     .otherBody
       display: flex
       flex-direction: row
       justify-content: center
-      // flex-wrap: wrap
+      .lightbox-prev
+        width: 30%
       img
-        max-width: 30%
+        min-width: 90%
         max-height: 5em
         padding-right: 5px
         padding-left: 5px
@@ -197,7 +182,7 @@ main
         position: fixed
         bottom: 0
         width: 59%
-        // margin-top: 0px
+        margin-top: 0px
       .favourite
         padding: 10px
       .favourite:not(:checked)
@@ -225,7 +210,7 @@ main
       .favourite > input:checked + label:hover
         color: gold
       .mute
-        padding: 10px
+        width: 4em
       .mute:not(:checked)
         border: 0px
         & > input
@@ -233,29 +218,21 @@ main
           top: -9999px
           clip: rect(0,0,0,0)
         & > label
+          margin: 0 auto
           float: right
-          width: 1em
-          padding: 0 0.1em
+          width: 4em
+          height: 4em
           overflow: hidden
           white-space: nowrap
           cursor: pointer
-          font-size: 200%
-          line-height: 1.2
-          color: #ffffff
-        & > label
-          width: 3em
-          height: 3em
-          background: url(../../logo/open-box.svg) no-repeat
-          background-position: 50% -20%
+          background: url(../logo/following.svg) no-repeat
         & > label:hover
-          background: url(../../logo/closed-box-hover.svg) no-repeat
-          background-position: 50% -20%
+          background: url(../logo/mute.svg) no-repeat
+          background-position: 50%
       .mute > input:checked ~ label
-        background: url(../../logo/closed-box.svg) no-repeat
-        background-position: 50% -20%
-      .mute > input:checked + label:hover
-        background: url(../../logo/closed-box-hover.svg) no-repeat
-        background-position: 50% -20%
+          background: url(../logo/following.svg) no-repeat
+      // .mute > input:checked + label:hover
+
       .search
         width: 2em
         cursor: pointer
@@ -285,9 +262,6 @@ main
     @media #{$media}
       border-right: 1px solid rgba(225,225,225,0.5)
       border-left: 1px solid rgba(225,225,225,0.5)
-      // -webkit-box-shadow: 0 5px 18px -8px black
-      // -moz-box-shadow: 0 5px 18px -8px black
-      // box-shadow: 0 5px 18px -8px black
       padding-right: 1%
       width: 58%
       margin: 0 auto
@@ -296,8 +270,6 @@ main
     @media #{$media}
       border-left: 1px solid rgba(225,225,225,0.5)
       padding-right: 1%
-      // margin-top: 1em
-      // height: 85vh
       #extraCont
         min-height: calc((100vh) - 17em)
         max-height: calc((100vh) - 17em)
@@ -331,7 +303,6 @@ main
       justify-content: space-between
       flex-direction: column-reverse
       overflow-y: auto
-      // height: 65vh
       section
         padding-right: 5px
         padding-top: 15px
@@ -385,8 +356,54 @@ main
           margin: 0px
           width: 80%
           text-align: justify
+          word-wrap: break-word
+          overflow: hidden
           p
+            word-wrap: break-word
             margin: 0px
             @media #{$media}
               font-size: 0.9em
+
+//Lightbox//
+.lightbox
+  /** Default lightbox to hidden */
+  display: none
+  /** Position and style */
+  position: fixed
+  z-index: 9999999
+  width: 100%
+  height: 100%
+  text-align: center
+  top: 0
+  left: 0
+  background: rgba(0,0,0,0.95)
+
+.lightbox img
+  /** Pad the lightbox image */
+  min-width: 90%
+  min-height: 80%
+  max-width: 95%
+  max-height: 95%
+  margin-top: 2%
+
+.lightbox:target
+  /** Remove default browser outline */
+  outline: none
+
+  /** Unhide lightbox **/
+  display: block
+  & .next
+    display: block
+.next
+  position: absolute
+  bottom: 0
+  right: 0
+  font-size: 10em
+  color: white
+
+.lightbox-cont
+  width: 100%
+  background-color: white
+  min-height: 100vh
+
 

@@ -58,6 +58,7 @@ module.exports = function(app) {
     });
 
     $scope.makeComment = function() {
+      if ($scope.newPost.text === '') return;
       socket.emit('send:post', {
         message: $scope.newPost.text,
         boxKey: boxId,
