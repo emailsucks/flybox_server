@@ -56,8 +56,8 @@ module.exports = function(app) {
       return $location.path('/settings');
     };
 
-    $scope.goToInbox = function() {
-      return $location.path('/inbox');
+    $scope.goToInbox = function(boxKey, creatorKey) {
+      return $location.path('/n/' + boxKey + '/' + creatorKey);
     };
 
     $scope.doneEditing = function() {
