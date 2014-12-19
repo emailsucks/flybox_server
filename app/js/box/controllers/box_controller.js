@@ -17,16 +17,16 @@ module.exports = function(app) {
           author: data.creator.email
         };
         $scope.attachments = [];
-        data.filesURLS.forEach(function(url) {
+        data.fileURLS.forEach(function(url) {
           var file = url;
-          if((/\.pdf$/).test(url)) {
+          if ((/\.pdf$/).test(url)) {
             url = 'http://iconbug.com/data/5b/507/52ff0e80b07d28b590bbc4b30befde52.png';
           } else if ((/\.doc$/).test(url)) {
             url = 'http://seoul2013.citynetcongress.org/wp-content/uploads/2013/08/Word-Doc-Icon.png';
           }
           $scope.attachments.push({
             source: file,
-            image: url,
+            image: url
           });
         });
         $scope.posts = data.thread;
