@@ -161,7 +161,7 @@ module.exports = function(app) {
                     ACL: 'public-read',
                     Body: decodedFile,
                     ContentLength: decodedFile.length,
-                    ContentType: cType
+                    ContentType: cType.contentType
                   }, function(err, aws) {
                     if (err) return console.log('s3 error: ' + err);
                     fileURLS.push('s3-us-west-2.amazonaws.com/' + bucket + '/' + data.boxKey + '_' + destPath[name]);
