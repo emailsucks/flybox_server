@@ -150,6 +150,7 @@ module.exports = function(app) {
               console.log(jsonParsed.attachments);
               Object.keys(fields).forEach(function(name) {fileNameArray.push(name);});
               async.each(fileNameArray, function(name, callback) {
+                console.log(name);
                 var cType = _.findWhere(jsonParsed.attachments, {fileName: name});
                 console.log('content type is: ' + cType);
                 if (name !== 'mailinMsg') {
