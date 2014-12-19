@@ -57,6 +57,7 @@ module.exports = function(grunt) {
         files: {
           'build/CSS/inbox.css': 'app/sass/inbox.sass',
           'build/CSS/style.css': 'app/sass/style.sass',
+          'build/CSS/colors.css': 'app/sass/colors.sass',
           'build/CSS/box.css': 'app/sass/box.sass'
         }
       }
