@@ -9,7 +9,6 @@ module.exports = function(app) {
 
     (function() {
       $http.get('/api/n/' + boxId + '/' + userId).success(function(data) {
-        console.log(data);
         $scope.original = {
           subject: data.subject,
           post: data.text,
