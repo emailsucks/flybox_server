@@ -22,7 +22,8 @@ module.exports = function(app, jwtAuth) {
           email: req.user.email,
           subject: box.subject,
           date: box.date,
-          userkey: key
+          boxKey: box.boxKey,
+          userKey: key
         });
       });
       res.json(response);
