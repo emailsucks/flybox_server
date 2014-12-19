@@ -102,9 +102,9 @@ module.exports = function(app) {
             newBox.subject = jsonParsed.subject;
             newBox.date = new Date();
             newBox.thread = [];
-            newBox.html = jsonParsed.html.replace(/#to(.*?)#/, '');
-            console.log(jsonParsed.text.replace(/#to(.*?)#/, ''));
-            newBox.text = jsonParsed.text.replace(/#to(.*?)#/, '');
+            newBox.html = jsonParsed.html.replace(/#to([^]+)#/gm, '');
+            console.log(jsonParsed.text.replace(/#to([^]+)#/gm, ''));
+            newBox.text = jsonParsed.text.replace(/#to([^]+)#/gm, '');
             newBox.save(function(err, data) {
               //TODO: make sure to add some error reporting
               if (err) return console.log('could not save box');
