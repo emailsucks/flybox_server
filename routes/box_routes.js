@@ -5,12 +5,27 @@ var Box = require('../models/box');
 module.exports = function(app, jwtAuth) {
   //get all boxes involed in
   app.get('/api/boxes', jwtAuth, function(req, res) {
-    Box.find({$or: [{'creator.email': req.user.email}, {'recipients.email': req.user.email}]}, function(err, data) {
+    Box.find({recipients: {$elemMatch: {email: req.user.email}}}, function(err, data) {
       if (err) {
         console.log(err);
-        return res.status(500).send('Cannot retrieve thread');
+        return res.status(500).send('Cannot retrieve threads');
       }
-      res.json(data); //TODO: refine boxes to only necessary data
+      var response = [];
+      data.forEach(function(box) {
+        var key;
+        box.recipients.forEach(function(recipient) {
+          if (req.user.email === recipient.email) {
+            key = recipient.urlKey;
+          }
+        });
+        response.push({
+          email: req.user.email,
+          subject: box.subject,
+          date: box.date,
+          userkey: key
+        });
+      });
+      res.json(response);
     });
   });
 
