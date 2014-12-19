@@ -20,8 +20,8 @@
         <figure><img src="../logo/flybox-4.0.4-64x64.svg"></figure>
         <section class='people'>
           <ul>
-            <li data-ng-model="original"><img title="{{original.author}}" src="../logo/flybox-4.0.4-64x64.svg"></li>
-            <li data-ng-repeat="recipient in recipients"><p>{{recipient.email[0]}}</p></li>
+            <li data-ng-model="original"><p title="{{original.author}}">{{original.author[0]}}</p></li>
+            <li data-ng-repeat="recipient in recipients"><p title="{{recipient.email}}">{{recipient.email[0]}}</p></li>
           </ul>
         </section>
       </section>
@@ -67,9 +67,9 @@
           <article class='comments'>
             <section ng-repeat="post in posts | orderBy:date:reverse">
               <aside>
-                <ul><li><p>f</p></li></ul>
+                <ul><li><p title="{{post.author}}">{{post.author[0]}}</p></li></ul>
                 <p class='email'>{{post.author}}</p>
-                <p class='date'>{{post.time | date}}<br></p>
+                <p class='date'>{{post.time | date}}<br>{{post.time | date:'hh:mm:ss'}}<br></p>
               </aside>
               <div><p>{{post.text}}</p>
               </div>
