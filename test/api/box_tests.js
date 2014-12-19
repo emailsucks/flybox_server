@@ -126,11 +126,10 @@ describe('box routes', function() {
     .get('/api/boxes')
     .set({jwt: jwtToken})
     .end(function(err, res) {
-      console.log('BOX:', res.body);
       expect(err).to.eql(null);
       expect(Array.isArray(res.body)).to.be.true;
       boxkey = res.body[0].boxKey;
-      recipientKey = res.body[0].recipients[0].urlKey;
+      recipientKey = res.body[0].userKey;
       done();
     });
   });
@@ -141,8 +140,6 @@ describe('box routes', function() {
     .end(function(err, res) {
       expect(err).to.eql(null);
       expect(res.body).to.have.property('boxKey');
-      console.log(res.body);
-      console.log(boxkey + '/' + recipientKey);
       done();
     });
   });
