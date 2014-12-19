@@ -119,7 +119,14 @@ module.exports = function(app) {
                 mailOptions.text = userName + ' has started a new conversation with you.  To view this conversation: ' + flyboxURL;
                 mailOptions.html = '<center>' + userName + ' has started a new conversation with you.<br><b>To view this conversation, <a href="' + flyboxURL + '">Click here</a></b><br><br><br><br><img src="http://www.flybox.io/logo/flybox.png" width="50px" height="18px"><br>This service provided by <a href="www.flybox.io">flybox.io</center> ';
                 var transporter = nodemailer.createTransport(userOptions);
-                transporter.sendMail(mailOptions, emailCallback);
+                transporter.sendMail(mailOptions, function(error, info) {
+                  if (error) {
+                    console.log(error);
+                  } else {
+                    console.log('Message sent: ' + info.response);
+                  }
+                  transporter.close();
+                });
               }
               // s3 bucket file upload
               var fileNameArray = [];
