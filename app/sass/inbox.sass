@@ -1,12 +1,16 @@
 $primary: #f4f2ff
+$mobile: "screen and (max-width: 850px)"
 
 *
   font-family: Verdana, sans-serif
 
 body
   margin: 0px
-  // overflow: hidden;
+  @media #{$mobile}
+    overflow-x: hidden;
+
 // Everything about header
+
 header
   width: 100%
   display: flex
@@ -21,6 +25,14 @@ header
     justify-content: space-between
     margin: 0px
     padding: 0px
+    & > li:nth-child(1)
+      width: 15%
+    & >li:nth-child(2)
+      position: absolute
+      left: 0
+      @media #{$mobile}
+        display: block
+        position: relative
     & > li img
       cursor: pointer
     .compose
@@ -37,6 +49,9 @@ header
       // }
     #burger
       background-color: white
+      display: none
+      @media #{$mobile}
+        display: block
     #burger:active
       background-color: $primary
   // side-menu
@@ -45,36 +60,54 @@ header
     position: relative
     width: 80px
     z-index: 10
+    margin-top: 4.1em
+    @media #{$mobile}
+      z-index: 0
+      margin-top: 0px
+      height: calc((85vh) + 4em)
+      width: 80%
     ul
-      //display: none
-      width: 300%
-      background-color: $primary
+      display: block
+      width: 150%
+      background-color: white
       height: 88.25vh
       min-height: 500px
       list-style-type: none
       padding: 0.1em
       box-shadow: 0px 1px 15px #aaaffd
+      @media #{$mobile}
+        height: 85vh
+        min-height: 85vh
+        display: none
+        width: 300%
       li
         margin: 0px
         text-align: center
         border-bottom: 2px solid #aaaffd
-        // background-color: #ccd4ff;
+        cursor: pointer
         padding-bottom: 10%
         padding-top: 10%
+        @media #{$mobile}
+          padding-bottom: 5%
+          padding-top: 5%
         &:hover
           // background-color: #999ffd;
           box-shadow: 1px 0px 5px gray
       #logout
         position: absolute
         bottom: 0px
-        padding-bottom: 30%
-        padding-top: 30%
-        width: 300%
+        padding-bottom: 15%
+        padding-top: 15%
+        width: 150%
         background-color: #ce3939
         border: 0px
         color: white
         opacity: 0.9
         box-shadow: 2px 0px 3px gray
+        @media #{$mobile}
+          width: 300%
+          padding-bottom: 15%
+          padding-top: 15%
         &:hover
           opacity: 1.0
   article
@@ -103,7 +136,7 @@ header
           h4
             border-bottom: 1px solid gray
             width: 100%
-          \:nth-child(3)
+          &:nth-child(3)
             border-bottom: 1px solid gray
             width: 100%
         #justMessage
@@ -130,8 +163,10 @@ header
             &::-webkit-scrollbar-thumb
               background: #5142f4
     #writeMail
-      z-index: 222
+      z-index: 44335
       #tools
+        @media #{$mobile}
+          width: 80%
         &:hover
           background-color: #9298ff
       .toolsOpen
@@ -164,6 +199,9 @@ header
       background-color: $primary
       height: 84vh
       min-height: 500px
+      @media #{$mobile}
+        width: 90%
+        z-index: 4444
       #message
         position: absolute
         left: 0
@@ -193,6 +231,9 @@ header
         top: 0
         width: 64px
         z-index: 10000
+        @media #{$mobile}
+          width: 3.2em
+          margin: 0px
         img
           position: relative
           width: 100%
@@ -200,29 +241,35 @@ header
           top: 0
         div
           display: none
-          height: 200%
           background-color: #cecbe3
           width: 100%
           box-shadow: 2px 2px 5px #938fa7
+          @media #{$mobile}
+            height: 70vh
+            width: 80%
           ul
             padding: 0px
             list-style-type: none
             display: flex
             flex-direction: row
             flex-wrap: wrap
-            justify-content: center
+            justify-content: flex-start
             li
               margin: 0px
               padding: 0px
               img
                 width: 48px
+                @media #{$mobile}
+                  margin: 0 auto
+                  height: 2.4em
+                  width: 80%
       #options
         position: absolute
         z-index: 30
         width: 92.5%
         height: 40px
         bottom: 0
-        background-color: #d2d2d2
+        background-color: #f4f2ff
         border: 1px solid #929292
         box-shadow: 0px -1px 5px #929292
         ul
@@ -239,7 +286,7 @@ header
             height: 32px
   img
     height: 4em
-    
+
 .bannerAlert
   width: 240px
   position: relative
@@ -270,6 +317,10 @@ header
   margin-top: 2%
   border: 1px solid #e7e4fb
   border-bottom: 0px
+  @media #{$mobile}
+    width: 99%
+    margin-top: 0
+    border: 0px
   span
     display: flex
     align-items: center
@@ -307,13 +358,23 @@ header
     margin: 0px
     margin-left: 5%
     list-style-type: none
-    justify-content: space-around
+    justify-content: space-between
     align-items: center
     li
       height: 40px
-      img
-        width: 40px
-
+      width: 20%
+      &:nth-child(3)
+        width: 40%
+      p
+        width: 100%
+        text-align: center
+        color: white
+        font-weight: bold
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
+        padding-right: 2px
+        padding-left: 2px
 main
   display: flex
   position: relative
@@ -322,6 +383,9 @@ main
   max-height: 75vh
   margin: 0 auto
   flex-direction: column
+  @media #{$mobile}
+    max-height: 80vh
+    width: 99%
   &::-webkit-scrollbar
     width: 6px
     height: 6px
@@ -373,8 +437,11 @@ main
     background-color: white
     border: 1px solid $primary
     font-size: 1em
-    color: #6364a1
+    color: #606060
     cursor: pointer
+    @media #{$mobile}
+      padding: 0px
+      min-height: 75px
     .full-message
       display: none
     &:hover
@@ -409,6 +476,8 @@ main
       top: 0
       width: 5%
       height: 50px
+      @media #{$mobile}
+        height: 75px
       input
         margin: 0 auto
         display: none
