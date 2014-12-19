@@ -11,6 +11,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-express-server');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-karma');
 
   grunt.initConfig({
     jshint: {
@@ -69,6 +70,14 @@ module.exports = function(grunt) {
         options: {
           transform: ['debowerify']
         }
+      },
+
+      test: {
+        src: ['test/client/**/*.js'],
+        dest: 'test/angular_testbundle.js',
+        options: {
+          transform: ['debowerify']
+        }
       }
     },
 
@@ -99,12 +108,26 @@ module.exports = function(grunt) {
         files: ['app/**/*.js', 'app/**/*.html'],
         tasks: 'build'
       }
+    },
+
+    karma: {
+      unit: {
+        configFile: 'karma.config.js'
+      },
+      continuous: {
+        configFile: 'karma.config.js',
+        singleRun: true,
+        browsers: ['PhantomJS']
+      }
     }
+
   });
   //trying other tasks
 
   grunt.registerTask('default', ['test']);
   grunt.registerTask('test', ['jshint', 'jscs', 'mongo_drop', 'simplemocha']);
+  grunt.registerTask('test:client', ['jshint', 'jscs', 'mongo_drop', 'build:test', 'karma']);
   grunt.registerTask('build', ['jshint', 'jscs', 'clean:dev', 'copy:dev', 'sass:dev', 'browserify:dev']);
+  grunt.registerTask('build:test', ['jshint', 'jscs', 'clean:dev', 'copy:dev', 'sass:dev', 'browserify:test']);
   grunt.registerTask('serve', ['build:dev', 'express:dev', 'watch']);
 };
