@@ -16,11 +16,37 @@ module.exports = function(app) {
           date: data.date,
           author: data.creator.email
         };
+        $scope.attachments = [];
+        data.fileURLS.forEach(function(url) {
+          var file = url;
+          if ((/\.pdf$/).test(url)) {
+            url = 'http://iconbug.com/data/5b/507/52ff0e80b07d28b590bbc4b30befde52.png';
+          } else if ((/\.doc$/).test(url)) {
+            url = 'http://seoul2013.citynetcongress.org/wp-content/uploads/2013/08/Word-Doc-Icon.png';
+          }
+          $scope.attachments.push({
+            source: file,
+            image: url
+          });
+        });
         $scope.posts = data.thread;
         $scope.recipients = data.recipients;
         $scope.textBody = {text:$scope.original.post};
       });
     })();
+
+//    console.log('before the crash', $document.document.bod);
+//    console.log('before the crash set', $document.body.offsetWidth);
+//    var width = $document[0].body.offsetWidth;
+//    if (width > 1000) {
+//      console.log('running the if');
+//      var sections = $document.querySelector('.comments').getElementsByTagName('section');
+//      var len = sections.length;
+//      for (var i = 0; i < len; i++) {
+//        var divH = sections[i].querySelectorAll('div')[0].offsetHeight;
+//        sections[i].style.minHeight = divH + 'px';
+//      }
+//    }
 
     socket.on('init', function(data) {
       $scope.name = data.name;
@@ -43,9 +69,11 @@ module.exports = function(app) {
       $scope.newPost = {};
     };
 
-    // $scope.refresh = function() {
-
-    // };
+    $scope.checkIfEnter = function(event) {
+      if (event === 13) {
+        $scope.makeComment();
+      }
+    };
 
     $scope.logOut = function() {
       delete $cookies.jwt;

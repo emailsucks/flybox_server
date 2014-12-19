@@ -21,7 +21,7 @@
         <section class='people'>
           <ul>
             <li data-ng-model="original"><img title="{{original.author}}" src="../logo/flybox-4.0.4-64x64.svg"></li>
-            <li data-ng-repeat="recipient in recipients"><div class="circle" title="{{recipient.email}}"><div class="letter"</div></li>
+            <li data-ng-repeat="recipient in recipients"><p>{{recipient.email[0]}}</p></li>
           </ul>
         </section>
       </section>
@@ -33,7 +33,10 @@
         <article class='body'>
           <h1 data-ng-model="original">{{original.subject}}</h1>
           <h2 data-ng-model="original">{{orininal.date | date}}</h2>
-          <section class='otherBody'><img src="../logo/flybox-4.0.4-64x64.svg"></section>
+          <section class='otherBody'><a data-ng-repeat="file in attachments" href='{{file.source}}'>
+            <img src="{{file.image}}">
+            </a>
+          </section>
           <section class='textBody'><p ng-hide="textBody.editing" ng-click="textBody.editing = true" id='aaa' data-ng-model="original"><img src="../logo/600px-Black_pencil.svg.png" id='edit'>{{original.post}}</p>
 
             <textarea ng-hide="!textBody.editing" ng-model="textBody.text" id='editing'>test</textarea>
@@ -58,14 +61,13 @@
       </div>
 
       <div class='comments-cont'>
-        <textarea data-ng-model='newPost.text' type='text' placeholder=' Write a Comment'></textarea>
+        <textarea data-ng-model='newPost.text' type='text' placeholder=' Write a Comment' id='commentBox' data-ng-keyup='checkIfEnter($event.keyCode)'></textarea>
         <button data-ng-click='makeComment()' id='send'>Send</button>
-
-        <div>
+        <div id='extraCont'>
           <article class='comments'>
             <section ng-repeat="post in posts | orderBy:date:reverse">
               <aside>
-                <img src="../logo/flybox-4.0.4-64x64.svg">
+                <ul><li><p>f</p></li></ul>
                 <p class='email'>{{post.author}}</p>
                 <p class='date'>{{post.time | date}}<br></p>
               </aside>

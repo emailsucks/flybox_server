@@ -42,8 +42,6 @@ header
   #images
     display: flex
     flex-direction: row
-    @media #{$media}
-      margin-top: -1.3em
   .people
     width: 100%
     align-items: center
@@ -82,6 +80,7 @@ header
         // text-align: center
         // line-height: 3em
         p
+          text-transform: uppercase
           font-size: 3.5em
           color: white
         &:hover
@@ -321,6 +320,10 @@ main
       padding-right: 1%
       // margin-top: 1em
       // height: 85vh
+      #extraCont
+        min-height: calc((100vh) - 17em)
+        max-height: calc((100vh) - 17em)
+        overflow-y: auto
     textarea
       width: calc((100%) - 2px)
       resize: none
@@ -349,7 +352,7 @@ main
       display: flex
       justify-content: space-between
       flex-direction: column-reverse
-      overflow: auto
+      overflow-y: auto
       // height: 65vh
       section
         padding-right: 5px
@@ -373,14 +376,26 @@ main
           justify-content: center
           text-align: center
           word-wrap: break-word
-          .circle
+          ul
             width: 4em
+            margin: 0px
             margin: 0 auto
+            height: 4em
+            padding: 0px
             border-radius: 100%
             background-color: #7f86e5
-            letter
+            list-style-type: none
+            li
               text-align: center
-              color: #fff
+              text-transform: uppercase
+              padding: 0
+              margin: 0px
+              width: 100%
+              p
+                padding: 0px
+                margin: 0px
+                font-size: 3.5em
+                color: #fff
           p
             color: #949494
           .email
